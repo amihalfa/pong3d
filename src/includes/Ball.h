@@ -18,12 +18,9 @@
 		float y;
 		float z;
 		
-		/* Direction de mouvement */
-		float dir_x;
-		float dir_y;
-		
-		/* Vitesse du mouvement */
-		float speed;
+		/* Vitesse de mouvement */
+		float speed_x;
+		float speed_y;
 		
 		/* Taille de la balle */
 		float radius;

@@ -21,6 +21,9 @@
 		/* Dimensions de la raquette */
 		float width;
 		float radius;
+
+		/* Vitesse maximum de la raquette */
+		float speed_max;
 	};
 
 	/* Definition du type Racket */

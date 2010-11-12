@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "includes/Ground.h"
 #include <GL/gl.h>
 #include <GL/glu.h>

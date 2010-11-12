@@ -1,7 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_h
 
-
 	#define WINDOW_TITLE		"Pong by A.H. & A.H."
 	#define WINDOW_WIDTH		800
 	#define WINDOW_HEIGHT		600

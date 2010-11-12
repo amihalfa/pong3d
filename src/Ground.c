@@ -47,25 +47,29 @@ void ground_draw( Ground* ground ){
 		
 	/* Dessin de la face avant */
 	glNormal3f( 0.0f , 1.0f , 0.0f );
-	glVertex3d( width_mi , -length_mi , 0 );
-	glVertex3d( width_mi , -length_mi , ground->height );
-	glVertex3d( -width_mi , -length_mi , ground->height );
-	glVertex3d( -width_mi , -length_mi , 0 );
+	for(i = -width_mi; i < width_mi; i++){
+		glVertex3d( i+1 , -length_mi , 0 );
+		glVertex3d( i+1 , -length_mi , ground->height );
+		glVertex3d( i , -length_mi , ground->height );
+		glVertex3d( i , -length_mi , 0 );
+	}
+	/* Dessin de la face gauche */
+	glNormal3f( 1.0f , 0.0f , 0.0f );
+	for(i = -length_mi; i < length_mi; i++){
+		glVertex3d( -width_mi , i+1 , 0 );
+		glVertex3d( -width_mi , i+1 , ground->height );
+		glVertex3d( -width_mi , i , ground->height );
+		glVertex3d( -width_mi , i , 0 );
+	}
 	
 	/* Dessin de la face droite */
 	glNormal3f( -1.0f , 0.0f , 0.0f );
-	glVertex3d( -width_mi , length_mi , 0 );
-	glVertex3d( -width_mi , length_mi , ground->height );
-	glVertex3d( -width_mi , -length_mi , ground->height );
-	glVertex3d( -width_mi , -length_mi , 0 );
-	
-	/* Dessin de la face gauche */
-	glNormal3f( 1.0f , 0.0f , 0.0f );
-	glVertex3d( width_mi , length_mi , 0 );
-	glVertex3d( width_mi , length_mi , ground->height );
-	glVertex3d( width_mi , -length_mi , ground->height );
-	glVertex3d( width_mi , -length_mi , 0 );
-	
+	for(i = -length_mi; i < length_mi; i++){
+		glVertex3d( width_mi , i+1 , 0 );
+		glVertex3d( width_mi , i+1 , ground->height );
+		glVertex3d( width_mi , i , ground->height );
+		glVertex3d( width_mi , i , 0 );
+	}
 	glEnd();
 	
 }

@@ -146,12 +146,12 @@ int state_game_events(State_Game_Env* env){
 	
 	if( keystates[ SDLK_LEFT ] ) { 
 		if( !collision_racket_ground( &(env->racket_bottom) , &(env->ground), COLLISION_LEFT) )
-			(env->racket_bottom).x -= 0.3;
+			(env->racket_bottom).x -= 0.25;
 	}
 	
 	if( keystates[ SDLK_RIGHT ] ) { 
 		if( !collision_racket_ground( &(env->racket_bottom) , &(env->ground), COLLISION_RIGHT) )
-			(env->racket_bottom).x += 0.3;
+			(env->racket_bottom).x += 0.25;
 	}
 	
 	return 1;

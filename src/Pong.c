@@ -6,6 +6,7 @@
 #include "includes/Ground.h"
 #include "includes/State.h"
 #include "includes/State_Game.h"
+#include "includes/State_Menu.h"
 
 /**
  *	Programme principal Pong
@@ -14,13 +15,12 @@
  */
 int main(){
 
+	state_menu_create();
 	state_game_create();
 	
-	state_current_change(state_game_get());
-	
 	window_create();
-
-	state_current_get()->init_handler( state_current_get()->env );
+	
+	state_current_change(state_menu_get());
 	
 	while( state_current_get()->events_handler( state_current_get()->env ) ){
 		
@@ -30,6 +30,7 @@ int main(){
 	
 	window_destroy();
 	
+	state_menu_destroy();
 	state_game_destroy();
 	
 	return 0;

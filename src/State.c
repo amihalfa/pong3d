@@ -13,6 +13,8 @@ State* state_current_change(State* s){
 	static State* state_cur;
 	if(s){
 		state_cur = s;
+		state_cur->init_handler( state_cur->env );
 	}
+		
 	return state_cur;
 }

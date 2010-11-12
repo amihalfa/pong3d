@@ -12,7 +12,7 @@ void racket_draw( Racket* racket ){
 	glPushMatrix();
 	
 	/* Changement de repere pour positionner au bon endroit */
-	glTranslated( racket->x , racket->y , racket->z );
+	glTranslated( racket->x - racket->width / 2 , racket->y , racket->z );
 	glRotated( 90 , 0 , 1 , 0);
 	
 	/* Choix de la couleur */

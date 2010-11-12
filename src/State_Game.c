@@ -4,6 +4,7 @@
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
+#include "includes/Collisions.h"
 #include "includes/State.h"
 #include "includes/State_Game.h"
 
@@ -24,6 +25,7 @@ State* state_game(int action){
 		free(state_game->env);
 		free(state_game);
 		
+		state_game = (State*)0;
 	}
 	return state_game;
 }
@@ -143,11 +145,13 @@ int state_game_events(State_Game_Env* env){
 	}
 	
 	if( keystates[ SDLK_LEFT ] ) { 
-		(env->racket_bottom).x -= 0.3;
+		if( !collision_racket_ground( &(env->racket_bottom) , &(env->ground), COLLISION_LEFT) )
+			(env->racket_bottom).x -= 0.3;
 	}
 	
 	if( keystates[ SDLK_RIGHT ] ) { 
-		(env->racket_bottom).x += 0.3;
+		if( !collision_racket_ground( &(env->racket_bottom) , &(env->ground), COLLISION_RIGHT) )
+			(env->racket_bottom).x += 0.3;
 	}
 	
 	return 1;

@@ -16,13 +16,13 @@ void racket_draw( Racket* racket ){
 	glRotated( 90 , 0 , 1 , 0);
 	
 	/* Choix de la couleur */
-	glColor3ub( 0 , 0 , 200 );
+	glColor3ub( 255 , 0 , 0 );
 	
 	/* On alloue dynamiquement les parametres pour notre quadrique */
 	GLUquadric* params = gluNewQuadric();
 	
 	/* Dessin de la raquette */
-	gluCylinder( params , 2 * racket->radius , 2 * racket->radius  , racket->width , 20 , 1 );
+	gluCylinder( params , racket->radius , racket->radius  , racket->width , 20 , 1 );
 	
 	/* Libération des ressources car fin du dessin */
 	gluDeleteQuadric( params );

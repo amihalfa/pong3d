@@ -5,7 +5,7 @@
 #########################################################
 
 CC = gcc
-CFLAGS = -w -ansi
+CFLAGS = -w -ansi -Wall
 LDFLAGS = -lGL -lGLU `sdl-config --cflags --libs`
 EXEC = Pong
 DIR_EXEC = bin

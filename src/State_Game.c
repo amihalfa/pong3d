@@ -54,7 +54,7 @@ void state_game_init(State_Game_Env* env){
 
 	
 	/* Initialisation des objets de la scene */
-	Ground g = { 2.0f , 40.0f , 30.0f };
+	Ground g = { 1.5f , 40.0f , 30.0f };
 	Racket r = { 0.0f , 18.0f , 0.5f , 5.0f , 0.5f , 0.01f };
 	Ball b = { 0.0f , 0.0f , 0.125f , 0.01f, 0.02f , 0.25f };
 	

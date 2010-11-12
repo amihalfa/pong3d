@@ -31,4 +31,4 @@
 	 *
 	int collision_ball_racket(Ball* ball, Racket* racket);*/
 
-#endif
+#endif COLLISIONS_H

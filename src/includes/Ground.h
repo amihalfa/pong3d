@@ -29,4 +29,4 @@
 	void ground_draw( Ground* ground );
 	
 
-#endif 
+#endif GROUND_H

@@ -36,4 +36,4 @@
 	void ball_draw( Ball* ball );
 	
 
-#endif
+#endif BALL_H

@@ -6,6 +6,8 @@
 		
 		Menu_Item menu_item[STATE_MENU_ITEMSNB];
 		
+		int selected_item;
+		
 	};
 	
 	typedef struct State_Menu_Env State_Menu_Env;

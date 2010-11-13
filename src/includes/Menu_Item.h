@@ -15,6 +15,9 @@
 		
 		/* Id de l'image affichee dessus */
 		GLuint texture;
+		
+		float anim_step;
+		float anim_dir;
 
 	};
 
@@ -25,5 +28,7 @@
 	 *	@param menu_item	Reference vers l'item a dessinner	
 	 */
 	void menu_item_draw(Menu_Item * menu_item);
+	
+	void menu_item_animate(Menu_Item * menu_item);
 
 #endif MENU_ITEM_H

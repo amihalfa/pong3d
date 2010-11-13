@@ -27,7 +27,6 @@ State* state_menu(int action){
 			
 		free(state_menu->env);
 		free(state_menu);
-			
 		state_menu = (State*)0;
 	}
 	
@@ -54,15 +53,16 @@ void state_menu_init(State_Menu_Env* env){
 	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
-	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 };
+	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 , 0 , 0.005 };
 	menu_item.texture = util_texture_load("./images/menu/jouer.jpg");
 	
 	env->menu_item[0] = menu_item;
 	
-	menu_item.y = -12;
+	menu_item.y = -10;
 	menu_item.texture = util_texture_load("./images/menu/quitter.jpg");
 	env->menu_item[1] = menu_item;
 	
+	env->selected_item = 0;
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);
@@ -115,6 +115,8 @@ void state_menu_draw(State_Menu_Env* env){
 
 int state_menu_events(State_Menu_Env* env){
 	
+	menu_item_animate(&env->menu_item[env->selected_item]);
+	
 	/* Variable de gestion des evenements */
 	SDL_Event event;
 	
@@ -129,12 +131,25 @@ int state_menu_events(State_Menu_Env* env){
 	
 	keystates = SDL_GetKeyState( NULL );
 		
-	if( keystates[ SDLK_ESCAPE ] ) { 
-		return 0;
+	if( keystates[ SDLK_RETURN ] ) { 
+		switch(env->selected_item){
+			case 0:
+				state_current_change(state_game_get());
+			break;
+			default:
+				return 0;
+			break;	
+		}
 	}
 		
-	if( keystates[ SDLK_SPACE ] ) { 
-		state_current_change(state_game_get());
+	if( keystates[ SDLK_DOWN ] ) { 
+		if(env->selected_item+1 < STATE_MENU_ITEMSNB)
+			env->selected_item++;
+	}
+	
+	if( keystates[ SDLK_UP ] ) { 
+		if(env->selected_item > 0)
+			env->selected_item--;
 	}
 				
 	return 1;

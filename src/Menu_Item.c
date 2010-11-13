@@ -8,7 +8,7 @@ void menu_item_draw(Menu_Item * menu_item){
 	glPushMatrix();
 	
 	/* Changement de repere pour positionner au bon endroit */
-	glTranslated( menu_item->x , menu_item->y , menu_item->z );
+	glTranslated( menu_item->x + menu_item->anim_step , menu_item->y , menu_item->z );
 	
 	glEnable (GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, menu_item->texture);
@@ -16,7 +16,7 @@ void menu_item_draw(Menu_Item * menu_item){
 	/* Début de dessin */
 	glBegin( GL_QUADS );
 	
-		/*glColor3ub( 210 , 200 , 200 );
+		glColor3ub( 250 , 250 , 250 );
 		
 		/* Dessin face du bas */
 		glNormal3f( 0.0f , 0.0f , -1.0f );
@@ -69,4 +69,14 @@ void menu_item_draw(Menu_Item * menu_item){
 	/* On remet la matrice mise en pile au depart */
 	glPopMatrix();
 
+}
+
+void menu_item_animate(Menu_Item * menu_item){
+	
+	if(menu_item->anim_step+menu_item->anim_dir >= 1 || menu_item->anim_step-menu_item->anim_dir <= -1){
+		menu_item->anim_dir *= -1;
+		menu_item->anim_step += 4*menu_item->anim_dir;
+	}
+	menu_item->anim_step += menu_item->anim_dir;		
+	
 }

@@ -1,6 +1,7 @@
 #include <SDL/SDL.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
+#include "includes/Util.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
@@ -53,10 +54,13 @@ void state_menu_init(State_Menu_Env* env){
 	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
-	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 0.5 , 2.0 , 5.0 };
+	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 };
+	menu_item.texture = util_texture_load("./images/menu/jouer.jpg");
 	
 	env->menu_item[0] = menu_item;
-	menu_item.y = -2.5;
+	
+	menu_item.y = -12;
+	menu_item.texture = util_texture_load("./images/menu/quitter.jpg");
 	env->menu_item[1] = menu_item;
 	
 	/* Activation de la lumiere */
@@ -85,7 +89,7 @@ void state_menu_draw(State_Menu_Env* env){
 	glLoadIdentity();
 	
 	/* Changement de position de la camera */
-	gluLookAt(-5,-40.0,40,0,-5,0,0,0,1);
+	gluLookAt(12.5,-40.0,40,12.5,-5,0,0,0,1);
 	
 	/* On place la lumiere dans la scene */
 	glLightfv(GL_LIGHT0,GL_POSITION,spotPosition);
@@ -125,7 +129,7 @@ int state_menu_events(State_Menu_Env* env){
 	
 	keystates = SDL_GetKeyState( NULL );
 		
-	if( keystates[ SDLK_q ] ) { 
+	if( keystates[ SDLK_ESCAPE ] ) { 
 		return 0;
 	}
 		

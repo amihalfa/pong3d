@@ -43,7 +43,6 @@ void window_create(){
 	
 	/* Mise en place des spots d'éclairage */
 	glEnable(GL_LIGHTING);
-	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_COLOR_MATERIAL);
 	
 }

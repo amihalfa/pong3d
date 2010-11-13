@@ -1,24 +1,24 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "includes/Util.h"
 
 GLuint util_texture_load(char * path){
 
-	GLuint texture_id;
-	SDL_Surface* texture;
+	GLuint texture_name;
+	SDL_Surface * texture;
 	
-	/* Generation d'un id pour la texture */
-	glGenTextures (1, & texture_id);
+	glGenTextures (1, &texture_name);
+	glBindTexture(GL_TEXTURE_2D, texture_name);
 	
-	/* Chargement en memoire avec la SDL */
-	texture = SDL_LoadBMP(path);
+	texture = IMG_Load(path);
 	
-	/* Passage de la SDL a OpenGL */
-	glTexImage2D (GL_TEXTURE_2D, 0, GL_RGBA8, texture->w, texture->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture->pixels);
+	glTexImage2D (GL_TEXTURE_2D, 0, texture->format->BytesPerPixel, texture->w, texture->h, 0, GL_RGB, GL_UNSIGNED_BYTE, texture-> pixels);
 	
-	/* Liberation de la memoire */
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	
 	SDL_FreeSurface(texture);
 	
-	return texture_id;
+	return texture_name;
 }

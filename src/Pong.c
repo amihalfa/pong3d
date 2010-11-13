@@ -6,6 +6,7 @@
 #include "includes/Ground.h"
 #include "includes/State.h"
 #include "includes/Menu_Item.h"
+#include "includes/Util.h"
 #include "includes/State_Game.h"
 #include "includes/State_Menu.h"
 
@@ -14,8 +15,8 @@
  *	Creation de la fenetre
  *	Permet le basculement entre les differents etats de l'application
  */
-int main(){
-
+int main(int argc, char **argv){
+	
 	state_menu_create();
 	state_game_create();
 	

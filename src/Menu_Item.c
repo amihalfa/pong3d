@@ -10,10 +10,13 @@ void menu_item_draw(Menu_Item * menu_item){
 	/* Changement de repere pour positionner au bon endroit */
 	glTranslated( menu_item->x , menu_item->y , menu_item->z );
 	
+	glEnable (GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, menu_item->texture);
+	
 	/* Début de dessin */
 	glBegin( GL_QUADS );
 	
-		glColor3ub( 210 , 200 , 200 );
+		/*glColor3ub( 210 , 200 , 200 );
 		
 		/* Dessin face du bas */
 		glNormal3f( 0.0f , 0.0f , -1.0f );
@@ -24,9 +27,13 @@ void menu_item_draw(Menu_Item * menu_item){
 			
 		/* Dessin face du haut */
 		glNormal3f( 0.0f , 0.0f , 1.0f );
+		glTexCoord2i(0,1);
 		glVertex3d( 0 , 0 , menu_item->height );
+		glTexCoord2i(1,1);
 		glVertex3d( menu_item->width , 0 , menu_item->height );
+		glTexCoord2i(1,0);
 		glVertex3d( menu_item->width , menu_item->length, menu_item->height );
+		glTexCoord2i(0,0);
 		glVertex3d( 0 , menu_item->length , menu_item->height );
 		
 		/* Dessin de la face avant */

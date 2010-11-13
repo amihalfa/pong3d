@@ -1,12 +1,12 @@
 #########################################################
-#	Makefile for Pong									#
-#		Author : Amirouche HALFAOUI						#
-#		Date : 27.10.2010								#
+#	Makefile for Pong				#
+#		Author : Amirouche HALFAOUI		#
+#		Date : 27.10.2010			#
 #########################################################
 
 CC = gcc
 CFLAGS = -w -ansi -Wall
-LDFLAGS = -lGL -lGLU `sdl-config --cflags --libs`
+LDFLAGS = -lGL -lGLU -lSDL -lSDL_image
 EXEC = Pong
 DIR_EXEC = bin
 DIR_OBJ = obj
@@ -24,7 +24,7 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(INC)
 	$(CC) -o $@ -c $< $(CFLAGS)
 	
 clean:
-	rm -rf $(DIR_EXEC)/*
+	rm -f $(DIR_EXEC)/$(EXEC)
 
 mrproper: clean
-	rm -rf $(DIR_OBJ)/*
+	rm -f $(DIR_OBJ)/*

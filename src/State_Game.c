@@ -75,7 +75,7 @@ void state_game_init(State_Game_Env* env){
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, spotSpec);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, spotAmb);
-	
+	glDisable (GL_TEXTURE_2D);
 }
 
 void state_game_draw(State_Game_Env* env){

@@ -17,6 +17,8 @@
 		float height;
 		float length;
 		float width;
+		
+		GLuint texture;
 	};
 
 	/* Definition du type Ground */

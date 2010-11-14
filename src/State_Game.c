@@ -54,12 +54,14 @@ void state_game_init(State_Game_Env* env){
 
 	
 	/* Initialisation des objets de la scene */
-	Ground g = { 1.5f , 40.0f , 30.0f };
+	Ground g = { 1.5f , 40.0f , 30.0f , 0 };
+	g.texture = util_texture_load ("images/game/wood.jpg");
+	
 	Racket r = { 0.0f , 18.0f , 0.5f , 5.0f , 0.5f , 0.01f };
 	Ball b = { 0.0f , 0.0f , 0.125f , 0.01f, 0.02f , 0.25f };
 	
 	/* Proprietes du spot d'eclairage */
-	GLfloat spotDif[] = {0.8f, 0.8f, 0.8f, 1.0f};
+	GLfloat spotDif[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
@@ -75,7 +77,6 @@ void state_game_init(State_Game_Env* env){
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, spotSpec);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, spotAmb);
-	glDisable (GL_TEXTURE_2D);
 }
 
 void state_game_draw(State_Game_Env* env){
@@ -98,7 +99,7 @@ void state_game_draw(State_Game_Env* env){
 	glLoadIdentity();
 	
 	/* Changement de position de la camera */
-	gluLookAt(-5,-40.0,40,0,-5,0,0,0,1);
+	gluLookAt(0,-40.0,40,0,-5,0,0,0,1);
 	
 	/* On place la lumiere dans la scene */
 	glLightfv(GL_LIGHT0,GL_POSITION,spotPosition);

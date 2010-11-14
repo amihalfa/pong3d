@@ -1,3 +1,5 @@
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include "includes/Ball.h"
 #include "includes/Racket.h"
 #include "includes/Ground.h"

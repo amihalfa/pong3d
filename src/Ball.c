@@ -12,7 +12,7 @@ void ball_draw( Ball* ball ){
 	glPushMatrix();
 	
 	/* On change le repere */
-	glTranslated( ball->x , ball->y, ball->z );
+	glTranslatef( ball->x , ball->y, ball->z );
 	
 	/* On applique la couleur */
 	glColor3ub( 100 , 100 , 100 );

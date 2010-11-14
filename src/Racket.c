@@ -1,6 +1,6 @@
-#include "includes/Racket.h" 
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "includes/Racket.h" 
 
 /**
  *	Dessin de la raquette en OpenGL
@@ -8,24 +8,56 @@
  */ 
 void racket_draw( Racket* racket ){
 
+	GLdouble eqn[4] = {-1.0, 0.0, 0.0, 0.0}; /* y < 0 */ 
+		
 	/* On met en pile la matrice telle qu'elle est au depart */
 	glPushMatrix();
 	
 	/* Changement de repere pour positionner au bon endroit */
-	glTranslated( racket->x - racket->width / 2 , racket->y , racket->z );
-	glRotated( 90 , 0 , 1 , 0);
+	glTranslatef( racket->x - racket->width / 2 + racket->radius , racket->y , racket->z );
 	
 	/* Choix de la couleur */
-	glColor3ub( 255 , 0 , 0 );
+	glColor3ub( 255 , 255 , 255 );
+	
+	glEnable (GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, racket->texture);
+	
+	glClipPlane (GL_CLIP_PLANE0, eqn); 
+	glEnable (GL_CLIP_PLANE0);
 	
 	/* On alloue dynamiquement les parametres pour notre quadrique */
 	GLUquadric* params = gluNewQuadric();
 	
+	gluQuadricDrawStyle(params,GLU_FILL);
+	gluQuadricTexture(params,GL_TRUE);
+	
+	
+	/* On dessine la gauche */
+	gluSphere( params , racket->radius , 10 , 10 );
+	
+ 	glDisable (GL_CLIP_PLANE0); 
+	
+	glRotatef( 90 , 0 , 1 , 0);
+	
 	/* Dessin de la raquette */
-	gluCylinder( params , racket->radius , racket->radius  , racket->width , 20 , 1 );
+	gluCylinder( params , racket->radius , racket->radius  , racket->width - 2 * racket->radius , 20 , 1 );
+	
+	glRotatef( -90 , 0 , 1 , 0);
+	
+	glTranslatef( racket->width - 2 * racket->radius , 0 , 0 );
+	
+	eqn[0] = 1.0;
+	glClipPlane (GL_CLIP_PLANE0, eqn); 
+	glEnable (GL_CLIP_PLANE0);
+	
+	gluSphere( params , racket->radius , 10 , 10 );
+	
+	glDisable (GL_CLIP_PLANE0); 
 	
 	/* Libération des ressources car fin du dessin */
 	gluDeleteQuadric( params );
+	
+	glDisable (GL_TEXTURE_2D);
 	
 	/* On remet la matrice de projection telle qu'elle était au départ */
 	glPopMatrix();

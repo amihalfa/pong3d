@@ -54,10 +54,13 @@ void state_game_init(State_Game_Env* env){
 
 	
 	/* Initialisation des objets de la scene */
-	Ground g = { 1.5f , 40.0f , 30.0f , 0 };
+	Ground g = { 2.0f , 40.0f , 30.0f , 0 };
 	g.texture = util_texture_load ("images/game/wood.jpg");
 	
-	Racket r = { 0.0f , 18.0f , 0.5f , 5.0f , 0.5f , 0.01f };
+	Racket r = { 0.0f , 18.0f , 0.5f , 5.0f , 0.5f , 0.01f , 0 };
+	
+	r.texture = util_texture_load ("images/game/wood0.jpg");
+	
 	Ball b = { 0.0f , 0.0f , 0.125f , 0.01f, 0.02f , 0.25f };
 	
 	/* Proprietes du spot d'eclairage */

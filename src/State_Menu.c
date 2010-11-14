@@ -34,7 +34,6 @@ State* state_menu(int action){
 	return state_menu;
 }
 
-
 void state_menu_create(){
 	state_menu( STATE_CREATE );
 }
@@ -57,14 +56,14 @@ void state_menu_init(State_Menu_Env* env){
 	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 , 0 , 0.005 };
 	
 	menu_item.texture = util_texture_load ("images/menu/jouer.jpg");
-	
 	env->menu_item[0] = menu_item;
 	
 	menu_item.y = -10;
 	menu_item.texture = util_texture_load("images/menu/quitter.jpg");
 	env->menu_item[1] = menu_item;
-	
+
 	env->selected_item = 0;
+	
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);

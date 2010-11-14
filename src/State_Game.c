@@ -58,10 +58,9 @@ void state_game_init(State_Game_Env* env){
 	g.texture = util_texture_load ("images/game/wood.jpg");
 	
 	Racket r = { 0.0f , 18.0f , 0.5f , 5.0f , 0.5f , 0.01f , 0 };
+	r.texture = util_texture_load ("images/game/steel.jpg");
 	
-	r.texture = util_texture_load ("images/game/wood0.jpg");
-	
-	Ball b = { 0.0f , 0.0f , 0.125f , 0.01f, 0.02f , 0.25f };
+	Ball b = { 0.0f , 0.0f , 0.5f , 0.1f, 0.2f , 0.5f };
 	
 	/* Proprietes du spot d'eclairage */
 	GLfloat spotDif[] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -89,10 +88,10 @@ void state_game_draw(State_Game_Env* env){
 	start_time = SDL_GetTicks();
 	
 	/* Position du spot d'eclairage */
-	GLfloat spotPosition[] = {-20.0 , -30.0 , 40.0 , 1.0};
+	GLfloat spotPosition[] = {0.0 , -30.0 , 40.0 , 1.0};
 	
 	/* Direction du spot d'eclairage */
-	GLfloat spotDirection[]={0.8 , 1.2 , -1.0};
+	GLfloat spotDirection[]={0.0 , 1.0 , -1.0};
 	
 	/* On vide le buffer d'affichage */
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -135,6 +134,11 @@ int state_game_events(State_Game_Env* env){
 	
 	/* Etat des touches */
 	Uint8 *keystates;
+	
+	collision_ball_ground(&env->ball, &env->ground);
+	collision_ball_racket(&env->ball, &env->racket_bottom);
+	collision_ball_racket(&env->ball, &env->racket_top);
+	ball_move( &env->ball );
 	
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 

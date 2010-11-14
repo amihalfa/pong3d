@@ -24,6 +24,8 @@
 
 		/* Vitesse de la raquette */
 		float speed;
+		
+		GLuint texture;
 	};
 
 	/* Definition du type Racket */

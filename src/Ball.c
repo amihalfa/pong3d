@@ -15,13 +15,13 @@ void ball_draw( Ball* ball ){
 	glTranslatef( ball->x , ball->y, ball->z );
 	
 	/* On applique la couleur */
-	glColor3ub( 100 , 100 , 100 );
+	glColor3ub( 100 , 10 , 10 );
 	
 	/* On alloue dynamiquement les parametres pour notre quadrique */
 	GLUquadric* params = gluNewQuadric();
 	
 	/* On dessine la balle */
-	gluSphere( params , 2 * ball->radius , 10 , 10 );
+	gluSphere( params , ball->radius , 10 , 10 );
 	
 	/* Liberation des ressources car fin du dessin */
 	gluDeleteQuadric(params);
@@ -30,4 +30,14 @@ void ball_draw( Ball* ball ){
 	glPopMatrix();
 	
 
+}
+/**
+ *	Mouvement de la balle en tenant compte de la vitesse
+ *	@param ball			Pointeur vers la structure de balle
+ */
+void ball_move( Ball* ball ){
+
+	ball->x += ball->speed_x;
+	ball->y += ball->speed_y;
+	
 }

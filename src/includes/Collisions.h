@@ -13,4 +13,8 @@
 
 	int collision_racket_ground( Racket* racket , Ground* ground, int position);
 
+	void collision_ball_ground( Ball* ball, Ground* ground );
+
+	void collision_ball_racket( Ball* ball, Racket* racket );
+	
 #endif COLLISIONS_H

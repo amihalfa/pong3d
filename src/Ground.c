@@ -22,43 +22,23 @@ void ground_draw( Ground* ground ){
 	/* Début de dessin */
 	glBegin( GL_QUADS );
 	
-	/* Couleur pour le sol */
+	/* Couleur generale */
 	glColor3ub( 255 , 255 , 255 );
 	
+	/* Bas du terrain (visible) */
 	glNormal3f( 0.0f , 0.0f , 1.0f );
+	glTexCoord2i(0,1); glVertex3d( -width_mi , -length_mi , 0 );
+	glTexCoord2i(1,1); glVertex3d( width_mi , -length_mi, 0 );
+	glTexCoord2i(1,0); glVertex3d( width_mi , length_mi , 0 );
+	glTexCoord2i(0,0); glVertex3d( -width_mi , length_mi , 0 );
 	
-	glTexCoord2i(0,1);
-	glVertex3d( -width_mi , -length_mi , 0 );
+	/* Bas du terrain (non visible) */
+	glNormal3f( 0.0f , 0.0f , -1.0f );
+	glTexCoord2i(0,1); glVertex3d( -width_mi - 0.5 , -length_mi , -1.0 );
+	glTexCoord2i(1,1); glVertex3d( width_mi + 0.5 , -length_mi, -1.0 );
+	glTexCoord2i(1,0); glVertex3d( width_mi + 0.5 , length_mi , -1.0 );
+	glTexCoord2i(0,0); glVertex3d( -width_mi - 0.5 , length_mi , -1.0 );
 	
-	glTexCoord2i(1,1);
-	glVertex3d( width_mi , -length_mi, 0 );
-	
-	glTexCoord2i(1,0);
-	glVertex3d( width_mi , length_mi , 0 );
-	
-	glTexCoord2i(0,0);
-	glVertex3d( -width_mi , length_mi , 0 );
-	
-	
-	/* Dessin du sol 
-	for(i = -width_mi; i < width_mi; i+=1){
-		for(j = -length_mi; j < length_mi; j+=1){
-			glTexCoord2i(i,j+1);
-			glVertex3d( i , j , 0 );
-			
-			glTexCoord2i(i+1,j+1);
-			glVertex3d( i+1 , j, 0 );
-			
-			glTexCoord2i(i+1,j);
-			glVertex3d( i+1 , j+1, 0 );
-			
-			glTexCoord2i(i,j);
-			glVertex3d( i , j+1 , 0 );
-		}
-	}
-	
-	/* Couleur des faces */
-	glColor3ub( 155 , 155 , 155 );
 	
 	/* Dessin de la face arriere 
 	glNormal3f( 0.0f , -1.0f , 0.0f );
@@ -77,23 +57,51 @@ void ground_draw( Ground* ground ){
 		glVertex3d( i , -length_mi , ground->height );
 		glVertex3d( i , -length_mi , 0 );
 	}
-	/* Dessin de la face gauche */
-	glNormal3f( 1.0f , 0.0f , 0.0f );
-	for(i = -length_mi; i < length_mi; i++){
-		glVertex3d( -width_mi , i+1 , 0 );
-		glVertex3d( -width_mi , i+1 , ground->height );
-		glVertex3d( -width_mi , i , ground->height );
-		glVertex3d( -width_mi , i , 0 );
-	}
 	
-	/* Dessin de la face droite */
+	/* Dessin de la face gauche interieure */
+	glNormal3f( 1.0f , 0.0f , 0.0f );
+	glTexCoord2i(0,1); glVertex3d( -width_mi , length_mi , 0 );
+	glTexCoord2i(1,1); glVertex3d( -width_mi , length_mi , ground->height );
+	glTexCoord2i(1,0); glVertex3d( -width_mi , -length_mi , ground->height );
+	glTexCoord2i(0,0); glVertex3d( -width_mi , -length_mi , 0 );
+	
+	/* Dessin de la face gauche exterieure */
 	glNormal3f( -1.0f , 0.0f , 0.0f );
-	for(i = -length_mi; i < length_mi; i++){
-		glVertex3d( width_mi , i+1 , 0 );
-		glVertex3d( width_mi , i+1 , ground->height );
-		glVertex3d( width_mi , i , ground->height );
-		glVertex3d( width_mi , i , 0 );
-	}
+	glVertex3d( -width_mi - 0.5 , length_mi , -1.0 );
+	glVertex3d( -width_mi - 0.5 , length_mi , ground->height );
+	glVertex3d( -width_mi - 0.5 , -length_mi , ground->height );
+	glVertex3d( -width_mi - 0.5 , -length_mi , -1.0 );
+	
+	
+	/* Dessin de la face droite interieure */
+	glNormal3f( -1.0f , 0.0f , 0.0f );
+	glTexCoord2i(0,1); glVertex3d( width_mi , length_mi , 0 );
+	glTexCoord2i(1,1); glVertex3d( width_mi , length_mi , ground->height );
+	glTexCoord2i(1,0); glVertex3d( width_mi , -length_mi , ground->height );
+	glTexCoord2i(0,0); glVertex3d( width_mi , -length_mi , 0 );
+	
+	/* Dessin de la face droite exterieure */
+	glNormal3f( 1.0f , 0.0f , 0.0f );
+	glTexCoord2i(0,1); glVertex3d( width_mi + 0.5 , length_mi , -1.0 );
+	glTexCoord2i(1,1); glVertex3d( width_mi + 0.5 , length_mi , ground->height );
+	glTexCoord2i(1,0); glVertex3d( width_mi + 0.5 , -length_mi , ground->height );
+	glTexCoord2i(0,0); glVertex3d( width_mi + 0.5 , -length_mi , -1.0 );
+	
+	/* Haut du terrain gauche */
+	glNormal3f( 0.0f , 0.0f , 1.0f );
+	glTexCoord2i(0,1); glVertex3d( -width_mi - 0.5 , -length_mi , ground->height );
+	glTexCoord2i(1,1); glVertex3d( -width_mi , -length_mi, ground->height );
+	glTexCoord2i(1,0); glVertex3d( -width_mi , length_mi , ground->height );
+	glTexCoord2i(0,0); glVertex3d( -width_mi - 0.5 , length_mi , ground->height );
+	
+	/* Haut du terrain a droite */
+	glNormal3f( 0.0f , 0.0f , 1.0f );
+	glTexCoord2i(0,1); glVertex3d( width_mi , -length_mi , ground->height );
+	glTexCoord2i(1,1); glVertex3d( width_mi + 0.5 , -length_mi, ground->height );
+	glTexCoord2i(1,0); glVertex3d( width_mi + 0.5 , length_mi , ground->height );
+	glTexCoord2i(0,0); glVertex3d( width_mi , length_mi , ground->height );
+	
+	
 	glEnd();
 	glDisable (GL_TEXTURE_2D);
 }

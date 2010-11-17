@@ -22,7 +22,7 @@
 		 *	Fonction d'affichage de l'état courant 
 		 *	@param	env		Environnement attache a l'etat
 		 */
-		void ( *draw_handler )( void* );
+		void ( *main_handler )( void* );
 		
 		/** 
 		 *	Fonction de gestion des événements de l'état courant 
@@ -49,3 +49,4 @@
 	
 
 #endif STATE_H
+

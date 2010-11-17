@@ -42,3 +42,4 @@
 	void ball_move( Ball* ball );
 
 #endif BALL_H
+

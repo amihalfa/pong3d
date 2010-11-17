@@ -1,11 +1,15 @@
 #ifndef STATE_GAME
 #define	STATE_GAME
 
+#include <SDL/SDL.h>
+#include "State.h"
+
 	struct State_Game_Env{
 		Ground ground;
 		Racket racket_top;
 		Racket racket_bottom;
 		Ball ball;
+		Uint32 ellapsed_time;
 	};
 
 	typedef struct State_Game_Env State_Game_Env;
@@ -18,6 +22,9 @@
 	State* state_game_get();
 
 	void state_game_destroy();
+
+
+	void state_game_main(State_Game_Env* env);
 
 	/**
 	 *	Initialisation de l'etat de jeu
@@ -36,4 +43,6 @@
 	int state_game_events(State_Game_Env* env);
 	
 
+
 #endif STATE_GAME
+

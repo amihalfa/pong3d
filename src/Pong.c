@@ -26,7 +26,7 @@ int main(int argc, char **argv){
 	
 	while( state_current_get()->events_handler( state_current_get()->env ) ){
 		
-		state_current_get()->draw_handler( state_current_get()->env );
+		state_current_get()->main_handler( state_current_get()->env );
 		
 	}
 	

@@ -20,7 +20,7 @@ State* state_menu(int action){
 		state_menu = ( State* ) malloc( sizeof(State) );
 		state_menu->env = ( State_Menu_Env* ) malloc( sizeof(State_Menu_Env) );
 		state_menu->init_handler = &state_menu_init;
-		state_menu->draw_handler = &state_menu_draw;
+		state_menu->main_handler = &state_menu_draw;
 		state_menu->events_handler = &state_menu_events;
 		
 	}

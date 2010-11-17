@@ -6,6 +6,16 @@
 #include "includes/Collisions.h" 
 
 
+int collision_main(State_Game_Env* env){
+	/* Il faudra faire une boucle pour toutes les balles */
+
+	collision_ball_racket(&env->ball, &env->racket_bottom);
+	collision_ball_racket(&env->ball, &env->racket_top);
+	collision_ball_ground(&env->ball, &env->ground);
+
+	return 0;
+}
+
 int collision_racket_ground( Racket* racket, Ground* ground, int position ){
 
 	float rckt_width_mi = racket->width / 2;

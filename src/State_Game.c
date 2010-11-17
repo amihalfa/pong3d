@@ -7,6 +7,9 @@
 #include "includes/Collisions.h"
 #include "includes/State.h"
 #include "includes/State_Game.h"
+#include <stdio.h>
+
+#define FRAME_DURATION 10
 
 State* state_game(int action){
 	static State* state_game = (State*)0;
@@ -16,7 +19,7 @@ State* state_game(int action){
 		state_game = ( State* ) malloc( sizeof(State) );
 		state_game->env = ( State_Game_Env* ) malloc( sizeof(State_Game_Env) );
 		state_game->init_handler = &state_game_init;
-		state_game->draw_handler = &state_game_draw;
+		state_game->main_handler = &state_game_main;
 		state_game->events_handler = &state_game_events;
 	
 	}
@@ -83,9 +86,6 @@ void state_game_init(State_Game_Env* env){
 
 void state_game_draw(State_Game_Env* env){
 	
-	Uint32 start_time, ellapsed_time;
-	
-	start_time = SDL_GetTicks();
 	
 	/* Position du spot d'eclairage */
 	GLfloat spotPosition[] = {0.0 , -30.0 , 40.0 , 1.0};
@@ -120,11 +120,6 @@ void state_game_draw(State_Game_Env* env){
 	
 	/* On affiche */
 	SDL_GL_SwapBuffers();
-	
-	ellapsed_time = SDL_GetTicks() - start_time;
-	if (ellapsed_time < 10){
-		SDL_Delay(10 - ellapsed_time);
-	}	
 }
 
 int state_game_events(State_Game_Env* env){
@@ -135,9 +130,6 @@ int state_game_events(State_Game_Env* env){
 	/* Etat des touches */
 	Uint8 *keystates;
 	
-	collision_ball_ground(&env->ball, &env->ground);
-	collision_ball_racket(&env->ball, &env->racket_bottom);
-	collision_ball_racket(&env->ball, &env->racket_top);
 	ball_move( &env->ball );
 	
 	while( SDL_PollEvent(&event) ){ 	
@@ -165,3 +157,20 @@ int state_game_events(State_Game_Env* env){
 	return 1;
 
 }
+
+
+state_game_main(State_Game_Env* env){
+
+	Uint32 start_time;
+	start_time = SDL_GetTicks();
+
+	collision_main(env);
+	state_game_draw(env);
+
+
+	env->ellapsed_time = SDL_GetTicks() - start_time;
+	if (env->ellapsed_time < FRAME_DURATION){
+		SDL_Delay(FRAME_DURATION - env->ellapsed_time);
+	}
+}
+

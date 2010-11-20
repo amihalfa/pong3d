@@ -83,7 +83,7 @@ void collision_ball_racket( Ball* ball, Racket* racket ){
 			float dist_left = sqrt( dist_x_l*dist_x_l + dist_y*dist_y );
 			float dist_right = 0; 
 			
-			dist_x_r = racket->x + rckt_width_mi - ball->x;
+			dist_x_r = - racket->x - rckt_width_mi + ball->x;
 			
 			dist_right = sqrt( dist_x_r*dist_x_r + dist_y*dist_y );
 			

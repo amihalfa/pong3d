@@ -63,40 +63,64 @@ void collision_ball_racket( Ball* ball, Racket* racket ){
 	if(ball->x > racket->x -rckt_width_mi && ball->x < racket->x + rckt_width_mi ){
 		
 		/* Arrivee de la balle par le haut */
-		if(ball->y - ball->radius <= racket->y + racket->radius){
-			if(ball->y - ball->radius > racket->y){
+		if(ball->y - ball->radius <= racket->y + racket->radius && ball->y - ball->radius > racket->y){
 				/* On renvoie la balle vers le haut */
 				ball->speed_y *= -1;
-			}
 		}
 		
 		/* Arrivee de la balle par le bas */
-		else if(ball->y + ball->radius >= racket->y - racket->radius){
-			if(ball->y + ball->radius < racket->y){
+		else if(ball->y + ball->radius >= racket->y - racket->radius && ball->y + ball->radius < racket->y){
 				/* On renvoie la balle vers le bas */
 				ball->speed_y *= -1;
-			}
 		}
 	}
 	else if(ball->y - ball->radius <= racket->y + racket->radius){ 
 		if(ball->y + ball->radius >= racket->y - racket->radius){
 	
-			float dist_x = racket->x - rckt_width_mi - ball->x;
-			float dist_y = racket->y - ball->y;
+			float dist_x_r, dist_x_l =  ball->x - (racket->x - rckt_width_mi);
+			float dist_y = - racket->y + ball->y;
 			
-			float dist_left = sqrt( dist_x*dist_x + dist_y*dist_y );
+			float dist_left = sqrt( dist_x_l*dist_x_l + dist_y*dist_y );
 			float dist_right = 0; 
 			
-			dist_x = racket->x + rckt_width_mi - ball->x;
+			dist_x_r = racket->x + rckt_width_mi - ball->x;
 			
-			dist_right = sqrt( dist_x*dist_x + dist_y*dist_y );
+			dist_right = sqrt( dist_x_r*dist_x_r + dist_y*dist_y );
 			
 			/* La raquette a ete cognee par la gauche */
 			if(dist_left <= ball->radius + racket->radius){
 			
+				float u_x = dist_x_l / dist_left;
+				float u_y = dist_y / dist_left;
+				
+				float d_x = ball->speed_x;
+				float d_y = ball->speed_y;
+				
+				float o_x = u_x * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
+				float o_y = u_y * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
+				
+				float d_o = sqrt(o_x*o_x + o_y*o_y);
+				
+				ball->speed_x += 2 * d_o * u_x;
+				ball->speed_y += 2 * d_o * u_y;
+			
 			}
 			/* La raquette a ete cognee par la droite */
 			else if(dist_right <= ball->radius + racket->radius){
+				
+				float u_x = dist_x_r / dist_right;
+				float u_y = dist_y / dist_right;
+				
+				float d_x = ball->speed_x;
+				float d_y = ball->speed_y;
+				
+				float o_x = u_x * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
+				float o_y = u_y * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
+				
+				float d_o = sqrt(o_x*o_x + o_y*o_y);
+				
+				ball->speed_x += 2 * d_o * u_x;
+				ball->speed_y += 2 * d_o * u_y;
 			
 			}
 			

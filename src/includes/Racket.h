@@ -8,6 +8,8 @@
 #ifndef RACKET_H
 #define RACKET_H
 
+	#include <GL/gl.h>
+
 	/**
 	*	Structure permettant de gerer une raquette
 	*/

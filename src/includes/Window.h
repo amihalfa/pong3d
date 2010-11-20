@@ -10,7 +10,7 @@
 	void window_create();
 
 	/**
-	 *	Liberation de la mémoire
+	 *	Liberation de la memoire
 	 */
 	void window_destroy();
 

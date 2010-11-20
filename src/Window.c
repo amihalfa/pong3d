@@ -3,6 +3,9 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 
+/**
+ *	Initialisation de la fenetre et de l'affichage 
+ */
 void window_create(){
 	
 	
@@ -47,6 +50,9 @@ void window_create(){
 	
 }
 
+/**
+ *	Liberation de la memoire
+ */
 void window_destroy(){
 
 	SDL_Quit();

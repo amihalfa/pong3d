@@ -8,12 +8,15 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
 
-#include "State_Game.h"
+	#include "Racket.h"
+	#include "Ball.h"
+	#include "Ground.h"
+	#include "State_Game.h"
 
 	#define COLLISION_LEFT		1
 	#define COLLISION_RIGHT		2
 
-	int collision_main(State_Game_Env* env);
+	int collision_state_game(State_Game_Env* env);
 
 	int collision_racket_ground( Racket* racket , Ground* ground, int position);
 

@@ -11,6 +11,9 @@
 #include "includes/State_Menu.h"
 #include "includes/State_Game.h"
 
+/**
+ *	Fonction generale de manipulation de l'etat menu
+ */
 State* state_menu(int action){
 	
 	static State* state_menu = (State*)0;
@@ -20,7 +23,7 @@ State* state_menu(int action){
 		state_menu = ( State* ) malloc( sizeof(State) );
 		state_menu->env = ( State_Menu_Env* ) malloc( sizeof(State_Menu_Env) );
 		state_menu->init_handler = &state_menu_init;
-		state_menu->main_handler = &state_menu_draw;
+		state_menu->main_handler = &state_menu_main;
 		state_menu->events_handler = &state_menu_events;
 		
 	}
@@ -34,18 +37,32 @@ State* state_menu(int action){
 	return state_menu;
 }
 
+/**
+ *	Creation de l'etat menu
+ */
 void state_menu_create(){
 	state_menu( STATE_CREATE );
 }
 
+/**
+ *	Recuperation de l'etat menu
+ *	@return 	pointeur vers l'etat menu
+ */
 State* state_menu_get(){
 	return state_menu( STATE_GET );
 }
 
+/**
+ *	Liberation des ressources occupees par l'etat menu
+ */
 void state_menu_destroy(){
 	state_menu( STATE_DESTROY );
 }
 
+/**
+ *	Initialisation de l'etat menu
+ *	@param	env		Envirronnement de l'etat menu
+ */
 void state_menu_init(State_Menu_Env* env){
 		
 	/* Proprietes du spot d'eclairage */
@@ -72,9 +89,11 @@ void state_menu_init(State_Menu_Env* env){
 	
 }
 
+/**
+ *	Affichage de l'etat menu
+ *	@param	env		Envirronnement de l'etat menu
+ */
 void state_menu_draw(State_Menu_Env* env){
-	
-	Uint32 start_time, ellapsed_time;
 	
 	/* Position du spot d'eclairage */
 	GLfloat spotPosition[] = {-20.0 , -30.0 , 40.0 , 1.0};
@@ -108,15 +127,13 @@ void state_menu_draw(State_Menu_Env* env){
 	/* On affiche */
 	SDL_GL_SwapBuffers();
 	
-	ellapsed_time = SDL_GetTicks() - start_time;
-	if (ellapsed_time < 10){
-		SDL_Delay(10 - ellapsed_time);
-	}
 }
 
+/**
+ *	Gestion des evenements de l'etat menu
+ *	@param	env		Envirronnement de l'etat menu
+ */
 int state_menu_events(State_Menu_Env* env){
-	
-	menu_item_animate(&env->menu_item[env->selected_item]);
 	
 	/* Variable de gestion des evenements */
 	SDL_Event event;
@@ -135,7 +152,7 @@ int state_menu_events(State_Menu_Env* env){
 	if( keystates[ SDLK_RETURN ] ) { 
 		switch(env->selected_item){
 			case 0:
-				state_current_set(state_game_get());
+				current_state_set(state_game_get());
 			break;
 			default:
 				return 0;
@@ -154,4 +171,11 @@ int state_menu_events(State_Menu_Env* env){
 	}
 				
 	return 1;
+}
+
+
+void state_menu_main(State_Menu_Env* env, Uint32 e_time){
+
+	state_menu_draw(env);
+	
 }

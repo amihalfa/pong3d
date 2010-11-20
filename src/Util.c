@@ -4,6 +4,9 @@
 #include <GL/glu.h>
 #include "includes/Util.h"
 
+/**
+ *	Fonction de chargement de la texture en memoire graphique
+ */
 GLuint util_texture_load(char * path){
 
 	GLuint texture_name;

@@ -1,6 +1,8 @@
 #ifndef MENU_ITEM_H
 #define MENU_ITEM_H
 
+	#include <GL/gl.h>
+
 	struct Menu_Item {
 
 		/* Position */

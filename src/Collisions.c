@@ -1,12 +1,11 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "includes/Ball.h"
-#include "includes/Racket.h"
-#include "includes/Ground.h"
+#include <SDL/SDL.h>
+#include "includes/State_Game.h"
 #include "includes/Collisions.h" 
 
 
-int collision_main(State_Game_Env* env){
+int collision_state_game(State_Game_Env* env){
 	/* Il faudra faire une boucle pour toutes les balles */
 
 	collision_ball_racket(&env->ball, &env->racket_bottom);

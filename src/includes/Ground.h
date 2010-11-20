@@ -8,6 +8,8 @@
 #ifndef GROUND_H
 #define GROUND_H
 
+	#include <GL/gl.h>
+
 	/**
 	*	Structure permettant de gerer le terrain
 	*/

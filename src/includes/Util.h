@@ -1,6 +1,8 @@
 #ifndef UTIL_H
 #define UTIL_H
 	
+	#include <GL/gl.h>
+	
 	/**
 	 *	Fonction de chargement d'une texture
 	 *	@param path		Chemin vers le fichier image a charger en tant que texture

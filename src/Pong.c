@@ -1,14 +1,10 @@
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <SDL/SDL.h>
 #include "includes/Window.h"
-#include "includes/Racket.h"
-#include "includes/Ball.h"
-#include "includes/Ground.h"
-#include "includes/State.h"
-#include "includes/Menu_Item.h"
 #include "includes/Util.h"
 #include "includes/State_Game.h"
 #include "includes/State_Menu.h"
+
+#define FRAME_DURATION 10
 
 /**
  *	Programme principal Pong
@@ -17,17 +13,32 @@
  */
 int main(int argc, char **argv){
 	
+	Uint32 s_time, e_time = 0;
+	s_time = SDL_GetTicks();
+
+	/* Creation des differents etats de l'application */
 	state_menu_create();
 	state_game_create();
 	
+	/* Mise en place du fenetrage */
 	window_create();
 	
-	state_current_set(state_menu_get());
+	/* Mise en place de l'etat courant */
+	current_state_set(state_menu_get());
 	
-	while( state_current_get()->events_handler( state_current_get()->env ) ){
+	/* Boucle de gestion des evenements et de l'affichage */
+	while( current_state_events( e_time ) ){
 		
-		state_current_get()->main_handler( state_current_get()->env );
+		/* Fonction principale de l'etat courant */
+		current_state_main( e_time );
 		
+		e_time = SDL_GetTicks() - s_time;
+			
+		if (e_time < FRAME_DURATION){
+			SDL_Delay(FRAME_DURATION - e_time);
+		}
+		
+		s_time = SDL_GetTicks();
 	}
 	
 	window_destroy();

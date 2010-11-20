@@ -4,12 +4,11 @@
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
-#include "includes/Collisions.h"
-#include "includes/State.h"
+#include "includes/Menu_Item.h"
 #include "includes/State_Game.h"
+#include "includes/State_Menu.h"
+#include "includes/Collisions.h"
 #include <stdio.h>
-
-#define FRAME_DURATION 10
 
 State* state_game(int action){
 	static State* state_game = (State*)0;
@@ -35,19 +34,14 @@ State* state_game(int action){
 
 
 void state_game_create(){
-
 	state_game( STATE_CREATE );
-	
 }
 
 State* state_game_get(){
-	
 	return state_game( STATE_GET );
-	
 }
 
 void state_game_destroy(){
-
 	state_game( STATE_DESTROY );
 }
 
@@ -85,7 +79,6 @@ void state_game_init(State_Game_Env* env){
 }
 
 void state_game_draw(State_Game_Env* env){
-	
 	
 	/* Position du spot d'eclairage */
 	GLfloat spotPosition[] = {0.0 , -30.0 , 40.0 , 1.0};
@@ -134,14 +127,14 @@ int state_game_events(State_Game_Env* env){
 	
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 
-			state_current_set(state_menu_get());
+			current_state_set(state_menu_get());
 		}
 	}
 
 	keystates = SDL_GetKeyState( NULL );
 	
 	if( keystates[ SDLK_ESCAPE ] ) { 
-		state_current_set(state_menu_get());
+		current_state_set(state_menu_get());
 	}
 	
 	if( keystates[ SDLK_LEFT ] ) { 
@@ -159,18 +152,8 @@ int state_game_events(State_Game_Env* env){
 }
 
 
-state_game_main(State_Game_Env* env){
-
-	Uint32 start_time;
-	start_time = SDL_GetTicks();
-
-	collision_main(env);
+void state_game_main(State_Game_Env* env, Uint32 e_time){
+	collision_state_game(env);
 	state_game_draw(env);
-
-
-	env->ellapsed_time = SDL_GetTicks() - start_time;
-	if (env->ellapsed_time < FRAME_DURATION){
-		SDL_Delay(FRAME_DURATION - env->ellapsed_time);
-	}
 }
 

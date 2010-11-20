@@ -1,6 +1,10 @@
 #ifndef STATE_MENU
 #define	STATE_MENU
 
+	#include <SDL/SDL.h>
+	#include "State.h"
+	#include "Menu_Item.h"
+
 	/* Nombre d'elements du menu */
 	#define STATE_MENU_ITEMSNB		2
 	
@@ -13,6 +17,7 @@
 		Menu_Item menu_item[STATE_MENU_ITEMSNB];
 		
 		int selected_item;
+		Uint32 ellapsed_time;
 		
 	};
 	typedef struct State_Menu_Env State_Menu_Env;
@@ -55,6 +60,8 @@
 	 *	Gestionnaire des evenements de l'etat de jeu
 	 */
 	int state_menu_events(State_Menu_Env* env);
+	
+	void state_menu_main(State_Menu_Env* env, Uint32 e_time);
 	
 	
 #endif STATE_MENU

@@ -54,7 +54,7 @@ void state_game_init(State_Game_Env* env){
 	Ground g = { 2.0f , 40.0f , 30.0f , 0 };
 	g.texture = util_texture_load ("images/game/wood.jpg");
 	
-	Racket r = { 0.0f , 18.0f , 0.5f , 5.0f , 0.5f , 0.01f , 0 };
+	Racket r = { 0.0f , 18.0f , 1.0f , 5.0f , 1.0f , 0.01f , 0 };
 	r.texture = util_texture_load ("images/game/steel.jpg");
 	
 	Ball b = { 0.0f , 0.0f , 0.5f , 0.1f, 0.2f , 0.5f };

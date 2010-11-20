@@ -45,7 +45,7 @@
 	*	Fonction permettant de retrouver l'etat courant de l'application
 	*	@return 	Pointeur vers l'etat courant de l'application
 	*/
-	State* state_current_change(State*);
+	State* state_current_set(State*);
 	
 
 #endif STATE_H

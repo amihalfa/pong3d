@@ -135,7 +135,7 @@ int state_menu_events(State_Menu_Env* env){
 	if( keystates[ SDLK_RETURN ] ) { 
 		switch(env->selected_item){
 			case 0:
-				state_current_change(state_game_get());
+				state_current_set(state_game_get());
 			break;
 			default:
 				return 0;

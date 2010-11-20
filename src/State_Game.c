@@ -134,14 +134,14 @@ int state_game_events(State_Game_Env* env){
 	
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 
-			state_current_change(state_menu_get());
+			state_current_set(state_menu_get());
 		}
 	}
 
 	keystates = SDL_GetKeyState( NULL );
 	
 	if( keystates[ SDLK_ESCAPE ] ) { 
-		state_current_change(state_menu_get());
+		state_current_set(state_menu_get());
 	}
 	
 	if( keystates[ SDLK_LEFT ] ) { 

@@ -22,7 +22,7 @@ int main(int argc, char **argv){
 	
 	window_create();
 	
-	state_current_change(state_menu_get());
+	state_current_set(state_menu_get());
 	
 	while( state_current_get()->events_handler( state_current_get()->env ) ){
 		

@@ -14,8 +14,7 @@
 int main(int argc, char **argv){
 	
 	Uint32 s_time, e_time = 0;
-	s_time = SDL_GetTicks();
-
+	
 	/* Creation des differents etats de l'application */
 	state_menu_create();
 	state_game_create();
@@ -25,6 +24,8 @@ int main(int argc, char **argv){
 	
 	/* Mise en place de l'etat courant */
 	current_state_set(state_menu_get());
+	
+	s_time = SDL_GetTicks();
 	
 	/* Boucle de gestion des evenements et de l'affichage */
 	while( current_state_events( e_time ) ){

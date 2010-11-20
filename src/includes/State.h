@@ -58,5 +58,5 @@
 	
 	void* current_state_env();
 
-#endif STATE_H
+#endif
 

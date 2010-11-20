@@ -1,15 +1,8 @@
-#include <SDL/SDL.h>
-#include <string.h>
 #include <GL/glu.h>
-#include <GL/gl.h>
 #include "includes/Util.h"
-#include "includes/Racket.h"
-#include "includes/Ball.h"
-#include "includes/Ground.h"
-#include "includes/State.h"
-#include "includes/Menu_Item.h"
 #include "includes/State_Menu.h"
 #include "includes/State_Game.h"
+#include "includes/Animation.h"
 
 /**
  *	Fonction generale de manipulation de l'etat menu
@@ -70,7 +63,7 @@ void state_menu_init(State_Menu_Env* env){
 	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
-	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 , 0 , 0.005 };
+	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 , 0.0 , 1 };
 	
 	menu_item.texture = util_texture_load ("images/menu/jouer.jpg");
 	env->menu_item[0] = menu_item;
@@ -79,7 +72,7 @@ void state_menu_init(State_Menu_Env* env){
 	menu_item.texture = util_texture_load("images/menu/quitter.jpg");
 	env->menu_item[1] = menu_item;
 
-	env->selected_item = 0;
+	env->selected_item = 1;
 	
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);
@@ -175,7 +168,8 @@ int state_menu_events(State_Menu_Env* env){
 
 
 void state_menu_main(State_Menu_Env* env, Uint32 e_time){
-
+	
+	animation_state_menu(env, e_time);
 	state_menu_draw(env);
 	
 }

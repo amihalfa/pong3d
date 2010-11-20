@@ -64,4 +64,4 @@
 	void state_menu_main(State_Menu_Env* env, Uint32 e_time);
 	
 	
-#endif STATE_MENU
+#endif

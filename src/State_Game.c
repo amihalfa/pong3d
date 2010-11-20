@@ -123,8 +123,6 @@ int state_game_events(State_Game_Env* env){
 	/* Etat des touches */
 	Uint8 *keystates;
 	
-	ball_move( &env->ball );
-	
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 
 			current_state_set(state_menu_get());
@@ -154,6 +152,7 @@ int state_game_events(State_Game_Env* env){
 
 void state_game_main(State_Game_Env* env, Uint32 e_time){
 	collision_state_game(env);
+	ball_move(&env->ball, e_time);
 	state_game_draw(env);
 }
 

@@ -40,5 +40,5 @@
 	void racket_draw( Racket* racket );
 
 
-#endif RACKET_H
+#endif
 

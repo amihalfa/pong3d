@@ -46,5 +46,5 @@
 	
 
 
-#endif STATE_GAME
+#endif
 

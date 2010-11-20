@@ -24,4 +24,4 @@
 
 	void collision_ball_racket( Ball* ball, Racket* racket );
 	
-#endif COLLISIONS_H
+#endif

@@ -35,9 +35,9 @@ void ball_draw( Ball* ball ){
  *	Mouvement de la balle en tenant compte de la vitesse
  *	@param ball			Pointeur vers la structure de balle
  */
-void ball_move( Ball* ball ){
+void ball_move( Ball* ball, Uint32 e_time ){
 
-	ball->x += ball->speed_x;
-	ball->y += ball->speed_y;
+	ball->x += ball->speed_x + (ball->speed_x / 10) * e_time ;
+	ball->y += ball->speed_y + (ball->speed_y / 10) * e_time;
 	
 }

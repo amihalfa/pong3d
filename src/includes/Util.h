@@ -10,4 +10,4 @@
 	 */
 	GLuint util_texture_load(char * path);
 	
-#endif UTIL_H
+#endif

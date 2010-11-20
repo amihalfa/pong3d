@@ -37,17 +37,17 @@ void collision_ball_ground( Ball* ball, Ground* ground ){
 	if( ball->x - ball->radius < -ground->width / 2 ){
 		
 		ball->speed_x *= -1;
-		ball_move( ball );
-		
+		ball->x = ball->radius -ground->width / 2;
+	
 	} else if( ball->x + ball->radius > ground->width / 2 ){
 	
 		ball->speed_x *= -1;
-		ball_move( ball );
+		ball->x = ground->width / 2 - ball->radius;
 		
 	} else if( ball->y + ball->radius > ground->length / 2 ){
 		
 		ball->speed_y *= -1;
-		ball_move( ball );
+		ball->y = ground->length / 2 - ball->radius;
 		
 	}
 	
@@ -55,7 +55,10 @@ void collision_ball_ground( Ball* ball, Ground* ground ){
 
 void collision_ball_racket( Ball* ball, Racket* racket ){
 
-	/* Collision de la balle et de la raquette */
+	/* Collision parfaitement au centre */
+	if(ball->x > -racket->width/2 +racket->radius && ball->x > -racket->width/2 -racket->radius )
+	
+	
 	if( ball->y - ball->radius < racket->y + racket->radius ){
 		/* On s'assure que la balle n'est pas sous la raquette */
 		if( ball->y + ball->radius > racket->y - racket->radius){
@@ -63,17 +66,17 @@ void collision_ball_racket( Ball* ball, Racket* racket ){
 			if( ball->x > racket->x - racket->width/2 && ball->x < racket->x + racket->width/2 ){
 				
 				ball->speed_y *= -1;
-				ball_move( ball );
+				ball_move( ball, 1 );
 			
 			} else if( ball->x + ball->radius > racket->x - racket->width/2 && ball->x < racket->x ){
 			
 				ball->speed_x *= -1;
-				ball_move( ball );
+				ball_move( ball, 1 );
 				
 			} else if( ball->x - ball->radius < racket->x + racket->width/2 && ball->x > racket->x ){
 			
 				ball->speed_x *= -1;
-				ball_move( ball );
+				ball_move( ball , 1 );
 				
 			}
 		}

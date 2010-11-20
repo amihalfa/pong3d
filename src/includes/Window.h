@@ -15,4 +15,4 @@
 	void window_destroy();
 
 
-#endif WINDOW_H
+#endif

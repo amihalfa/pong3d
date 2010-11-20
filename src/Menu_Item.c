@@ -71,12 +71,27 @@ void menu_item_draw(Menu_Item * menu_item){
 
 }
 
-void menu_item_animate(Menu_Item * menu_item){
+void menu_item_animate(Menu_Item * menu_item, Uint32 e_time){
 	
-	if(menu_item->anim_step+menu_item->anim_dir >= 1 || menu_item->anim_step-menu_item->anim_dir <= -1){
+	float d_step = (0.05 + (0.005 * e_time) ) * menu_item->anim_dir;
+	
+	if(menu_item->anim_step >= 1 || menu_item->anim_step <= -1){
+		menu_item->anim_step = menu_item->anim_dir;
 		menu_item->anim_dir *= -1;
-		menu_item->anim_step += 4*menu_item->anim_dir;
+		d_step *= -1;
 	}
-	menu_item->anim_step += menu_item->anim_dir;		
+	menu_item->anim_step += d_step;
 	
+}
+
+void menu_item_animate_to_0(Menu_Item * menu_item, Uint32 e_time){
+
+	if( menu_item->anim_step != 0.0 ){
+
+		if(menu_item->anim_step > -0.1 && menu_item->anim_step < 0.1 ){
+			menu_item->anim_step = 0;
+		} else {
+			menu_item_animate(menu_item,e_time);
+		}
+	}
 }

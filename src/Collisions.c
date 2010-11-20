@@ -1,6 +1,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <SDL/SDL.h>
+#include <math.h>
 #include "includes/State_Game.h"
 #include "includes/Collisions.h" 
 
@@ -55,30 +56,50 @@ void collision_ball_ground( Ball* ball, Ground* ground ){
 
 void collision_ball_racket( Ball* ball, Racket* racket ){
 
+	
+	float rckt_width_mi = racket->width/2 - racket->radius;
+	
 	/* Collision parfaitement au centre */
-	if(ball->x > -racket->width/2 +racket->radius && ball->x > -racket->width/2 -racket->radius )
-	
-	
-	if( ball->y - ball->radius < racket->y + racket->radius ){
-		/* On s'assure que la balle n'est pas sous la raquette */
-		if( ball->y + ball->radius > racket->y - racket->radius){
-			
-			if( ball->x > racket->x - racket->width/2 && ball->x < racket->x + racket->width/2 ){
-				
+	if(ball->x > racket->x -rckt_width_mi && ball->x < racket->x + rckt_width_mi ){
+		
+		/* Arrivee de la balle par le haut */
+		if(ball->y - ball->radius <= racket->y + racket->radius){
+			if(ball->y - ball->radius > racket->y){
+				/* On renvoie la balle vers le haut */
 				ball->speed_y *= -1;
-				ball_move( ball, 1 );
-			
-			} else if( ball->x + ball->radius > racket->x - racket->width/2 && ball->x < racket->x ){
-			
-				ball->speed_x *= -1;
-				ball_move( ball, 1 );
-				
-			} else if( ball->x - ball->radius < racket->x + racket->width/2 && ball->x > racket->x ){
-			
-				ball->speed_x *= -1;
-				ball_move( ball , 1 );
-				
 			}
+		}
+		
+		/* Arrivee de la balle par le bas */
+		else if(ball->y + ball->radius >= racket->y - racket->radius){
+			if(ball->y + ball->radius < racket->y){
+				/* On renvoie la balle vers le bas */
+				ball->speed_y *= -1;
+			}
+		}
+	}
+	else if(ball->y - ball->radius <= racket->y + racket->radius){ 
+		if(ball->y + ball->radius >= racket->y - racket->radius){
+	
+			float dist_x = racket->x - rckt_width_mi - ball->x;
+			float dist_y = racket->y - ball->y;
+			
+			float dist_left = sqrt( dist_x*dist_x + dist_y*dist_y );
+			float dist_right = 0; 
+			
+			dist_x = racket->x + rckt_width_mi - ball->x;
+			
+			dist_right = sqrt( dist_x*dist_x + dist_y*dist_y );
+			
+			/* La raquette a ete cognee par la gauche */
+			if(dist_left <= ball->radius + racket->radius){
+			
+			}
+			/* La raquette a ete cognee par la droite */
+			else if(dist_right <= ball->radius + racket->radius){
+			
+			}
+			
 		}
 	}
 

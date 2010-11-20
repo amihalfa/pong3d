@@ -151,7 +151,7 @@ int state_game_events(State_Game_Env* env){
 
 
 void state_game_main(State_Game_Env* env, Uint32 e_time){
-	collision_state_game(env);
+	collision_state_game(env, e_time);
 	ball_move(&env->ball, e_time);
 	state_game_draw(env);
 }

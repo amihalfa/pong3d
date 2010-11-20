@@ -6,11 +6,15 @@
 #include "includes/Collisions.h" 
 
 
-int collision_state_game(State_Game_Env* env){
+int collision_state_game(State_Game_Env* env, Uint32 e_time){
 	/* Il faudra faire une boucle pour toutes les balles */
 
-	collision_ball_racket(&env->ball, &env->racket_bottom);
-	collision_ball_racket(&env->ball, &env->racket_top);
+	if(collision_ball_racket(&env->ball, &env->racket_bottom) == 2){
+		ball_move(&env->ball, e_time);
+	}
+	if(collision_ball_racket(&env->ball, &env->racket_top)){
+		ball_move(&env->ball, e_time);
+	}
 	collision_ball_ground(&env->ball, &env->ground);
 
 	return 0;
@@ -54,7 +58,7 @@ void collision_ball_ground( Ball* ball, Ground* ground ){
 	
 }
 
-void collision_ball_racket( Ball* ball, Racket* racket ){
+int collision_ball_racket( Ball* ball, Racket* racket ){
 
 	
 	float rckt_width_mi = racket->width/2 - racket->radius;
@@ -66,12 +70,14 @@ void collision_ball_racket( Ball* ball, Racket* racket ){
 		if(ball->y - ball->radius <= racket->y + racket->radius && ball->y - ball->radius > racket->y){
 				/* On renvoie la balle vers le haut */
 				ball->speed_y *= -1;
+				return 1;
 		}
 		
 		/* Arrivee de la balle par le bas */
 		else if(ball->y + ball->radius >= racket->y - racket->radius && ball->y + ball->radius < racket->y){
 				/* On renvoie la balle vers le bas */
 				ball->speed_y *= -1;
+				return 1;
 		}
 	}
 	else if(ball->y - ball->radius <= racket->y + racket->radius){ 
@@ -103,7 +109,7 @@ void collision_ball_racket( Ball* ball, Racket* racket ){
 				
 				ball->speed_x += 2 * d_o * u_x;
 				ball->speed_y += 2 * d_o * u_y;
-			
+				return 2;
 			}
 			/* La raquette a ete cognee par la droite */
 			else if(dist_right <= ball->radius + racket->radius){
@@ -121,11 +127,11 @@ void collision_ball_racket( Ball* ball, Racket* racket ){
 				
 				ball->speed_x += 2 * d_o * u_x;
 				ball->speed_y += 2 * d_o * u_y;
-			
+				return 2;
 			}
 			
 		}
 	}
-
+	return 0;
 	
 }

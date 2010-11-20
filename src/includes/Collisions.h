@@ -16,12 +16,12 @@
 	#define COLLISION_LEFT		1
 	#define COLLISION_RIGHT		2
 
-	int collision_state_game(State_Game_Env* env);
+	int collision_state_game(State_Game_Env* env, Uint32 e_time);
 
 	int collision_racket_ground( Racket* racket , Ground* ground, int position);
 
 	void collision_ball_ground( Ball* ball, Ground* ground );
 
-	void collision_ball_racket( Ball* ball, Racket* racket );
+	int collision_ball_racket( Ball* ball, Racket* racket );
 	
 #endif

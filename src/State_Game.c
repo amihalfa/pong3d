@@ -8,7 +8,6 @@
 #include "includes/State_Game.h"
 #include "includes/State_Menu.h"
 #include "includes/Collisions.h"
-#include <stdio.h>
 
 State* state_game(int action){
 	static State* state_game = (State*)0;
@@ -46,7 +45,6 @@ void state_game_destroy(){
 }
 
 
-
 void state_game_init(State_Game_Env* env){
 
 	
@@ -69,7 +67,10 @@ void state_game_init(State_Game_Env* env){
 	env->racket_top = r;
 	r.y = -18.0f;
 	env->racket_bottom = r;
-	env->ball = b;
+	env->ball[0] = b;
+	b.x = 1.0;
+	b.speed_x = 0.09;
+	env->ball[1] = b;
 	
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);
@@ -79,6 +80,8 @@ void state_game_init(State_Game_Env* env){
 }
 
 void state_game_draw(State_Game_Env* env){
+	
+	int i;
 	
 	/* Position du spot d'eclairage */
 	GLfloat spotPosition[] = {0.0 , -30.0 , 40.0 , 1.0};
@@ -103,7 +106,10 @@ void state_game_draw(State_Game_Env* env){
 	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 5);
 	
 	/* Dessin des elements de la scene */
-	ball_draw( &(env->ball) );
+	
+	for(i = 0 ; i< 2 ; i++)
+		ball_draw( &(env->ball[i]) );
+	
 	ground_draw( &(env->ground) );
 	racket_draw( &(env->racket_top) );
 	racket_draw( &(env->racket_bottom) );
@@ -151,8 +157,14 @@ int state_game_events(State_Game_Env* env){
 
 
 void state_game_main(State_Game_Env* env, Uint32 e_time){
+	
+	int i;
+	
 	collision_state_game(env, e_time);
-	ball_move(&env->ball, e_time);
+	
+	for(i = 0 ; i< 2 ; i++)
+		ball_move(&env->ball[i], e_time);
+	
 	state_game_draw(env);
 }
 

@@ -1,6 +1,7 @@
 #ifndef STATE_GAME
 #define	STATE_GAME
 
+	#define STATE_GAME_BALLS	10
 	#include <SDL/SDL.h>
 	#include "State.h"
 	#include "Ground.h"
@@ -11,7 +12,8 @@
 		Ground ground;
 		Racket racket_top;
 		Racket racket_bottom;
-		Ball ball;
+		Ball ball[STATE_GAME_BALLS];
+		int balls_nb;
 	};
 
 	typedef struct State_Game_Env State_Game_Env;

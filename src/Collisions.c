@@ -9,13 +9,31 @@
 int collision_state_game(State_Game_Env* env, Uint32 e_time){
 	/* Il faudra faire une boucle pour toutes les balles */
 
-	if(collision_ball_racket(&env->ball, &env->racket_bottom) == 2){
-		ball_move(&env->ball, e_time);
+	int i,j;
+	for(i = 0 ; i< 2 ; i++){
+	
+		if(collision_ball_racket(&env->ball[i], &env->racket_bottom) == 2){
+			ball_move(&env->ball[i], e_time);
+			ball_move(&env->ball[i], e_time);
+		}
+		if(collision_ball_racket(&env->ball[i], &env->racket_top) == 2){
+			ball_move(&env->ball[i], e_time);
+			ball_move(&env->ball[i], e_time);
+		}
+		collision_ball_ground(&env->ball[i], &env->ground);
+		
+		for(j = 0 ; j < 2 ; j++){
+			if(j != i){
+				if(collision_ball_ball( &env->ball[i], &env->ball[j] )){
+					ball_move(&env->ball[i], e_time);
+					ball_move(&env->ball[j], e_time);
+					ball_move(&env->ball[i], e_time);
+					ball_move(&env->ball[j], e_time);
+				}
+			}
+		}
+		
 	}
-	if(collision_ball_racket(&env->ball, &env->racket_top) == 2){
-		ball_move(&env->ball, e_time);
-	}
-	collision_ball_ground(&env->ball, &env->ground);
 
 	return 0;
 }

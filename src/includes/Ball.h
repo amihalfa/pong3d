@@ -1,4 +1,5 @@
 /**
+ *	@author		Antoine HEZARD
  *	@author		Amirouche HALFAOUI
  *	@date		17.06.2010
  *
@@ -13,23 +14,27 @@
 	/**
 	 *	Structure permettant de gerer la balle
 	 */
-	struct Ball{
+	typedef struct Ball{
 		
-		/* Position */
+		/** Position de la balle en x */
 		float x;
+		
+		/** Position de la balle en y */
 		float y;
+		
+		/** Position de la balle en z */
 		float z;
 		
-		/* Vitesse de mouvement */
+		/** Vitesse de la balle en x */
 		float speed_x;
+		
+		/** Vitesse de la balle en y */
 		float speed_y;
 		
-		/* Taille de la balle */
+		/** Rayon de la balle */
 		float radius;
-	};
-	
-	/* Definition du type Ball */
-	typedef struct Ball Ball;
+		
+	} Ball;
 	
 	/**
 	 *	Dessin de la balle en OpenGL

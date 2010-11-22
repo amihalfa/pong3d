@@ -33,7 +33,7 @@ void window_create(){
 	SDL_WM_SetCaption( WINDOW_TITLE , NULL );
 	
 	/* On masque le curseur de la souris */
-	SDL_ShowCursor(0);
+	/*SDL_ShowCursor(SDL_DISABLE);*/
 	
 	/* Pour gérer les zIndex */
 	glEnable(GL_DEPTH_TEST);

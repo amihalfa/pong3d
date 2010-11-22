@@ -8,12 +8,14 @@
 	#include "Racket.h"
 	#include "Ball.h"
 
+
 	struct State_Game_Env{
 		Ground ground;
 		Racket racket_top;
 		Racket racket_bottom;
 		Ball ball[STATE_GAME_BALLS];
 		int balls_nb;
+		Coord2d mouse_position;
 	};
 
 	typedef struct State_Game_Env State_Game_Env;

@@ -9,7 +9,11 @@
 #define RACKET_H
 
 	#include <GL/gl.h>
+	#include "Util.h"
+	#include "Ground.h"
 
+	#define RACKET_ACCELERATION 1
+	#define RACKET_BREAK 5
 	/**
 	*	Structure permettant de gerer une raquette
 	*/
@@ -39,6 +43,13 @@
 	 */
 	void racket_draw( Racket* racket );
 
+	/**
+	 * Actualise la vitesse de la rackette et la bouge
+	 * @param racket		Pointeur vers la rackette à bouger
+	 * @param mouse_pos		Coordonnées de la souris
+	 * @param e_time		Temps de la frame
+	 */
+	void racket_move( Racket* racket, Ground* ground, Coord2d mouse_position, Uint32 e_time );
 
 #endif
 

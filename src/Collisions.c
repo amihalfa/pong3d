@@ -4,10 +4,12 @@
 #include <math.h>
 #include "includes/State_Game.h"
 #include "includes/Collisions.h" 
+#include "includes/Racket.h"
 
 
 int collision_state_game(State_Game_Env* env, Uint32 e_time){
-	/* Il faudra faire une boucle pour toutes les balles */
+
+	/*acket_move(& env->racket_bottom, & env->ground, env->mouse_position, e_time);*/
 
 	int i,j;
 	for(i = 0 ; i< 2 ; i++){

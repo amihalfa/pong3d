@@ -17,6 +17,7 @@ void ground_draw( Ground* ground ){
 	width_mi = ground->width / 2;
 	
 	glEnable (GL_TEXTURE_2D);
+	glShadeModel(GL_SMOOTH);
 	glBindTexture(GL_TEXTURE_2D, ground->texture);
 	
 	/* Début de dessin */

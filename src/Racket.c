@@ -1,5 +1,6 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <SDL/SDL.h>
 #include "includes/Racket.h" 
 
 /**
@@ -63,4 +64,28 @@ void racket_draw( Racket* racket ){
 	/* On remet la matrice de projection telle qu'elle était au départ */
 	glPopMatrix();
 	
+}
+
+void racket_move( Racket* racket, Ground* ground, Coord2d mouse_position, Uint32 e_time ){
+	float rckt_width_mi = racket->width / 2;
+	float grnd_width_mi = ground->width / 2;
+
+	if ( mouse_position.x > (racket->x + RACKET_BREAK) ){
+		racket->speed += RACKET_ACCELERATION;
+	} else if ( mouse_position.x < (racket->x + RACKET_BREAK) ){
+		racket->speed -= RACKET_ACCELERATION;
+	} else{
+		racket->speed = 0;
+	}
+
+
+	racket->x += racket->speed * e_time;
+	if ( racket->x <= -grnd_width_mi + rckt_width_mi){
+		racket->x = -grnd_width_mi + rckt_width_mi;
+		racket->speed = 0;
+
+	} else if( racket->x >= grnd_width_mi - rckt_width_mi){
+		racket->x = grnd_width_mi - rckt_width_mi;
+		racket->speed = 0;
+	}
 }

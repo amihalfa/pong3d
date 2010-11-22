@@ -71,6 +71,10 @@ void state_game_init(State_Game_Env* env){
 	b.x = 1.0;
 	b.speed_x = 0.09;
 	env->ball[1] = b;
+	env->balls_nb = 2;
+	env->mouse_position.x = 0;
+	env->mouse_position.y = 0;
+
 	
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);
@@ -107,7 +111,7 @@ void state_game_draw(State_Game_Env* env){
 	
 	/* Dessin des elements de la scene */
 	
-	for(i = 0 ; i< 2 ; i++)
+	for(i = 0 ; i< env->balls_nb ; i++)
 		ball_draw( &(env->ball[i]) );
 	
 	ground_draw( &(env->ground) );
@@ -132,6 +136,11 @@ int state_game_events(State_Game_Env* env){
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 
 			current_state_set(state_menu_get());
+		}
+		else if (event.type == SDL_MOUSEMOTION)
+		{
+			env->mouse_position.x = event.motion.x;
+			env->mouse_position.y = event.motion.y;
 		}
 	}
 
@@ -162,7 +171,7 @@ void state_game_main(State_Game_Env* env, Uint32 e_time){
 	
 	collision_state_game(env, e_time);
 	
-	for(i = 0 ; i< 2 ; i++)
+	for(i = 0 ; i< env->balls_nb ; i++)
 		ball_move(&env->ball[i], e_time);
 	
 	state_game_draw(env);

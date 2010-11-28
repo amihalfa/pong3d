@@ -20,10 +20,9 @@
 	/**
 	 *	Gestion generale des collisions de l'etat Jeu
 	 *	@param	env			Envirronement du jeu 
-	 *	@param	e_time		Temps de retard depuis la precedente frame
 	 *	@return				Nul si pas de collision, un entier sinon
 	 */
-	int collision_state_game(State_Game_Env* env, Uint32 e_time);
+	int collision_state_game( State_Game_Env* env );
 
 	int collision_racket_ground( Racket* racket , Ground* ground, int position);
 

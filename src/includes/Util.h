@@ -3,8 +3,12 @@
 	
 	#include <GL/gl.h>
 	
+	#define MIN(a,b) ((a)<(b))?(a):(b)
+	#define MAX(a,b) ((a)>(b))?(a):(b)
+	#define ABS(a) ((a)>0)?(a):(-a)
+
 	struct Coord2d {
-		int x, y;
+		float x, y;
 	};
 
 	typedef struct Coord2d Coord2d;

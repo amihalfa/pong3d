@@ -37,7 +37,7 @@ void ball_draw( Ball* ball ){
  */
 void ball_move( Ball* ball, Uint32 e_time ){
 
-	ball->x += ball->speed_x + (ball->speed_x / 10) * e_time ;
-	ball->y += ball->speed_y + (ball->speed_y / 10) * e_time;
+	ball->x += ball->speed.x + (ball->speed.x / 10) * e_time ;
+	ball->y += ball->speed.y + (ball->speed.y / 10) * e_time;
 	
 }

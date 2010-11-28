@@ -1,7 +1,5 @@
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <SDL/SDL.h>
-#include "includes/Racket.h" 
+#include "includes/Racket.h"
+#include "includes/State_Game.h"
 
 /**
  *	Dessin de la raquette en OpenGL
@@ -66,26 +64,27 @@ void racket_draw( Racket* racket ){
 	
 }
 
-void racket_move( Racket* racket, Ground* ground, Coord2d mouse_position, Uint32 e_time ){
+void racket_move(void* v_env, char num_racket ){
+
+	State_Game_Env* env = (State_Game_Env*) v_env;
+
+	Racket* racket;
+	if ( num_racket == RACKET_BOTTOM){
+		racket = &env->racket_bottom;
+	} else if ( num_racket == RACKET_TOP ){
+		racket = &env->racket_top;
+	}
+
 	float rckt_width_mi = racket->width / 2;
-	float grnd_width_mi = ground->width / 2;
+	float grnd_width_mi = env->ground.width / 2;
 
-	if ( mouse_position.x > (racket->x + RACKET_BREAK) ){
-		racket->speed += RACKET_ACCELERATION;
-	} else if ( mouse_position.x < (racket->x + RACKET_BREAK) ){
-		racket->speed -= RACKET_ACCELERATION;
-	} else{
-		racket->speed = 0;
+	if ( env->keystates[SDLK_RIGHT] ){
+		racket->x += RACKET_SPEED *env->ellapsed_time;
+	}
+	else if ( env->keystates[SDLK_LEFT] ){
+		racket->x -= RACKET_SPEED *env->ellapsed_time;
 	}
 
-
-	racket->x += racket->speed * e_time;
-	if ( racket->x <= -grnd_width_mi + rckt_width_mi){
-		racket->x = -grnd_width_mi + rckt_width_mi;
-		racket->speed = 0;
-
-	} else if( racket->x >= grnd_width_mi - rckt_width_mi){
-		racket->x = grnd_width_mi - rckt_width_mi;
-		racket->speed = 0;
-	}
+	racket->x = MAX(racket->x, -grnd_width_mi + rckt_width_mi);
+	racket->x = MIN(racket->x, grnd_width_mi - rckt_width_mi);
 }

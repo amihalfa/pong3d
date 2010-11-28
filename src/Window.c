@@ -1,5 +1,6 @@
 #include "includes/Window.h"
 #include <SDL/SDL.h>
+#include <SDL/SDL_mouse.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 
@@ -33,8 +34,8 @@ void window_create(){
 	SDL_WM_SetCaption( WINDOW_TITLE , NULL );
 	
 	/* On masque le curseur de la souris */
-	/*SDL_ShowCursor(SDL_DISABLE);*/
-	
+	SDL_ShowCursor(SDL_DISABLE);
+
 	/* Pour gérer les zIndex */
 	glEnable(GL_DEPTH_TEST);
 	

@@ -10,6 +10,7 @@
 #define BALL_H
 
 	#include <SDL/SDL.h>
+	#include "Util.h"
 	
 	/**
 	 *	Structure permettant de gerer la balle
@@ -25,12 +26,9 @@
 		/** Position de la balle en z */
 		float z;
 		
-		/** Vitesse de la balle en x */
-		float speed_x;
-		
-		/** Vitesse de la balle en y */
-		float speed_y;
-		
+		/** Vitesse de la balle */
+		Coord2d speed;
+
 		/** Rayon de la balle */
 		float radius;
 		

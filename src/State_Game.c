@@ -1,6 +1,8 @@
 #include <SDL/SDL.h>
 #include <GL/glu.h>
 #include <GL/gl.h>
+#include <stdlib.h>
+#include <time.h>
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
@@ -47,6 +49,7 @@ void state_game_destroy(){
 
 void state_game_init(State_Game_Env* env){
 
+	int i;
 	
 	/* Initialisation des objets de la scene */
 	Ground g = { 2.0f , 40.0f , 30.0f , 0 };
@@ -54,8 +57,6 @@ void state_game_init(State_Game_Env* env){
 	
 	Racket r = { 0.0f , 18.0f , 1.0f , 5.0f , 1.0f , 0.01f , 0 };
 	r.texture = util_texture_load ("images/game/steel.jpg");
-	
-	Ball b = { 0.0f , 0.0f , 0.5f , 0.1f, 0.2f , 0.5f };
 	
 	/* Proprietes du spot d'eclairage */
 	GLfloat spotDif[] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -67,13 +68,27 @@ void state_game_init(State_Game_Env* env){
 	env->racket_top = r;
 	r.y = -18.0f;
 	env->racket_bottom = r;
-	env->ball[0] = b;
-	b.x = 1.0;
-	b.speed_x = 0.09;
-	env->ball[1] = b;
 	env->balls_nb = 2;
-	env->mouse_position.x = 0;
-	env->mouse_position.y = 0;
+	env->mouse_motion.x = 0;
+	env->mouse_motion.y = 0;
+
+	/* initialisation de balles */
+	srand(time(NULL));
+	Ball b = { 0.0f , 0.0f , 0.0f , 0.0f, 0.25f , 0.5f };
+	for (i = 0; i < env->balls_nb; i++){
+		b.x = (i - env->balls_nb / 2)*(b.radius * 1.5f);
+		b.speed.x = (float) (rand()%200 - 100) / 500.0f;
+		b.speed.y = (float) (rand()%200 - 100) / 500.0f;
+		env->ball[i] = b;
+	}
+	/*Ball b = { 0.0f , 0.0f , 0.25f , 0.0f, 0.0f , 0.5f };
+	b.speed.x = 0.02f;
+	b.x = -5.0f;
+	env->ball[0] = b;
+	b.speed.x = -0.04f;
+	b.x = 5.0f;
+	env->ball[1] = b;*/
+
 
 	
 	/* Activation de la lumiere */
@@ -130,35 +145,24 @@ int state_game_events(State_Game_Env* env){
 	/* Variable de gestion des evenements */
 	SDL_Event event;
 	
-	/* Etat des touches */
-	Uint8 *keystates;
-	
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 
 			current_state_set(state_menu_get());
 		}
 		else if (event.type == SDL_MOUSEMOTION)
 		{
-			env->mouse_position.x = event.motion.x;
-			env->mouse_position.y = event.motion.y;
+			env->mouse_motion.x = event.motion.xrel;
+			env->mouse_motion.y = event.motion.yrel;
 		}
 	}
 
-	keystates = SDL_GetKeyState( NULL );
+	env->keystates = SDL_GetKeyState( NULL );
 	
-	if( keystates[ SDLK_ESCAPE ] ) { 
+	if( env->keystates[ SDLK_ESCAPE ] ) {
 		current_state_set(state_menu_get());
 	}
 	
-	if( keystates[ SDLK_LEFT ] ) { 
-		if( !collision_racket_ground( &(env->racket_bottom) , &(env->ground), COLLISION_LEFT) )
-			(env->racket_bottom).x -= 0.25;
-	}
-	
-	if( keystates[ SDLK_RIGHT ] ) { 
-		if( !collision_racket_ground( &(env->racket_bottom) , &(env->ground), COLLISION_RIGHT) )
-			(env->racket_bottom).x += 0.25;
-	}
+	racket_move(env, RACKET_BOTTOM);
 	
 	return 1;
 
@@ -168,11 +172,12 @@ int state_game_events(State_Game_Env* env){
 void state_game_main(State_Game_Env* env, Uint32 e_time){
 	
 	int i;
+	env->ellapsed_time = e_time;
 	
-	collision_state_game(env, e_time);
+	collision_state_game(env);
 	
 	for(i = 0 ; i< env->balls_nb ; i++)
-		ball_move(&env->ball[i], e_time);
+		ball_move(&env->ball[i], e_time );
 	
 	state_game_draw(env);
 }

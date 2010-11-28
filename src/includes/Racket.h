@@ -9,14 +9,16 @@
 #define RACKET_H
 
 	#include <GL/gl.h>
+	#include <GL/glu.h>
+	#include <SDL/SDL.h>
 	#include "Util.h"
 	#include "Ground.h"
 
-	#define RACKET_ACCELERATION 1
-	#define RACKET_BREAK 5
-	/**
+	#define RACKET_SPEED 0.05
+   /**
 	*	Structure permettant de gerer une raquette
 	*/
+
 	struct Racket{
 		
 		/* Position */
@@ -36,7 +38,7 @@
 
 	/* Definition du type Racket */
 	typedef struct Racket Racket;
-	
+
 	/**
 	 *	Dessin de la raquette en OpenGL
 	 *	@param	racket		Pointeur vers la structure a utiliser pour le dessin
@@ -45,11 +47,10 @@
 
 	/**
 	 * Actualise la vitesse de la rackette et la bouge
-	 * @param racket		Pointeur vers la rackette à bouger
-	 * @param mouse_pos		Coordonnées de la souris
-	 * @param e_time		Temps de la frame
+	 * @param env			Environement
+	 * @param num_racket	numéro de la rackette à bouger
 	 */
-	void racket_move( Racket* racket, Ground* ground, Coord2d mouse_position, Uint32 e_time );
+	void racket_move(void* v_env, char num_racket );
 
 #endif
 

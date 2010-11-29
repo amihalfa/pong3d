@@ -22,17 +22,14 @@ int collision_state_game(State_Game_Env* env){
 		}
 		collision_ball_ground(&env->ball[i], &env->ground);
 		
-		for(j = 0 ; j < env->balls_nb ; j++){
-			if(j != i){
-				if(collision_ball_ball( &env->ball[i], &env->ball[j] )){
+		for(j = env->balls_nb - 1; j > i ; j--){
+			if(collision_ball_ball( &env->ball[i], &env->ball[j] )){
 					ball_move(&env->ball[i], env->ellapsed_time);
 					ball_move(&env->ball[j], env->ellapsed_time);
 					ball_move(&env->ball[i], env->ellapsed_time);
 					ball_move(&env->ball[j], env->ellapsed_time);
-				}
 			}
 		}
-		
 	}
 
 	return 0;
@@ -163,13 +160,13 @@ int collision_ball_racket( Ball* ball, Racket* racket ){
 	
 }
 
-int collision_ball_ball2( Ball* ball_a, Ball* ball_b ){
+int collision_ball_ball( Ball* ball_a, Ball* ball_b ){
 
 	float dist_x = ball_b->x - ball_a->x;
 	float dist_y = ball_b->y - ball_a->y;
 	float dist = ball_a->radius + ball_b->radius;
 	
-	/* Distance entre les deux balles *
+	/* Distance entre les deux balles */
 	float dist_bb = sqrt( dist_x*dist_x + dist_y*dist_y );
 	
 	/* Cas ou il y a collision */
@@ -180,8 +177,8 @@ int collision_ball_ball2( Ball* ball_a, Ball* ball_b ){
 	
 		/* place la balle b a la bonne distance de a */
 		tmp = dist / dist_bb;
-		ball_b->x *= tmp;
-		ball_b->y *= tmp;
+		ball_b->x = (ball_b->x - ball_a->x) * tmp + ball_a->x;
+		ball_b->y = (ball_b->y - ball_a->y) * tmp + ball_a->y;
 		
 		/* on récupèrele l'axe de collision sous forme de vecteur unitaire */
 		axe.x = (ball_b->x - ball_a->x) / dist;
@@ -209,7 +206,7 @@ int collision_ball_ball2( Ball* ball_a, Ball* ball_b ){
 
 		/* enfin on met a jour les vitesses de a et b en sommant leurs composantes */
 		ball_a->speed.x = speed_col_a.x + speed_nor_a.x;
-		ball_b->speed.y = speed_col_a.y + speed_nor_a.y;
+		ball_a->speed.y = speed_col_a.y + speed_nor_a.y;
 		ball_b->speed.x = speed_col_b.x + speed_nor_b.x;
 		ball_b->speed.y = speed_col_b.y + speed_nor_b.y;
 
@@ -222,54 +219,4 @@ int collision_ball_ball2( Ball* ball_a, Ball* ball_b ){
 	}
 }
 
-
-int collision_ball_ball( Ball* ball_a, Ball* ball_b ){
-
-	float dist_x = ball_a->x - ball_b->x;
-	float dist_y = ball_a->y - ball_b->y;
-
-	/* Distance entre les deux balles */
-	float dist_bb = sqrt( dist_x*dist_x + dist_y*dist_y );
-
-	/* Cas ou il y a collision */
-	if(dist_bb <= ball_a->radius + ball_b->radius ){
-
-		/* On devie d'abord la balle A de sa trajectoire */
-		float u_x = dist_x / dist_bb;
-		float u_y = dist_y / dist_bb;
-
-		float d_x = ball_a->speed_x;
-		float d_y = ball_a->speed_y;
-
-		float o_x = u_x * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
-		float o_y = u_y * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
-
-		float d_o = sqrt(o_x*o_x + o_y*o_y);
-
-		ball_a->speed_x += 2 * d_o * u_x;
-		ball_a->speed_y += 2 * d_o * u_y;
-
-		/* On devie la balle B de sa trajectoire */
-		u_x = -u_x;
-		u_y = -u_y;
-
-		d_x = ball_b->speed_x;
-		d_y = ball_b->speed_y;
-
-		o_x = u_x * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
-		o_y = u_y * (u_x*d_x + u_y*d_y) / (u_x*u_x + u_y*u_y);
-
-		d_o = sqrt(o_x*o_x + o_y*o_y);
-
-		ball_b->speed_x += 2 * d_o * u_x;
-		ball_b->speed_y += 2 * d_o * u_y;
-
-		return 1;
-	}
-
-	/* Pas de collision entre les balles */
-	else {
-		return 0;
-	}
-}
 

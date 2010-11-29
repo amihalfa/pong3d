@@ -68,24 +68,28 @@ void state_game_init(State_Game_Env* env){
 	env->racket_top = r;
 	r.y = -18.0f;
 	env->racket_bottom = r;
-	env->balls_nb = 2;
+	env->balls_nb = 5;
 	env->mouse_motion.x = 0;
 	env->mouse_motion.y = 0;
 
 	/* initialisation de balles */
 	srand(time(NULL));
-	Ball b = { 0.0f , 0.0f , 0.0f , 0.0f, 0.25f , 0.5f };
+	Ball b = { 0.0f , 0.0f , 0.25f , 0.0f, 0.0f , 0.5f };
 	for (i = 0; i < env->balls_nb; i++){
 		b.x = (i - env->balls_nb / 2)*(b.radius * 1.5f);
-		b.speed.x = (float) (rand()%200 - 100) / 500.0f;
-		b.speed.y = (float) (rand()%200 - 100) / 500.0f;
+		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
+		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
 		env->ball[i] = b;
 	}
 	/*Ball b = { 0.0f , 0.0f , 0.25f , 0.0f, 0.0f , 0.5f };
+	b.speed.y = 0.02f;
 	b.speed.x = 0.02f;
+	b.y = -5.0f;
 	b.x = -5.0f;
 	env->ball[0] = b;
+	b.speed.y = -0.04f;
 	b.speed.x = -0.04f;
+	b.y = 5.0f;
 	b.x = 5.0f;
 	env->ball[1] = b;*/
 

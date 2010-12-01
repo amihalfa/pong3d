@@ -23,7 +23,8 @@
 		/** Position de la balle en y */
 		float y;
 		
-		/** Position de la balle en z */
+		/** Position de la balle en z
+		*/
 		float z;
 		
 		/** Vitesse de la balle */

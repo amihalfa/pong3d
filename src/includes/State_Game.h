@@ -1,7 +1,7 @@
 #ifndef STATE_GAME
 #define	STATE_GAME
 
-	#define STATE_GAME_BALLS	10
+	#define STATE_GAME_BALLS	500
 	#include <SDL/SDL.h>
 	#include "State.h"
 	#include "Ground.h"

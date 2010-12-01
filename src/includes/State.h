@@ -41,13 +41,13 @@
 	 *	Fonction permettant de retrouver l'etat courant de l'application
 	 *	@return 	Pointeur vers l'etat courant de l'application
 	 */
-	State* current_state_get();
+	State* state_get_current();
 	
 	/**
 	*	Fonction permettant de retrouver l'etat courant de l'application
 	*	@return 	Pointeur vers l'etat courant de l'application
 	*/
-	State* current_state_set(State*);
+	State* state_set_current(State*);
 	
 	/**
 	 *	Gestionnaire d'evenements de l'etat courant

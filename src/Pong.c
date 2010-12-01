@@ -23,7 +23,7 @@ int main(int argc, char **argv){
 	window_create();
 	
 	/* Mise en place de l'etat courant */
-	current_state_set(state_menu_get());
+	state_set_current(state_get_menu());
 	
 	s_time = SDL_GetTicks();
 	

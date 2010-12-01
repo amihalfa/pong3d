@@ -41,7 +41,7 @@ void state_menu_create(){
  *	Recuperation de l'etat menu
  *	@return 	pointeur vers l'etat menu
  */
-State* state_menu_get(){
+State* state_get_menu(){
 	return state_menu( STATE_GET );
 }
 
@@ -145,7 +145,7 @@ int state_menu_events(State_Menu_Env* env){
 	if( keystates[ SDLK_RETURN ] ) { 
 		switch(env->selected_item){
 			case 0:
-				current_state_set(state_game_get());
+				state_set_current(state_game_get());
 			break;
 			default:
 				return 0;

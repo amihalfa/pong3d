@@ -38,7 +38,7 @@
 	 *	Recuperation du pointeur vers l'etat menu
 	 *	@return			Pointeur vers l'instance de l'etat menu en cours
 	 */
-	State* state_menu_get();
+	State* state_get_menu();
 	
 	/**
 	 *	Destruction de l'etat menu

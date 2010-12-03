@@ -10,24 +10,24 @@
 	struct State{
 
 		/** 
-		 *	Environnement associé à l'état en cours de l'application 
+		 *	Environnement associe a l'etat en cours de l'application 
 		 */
 		void* env;
 		
 		/**
-		 *	Fonction d'initialisation de l'état courant 
+		 *	Fonction d'initialisation de l'etat courant 
 		 *	@param	env		Environnement attache a l'etat
 		 */
 		void ( *init_handler )( void* );
 		
 		/** 
-		 *	Fonction d'affichage de l'état courant 
+		 *	Fonction d'affichage de l'etat courant 
 		 *	@param	env		Environnement attache a l'etat
 		 */
 		void ( *main_handler )( void*, Uint32 );
 		
 		/** 
-		 *	Fonction de gestion des événements de l'état courant 
+		 *	Fonction de gestion des evenements de l'etat courant 
 		 *	@param	env		Environnement attache a l'etat
 		 */
 		int ( *events_handler )( void*, Uint32 );

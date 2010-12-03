@@ -44,7 +44,7 @@
 	void state_game_init(State_Game_Env* env);
 
 	/**
-	 *	Dessin de l'état de jeu
+	 *	Dessin de l'etat de jeu
 	 */
 	void state_game_draw(State_Game_Env* env);
 

@@ -68,7 +68,7 @@ void state_game_init(State_Game_Env* env){
 	env->racket_top = r;
 	r.y = -18.0f;
 	env->racket_bottom = r;
-	env->balls_nb = 100;
+	env->balls_nb = 10;
 	env->mouse_motion.x = 0;
 	env->mouse_motion.y = 0;
 
@@ -83,15 +83,6 @@ void state_game_init(State_Game_Env* env){
 		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
 		env->ball[i] = b;
 	}
-	/*for (i = 1; i < env->balls_nb; i++){
-		b.x = (i - env->balls_nb/2)*(b.radius * 2.1f);
-		env->ball[i] = b;
-	}
-	b.x = -10.0f;
-	b.speed.x = 0.06f;
-	env->ball[0] = b;*/
-
-
 	
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);
@@ -135,7 +126,7 @@ void state_game_draw(State_Game_Env* env){
 	racket_draw( &(env->racket_top) );
 	racket_draw( &(env->racket_bottom) );
 	
-	/* On s'assure que le dessin est terminé */
+	/* On s'assure que le dessin est termine */
 	glFlush();
 	
 	/* On affiche */

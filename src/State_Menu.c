@@ -114,7 +114,7 @@ void state_menu_draw(State_Menu_Env* env){
 	menu_item_draw( &(env->menu_item[0]) );
 	menu_item_draw( &(env->menu_item[1]) );
 	
-	/* On s'assure que le dessin est terminé */
+	/* On s'assure que le dessin est termine */
 	glFlush();
 	
 	/* On affiche */

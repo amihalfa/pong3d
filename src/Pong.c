@@ -33,15 +33,15 @@ int main(int argc, char **argv){
 		/* Fonction principale de l'etat courant */
 		current_state_main( e_time );
 
-		/* on récupère le temps que la focntion principale a durée */
+		/* on recupere le temps que la focntion principale a duree */
 		e_time = SDL_GetTicks() - s_time;
 
-		/* et on fait un délai si ce temps est inferieur au temps d'une frame */
+		/* et on fait un delai si ce temps est inferieur au temps d'une frame */
 		if (e_time < FRAME_DURATION){
 			SDL_Delay(FRAME_DURATION - e_time);
 		}
 		
-		/* on récupère le temps écoulé effectif */
+		/* on recupere le temps ecoule effectif */
 		e_time = SDL_GetTicks() - s_time;
 		/* et le temps de fin de boucle */
 		s_time = SDL_GetTicks();

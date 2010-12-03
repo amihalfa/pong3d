@@ -48,7 +48,7 @@
 	/**
 	 * Actualise la vitesse de la rackette et la bouge
 	 * @param env			Environement
-	 * @param num_racket	numéro de la rackette à bouger
+	 * @param num_racket	numero de la rackette a bouger
 	 */
 	void racket_move(void* v_env, char num_racket );
 

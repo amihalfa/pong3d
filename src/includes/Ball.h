@@ -11,6 +11,8 @@
 
 	#include <SDL/SDL.h>
 	#include "Util.h"
+
+	#define BALL_MAX_SPEED 0.06
 	
 	/**
 	 *	Structure permettant de gerer la balle

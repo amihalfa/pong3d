@@ -54,12 +54,12 @@ void racket_draw( Racket* racket ){
 	
 	glDisable (GL_CLIP_PLANE0); 
 	
-	/* Libération des ressources car fin du dessin */
+	/* Liberation des ressources car fin du dessin */
 	gluDeleteQuadric( params );
 	
 	glDisable (GL_TEXTURE_2D);
 	
-	/* On remet la matrice de projection telle qu'elle était au départ */
+	/* On remet la matrice de projection telle qu'elle etait au depart */
 	glPopMatrix();
 	
 }
@@ -79,12 +79,20 @@ void racket_move(void* v_env, char num_racket ){
 	float grnd_width_mi = env->ground.width / 2;
 
 	if ( env->keystates[SDLK_RIGHT] ){
-		racket->x += RACKET_SPEED *env->ellapsed_time;
+		racket->speed = RACKET_SPEED * env->ellapsed_time;
 	}
 	else if ( env->keystates[SDLK_LEFT] ){
-		racket->x -= RACKET_SPEED *env->ellapsed_time;
+		racket->speed = - RACKET_SPEED * env->ellapsed_time;
+	}
+	else{
+		racket->speed = 0;
 	}
 
-	racket->x = MAX(racket->x, -grnd_width_mi + rckt_width_mi);
-	racket->x = MIN(racket->x, grnd_width_mi - rckt_width_mi);
+
+	racket->x += racket->speed;
+
+	if (racket->x < -grnd_width_mi + rckt_width_mi)
+		racket->x = -grnd_width_mi + rckt_width_mi;
+	else if (racket->x > grnd_width_mi - rckt_width_mi)
+		racket->x = grnd_width_mi - rckt_width_mi;
 }

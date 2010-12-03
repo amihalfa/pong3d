@@ -13,7 +13,7 @@ void menu_item_draw(Menu_Item * menu_item){
 	glEnable (GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, menu_item->texture);
 	
-	/* Début de dessin */
+	/* Debut de dessin */
 	glBegin( GL_QUADS );
 	
 		glColor3ub( 250 , 250 , 250 );

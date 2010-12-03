@@ -20,7 +20,7 @@ void ground_draw( Ground* ground ){
 	glShadeModel(GL_SMOOTH);
 	glBindTexture(GL_TEXTURE_2D, ground->texture);
 	
-	/* Début de dessin */
+	/* Debut de dessin */
 	glBegin( GL_QUADS );
 	
 	/* Couleur generale */

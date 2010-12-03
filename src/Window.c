@@ -36,7 +36,7 @@ void window_create(){
 	/* On masque le curseur de la souris */
 	SDL_ShowCursor(SDL_DISABLE);
 
-	/* Pour gérer les zIndex */
+	/* Pour gerer les zIndex */
 	glEnable(GL_DEPTH_TEST);
 	
 	/* Mise en place de la projection en perspective */
@@ -45,7 +45,7 @@ void window_create(){
 	
 	gluPerspective( 40 , ratio , 1 , 1000);
 	
-	/* Mise en place des spots d'éclairage */
+	/* Mise en place des spots d'eclairage */
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 	

@@ -73,7 +73,7 @@ void menu_item_draw(Menu_Item * menu_item){
 
 void menu_item_animate(Menu_Item * menu_item, Uint32 e_time){
 	
-	float d_step = (0.05 + (0.005 * e_time) ) * menu_item->anim_dir;
+	float d_step = e_time / 300.0f * menu_item->anim_dir;
 	
 	if(menu_item->anim_step >= 1 || menu_item->anim_step <= -1){
 		menu_item->anim_step = menu_item->anim_dir;

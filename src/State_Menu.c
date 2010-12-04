@@ -133,7 +133,7 @@ int state_menu_events(State_Menu_Env* env){
 	
 	/* Etat des touches */
 	Uint8 *keystates;
-	
+
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 
 			return 0; 
@@ -162,7 +162,7 @@ int state_menu_events(State_Menu_Env* env){
 		if(env->selected_item > 0)
 			env->selected_item--;
 	}
-				
+
 	return 1;
 }
 

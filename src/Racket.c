@@ -78,7 +78,11 @@ void racket_move(void* v_env, char num_racket ){
 	float rckt_width_mi = racket->width / 2;
 	float grnd_width_mi = env->ground.width / 2;
 
-	if ( env->keystates[SDLK_RIGHT] ){
+	if ( env->mouse_motion_x != 0 )
+	{
+		racket->speed = RACKET_SPEED * env->ellapsed_time * env->mouse_motion_x / 10.0;
+	}
+	else if ( env->keystates[SDLK_RIGHT] ){
 		racket->speed = RACKET_SPEED * env->ellapsed_time;
 	}
 	else if ( env->keystates[SDLK_LEFT] ){

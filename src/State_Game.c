@@ -34,8 +34,10 @@ State* state_game(int action){
 }
 
 
-void state_game_create(){
-	state_game( STATE_CREATE );
+void state_game_create(int height, int width){
+	State* state = state_game( STATE_CREATE );
+	(( State_Game_Env* ) state->env)->w_height = height;
+	(( State_Game_Env* ) state->env)->w_width = width;
 }
 
 State* state_game_get(){
@@ -69,8 +71,8 @@ void state_game_init(State_Game_Env* env){
 	r.y = -18.0f;
 	env->racket_bottom = r;
 	env->balls_nb = 10;
-	env->mouse_motion.x = 0;
-	env->mouse_motion.y = 0;
+	env->mouse_motion_x = 0;
+	env->mouse_motion_y = 0;
 
 	/* initialisation de balles */
 	srand(time(NULL));
@@ -138,16 +140,22 @@ int state_game_events(State_Game_Env* env){
 	/* Variable de gestion des evenements */
 	SDL_Event event;
 	
+	env->mouse_motion_x = env->mouse_motion_y = 0;
+
 	while( SDL_PollEvent(&event) ){ 	
 		if( event.type == SDL_QUIT ){ 
 			state_set_current(state_get_menu());
 		}
 		else if (event.type == SDL_MOUSEMOTION)
 		{
-			env->mouse_motion.x = event.motion.xrel;
-			env->mouse_motion.y = event.motion.yrel;
+			env->mouse_motion_x += event.motion.xrel;
+			env->mouse_motion_y += event.motion.yrel;
 		}
 	}
+
+	/* on replace la souris au centre et on enleve l'evenement ainsi genere */
+	SDL_WarpMouse(env->w_width/2, env->w_height/2);
+	while( SDL_PollEvent(&event) );
 
 	env->keystates = SDL_GetKeyState( NULL );
 	

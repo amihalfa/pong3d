@@ -18,7 +18,8 @@
 		Racket racket_bottom;
 		Ball ball[STATE_GAME_BALLS];
 		int balls_nb;
-		Coord2d mouse_motion;
+		Uint16 w_height, w_width;
+		Sint16 mouse_motion_x, mouse_motion_y;
 		Uint8 *keystates;
 		Uint32 ellapsed_time;
 	};

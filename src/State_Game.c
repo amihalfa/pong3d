@@ -21,7 +21,12 @@ State* state_game(int action){
 		state_game->init_handler = &state_game_init;
 		state_game->main_handler = &state_game_main;
 		state_game->events_handler = &state_game_events;
-	
+		
+		SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_OPENGL);
+		(( State_Game_Env* )state_game->env)->w_height = modes[0]->h;
+		(( State_Game_Env* )state_game->env)->w_width = modes[0]->w;
+		
+		load_configuration(( State_Game_Env* ) state_game->env);
 	}
 	else if( action == STATE_DESTROY && state_game ){
 	
@@ -34,10 +39,8 @@ State* state_game(int action){
 }
 
 
-void state_game_create(int height, int width){
+void state_game_create(){
 	State* state = state_game( STATE_CREATE );
-	(( State_Game_Env* ) state->env)->w_height = height;
-	(( State_Game_Env* ) state->env)->w_width = width;
 }
 
 State* state_game_get(){

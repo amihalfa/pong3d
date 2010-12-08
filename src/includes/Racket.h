@@ -11,7 +11,6 @@
 	#include <GL/gl.h>
 	#include <GL/glu.h>
 	#include <SDL/SDL.h>
-	#include "Util.h"
 	#include "Ground.h"
 
 	#define RACKET_SPEED 0.05

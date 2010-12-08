@@ -11,6 +11,8 @@
 
 	#define RACKET_BOTTOM 0
 	#define RACKET_TOP 1
+	#define NB_CONFIG 1
+	#define MOUSE_SENSIBILITY 0
 
 	struct State_Game_Env{
 		Ground ground;
@@ -22,6 +24,7 @@
 		Sint16 mouse_motion_x, mouse_motion_y;
 		Uint8 *keystates;
 		Uint32 ellapsed_time;
+		float config[NB_CONFIG];
 	};
 
 	typedef struct State_Game_Env State_Game_Env;

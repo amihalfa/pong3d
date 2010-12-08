@@ -10,9 +10,15 @@
 #define BALL_H
 
 	#include <SDL/SDL.h>
-	#include "Util.h"
 
 	#define BALL_MAX_SPEED 0.06
+	
+	
+	struct Coord2d {
+		float x, y;
+	};
+	
+	typedef struct Coord2d Coord2d;
 	
 	/**
 	 *	Structure permettant de gerer la balle

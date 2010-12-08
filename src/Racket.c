@@ -80,7 +80,7 @@ void racket_move(void* v_env, char num_racket ){
 
 	if ( env->mouse_motion_x != 0 )
 	{
-		racket->speed = RACKET_SPEED * env->ellapsed_time * env->mouse_motion_x / 10.0;
+		racket->speed = RACKET_SPEED * env->ellapsed_time * env->mouse_motion_x * env->config[MOUSE_SENSIBILITY];
 	}
 	else if ( env->keystates[SDLK_RIGHT] ){
 		racket->speed = RACKET_SPEED * env->ellapsed_time;

@@ -1,4 +1,5 @@
 #include <SDL/SDL.h>
+#include <stdio.h>
 #include "includes/Window.h"
 #include "includes/Util.h"
 #include "includes/State_Game.h"
@@ -14,14 +15,13 @@
 int main(int argc, char **argv){
 	
 	Uint32 s_time, e_time = 0;
-	int width, height;
 
 	/* Mise en place du fenetrage */
-	window_create(&height, &width);
+	window_create();
 	
 	/* Creation des differents etats de l'application */
 	state_menu_create();
-	state_game_create(height, width);
+	state_game_create();
 	
 	/* Mise en place de l'etat courant */
 	state_set_current(state_get_menu());

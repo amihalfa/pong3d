@@ -24,3 +24,17 @@ GLuint util_texture_load(char * path){
 	
 	return texture_name;
 }
+
+
+char load_configuration(State_Game_Env* env_game){
+	char* vars[NB_CONFIG] = {"mouse_sensibility=%f\n"};
+	int i;
+	FILE* config = fopen("config/config.cfg", "r+");
+	if (!config) {
+		return 0;
+	}
+	for (i = 0; i < NB_CONFIG; i++) {
+		fscanf(config, vars[i], &env_game->config[i]);
+	}
+	return 1;
+}

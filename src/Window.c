@@ -7,7 +7,7 @@
 /**
  *	Initialisation de la fenetre et de l'affichage 
  */
-void window_create(Uint16* height, Uint16* width){
+void window_create(){
 	
 	
 	float ratio;
@@ -23,16 +23,12 @@ void window_create(Uint16* height, Uint16* width){
 	
 	/* Recuperation des resolutions possibles */
 	modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_OPENGL);
-	
-	/* recuêration de la hauteur et largeur de la fenetre */
-	*height = modes[0]->h;
-	*width = modes[0]->w;
 
 	/* Calcul du ratio de la resolution */
-	ratio = (float) *width / *height;
+	ratio = (float) modes[0]->w / modes[0]->h;
 	
 	/* Initialisation de la fenetre */
-	screen = SDL_SetVideoMode( *width , *height , WINDOW_COLOR_DEPTH , SDL_FULLSCREEN|SDL_OPENGL );
+	screen = SDL_SetVideoMode( modes[0]->w , modes[0]->h , WINDOW_COLOR_DEPTH , SDL_FULLSCREEN|SDL_OPENGL );
 	
 	/* Mise en place du titre de la fenetre */
 	SDL_WM_SetCaption( WINDOW_TITLE , NULL );

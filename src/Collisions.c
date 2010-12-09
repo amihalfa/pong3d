@@ -2,6 +2,11 @@
 #include <GL/glu.h>
 #include <SDL/SDL.h>
 #include <math.h>
+#include "includes/Coords.h"
+#include "includes/State.h"
+#include "includes/Ground.h"
+#include "includes/Ball.h"
+#include "includes/Racket.h"
 #include "includes/State_Game.h"
 #include "includes/Collisions.h" 
 #include "includes/Racket.h"
@@ -30,11 +35,11 @@ int collision_racket_ground( Racket* racket, Ground* ground, int position ){
 	float rckt_width_mi = racket->width / 2;
 	float grnd_width_mi = ground->width / 2;
 	if(position == COLLISION_LEFT){
-		if( racket->x - rckt_width_mi <= -grnd_width_mi ){
+		if( racket->position.x - rckt_width_mi <= -grnd_width_mi ){
 			return 1;
 		}
 	} else if(position == COLLISION_RIGHT){
-		if( racket->x + rckt_width_mi >= grnd_width_mi ){
+		if( racket->position.x + rckt_width_mi >= grnd_width_mi ){
 			return 1;
 		}
 	}
@@ -45,26 +50,26 @@ int collision_racket_ground( Racket* racket, Ground* ground, int position ){
 int collision_ball_ground( Ball* ball, Ground* ground ){
 
 	/* Collision a gauche du terrain */
-	if( ball->x - ball->radius < -ground->width / 2 ){
+	if( ball->position.x - ball->radius < -ground->width / 2 ){
 		ball->speed.x *= -1;
-		ball->x = ball->radius -ground->width / 2;
+		ball->position.x = ball->radius -ground->width / 2;
 		
 		return 1;
 	} 
 	
 	/* Collision a droite du terrain */
-	else if( ball->x + ball->radius > ground->width / 2 ){
+	else if( ball->position.x + ball->radius > ground->width / 2 ){
 		ball->speed.x *= -1;
-		ball->x = ground->width / 2 - ball->radius;
+		ball->position.x = ground->width / 2 - ball->radius;
 		
 		return 1;
 	} 
 	
 	/* Collision par le haut ... C'est temporaire ... */
-	else if( ball->y + ball->radius > ground->length / 2 ){
+	else if( ball->position.y + ball->radius > ground->length / 2 ){
 		
 		ball->speed.y *= -1;
-		ball->y = ground->length / 2 - ball->radius;
+		ball->position.y = ground->length / 2 - ball->radius;
 		
 		return 2;
 	}
@@ -78,38 +83,38 @@ int collision_ball_racket( Ball* ball, Racket* racket ){
 	float rckt_width_mi = racket->width/2 - racket->radius;
 	
 	/* Collision parfaitement au centre */
-	if(ball->x > racket->x -rckt_width_mi && ball->x < racket->x + rckt_width_mi ){
+	if(ball->position.x > racket->position.x -rckt_width_mi && ball->position.x < racket->position.x + rckt_width_mi ){
 		
 		/* Arrivee de la balle par le haut */
-		if(ball->y - ball->radius > racket->y && ball->y - ball->radius < racket->y + racket->radius){
+		if(ball->position.y - ball->radius > racket->position.y && ball->position.y - ball->radius < racket->position.y + racket->radius){
 				
-			ball->y = racket->y + racket->radius + ball->radius;
+			ball->position.y = racket->position.y + racket->radius + ball->radius;
 			/* On renvoie la balle vers le haut */
 			ball->speed.y = fabs(ball->speed.y);
 			return 1;
 		}
 		
 		/* Arrivee de la balle par le bas */
-		else if(ball->y + ball->radius < racket->y && ball->y + ball->radius > racket->y - racket->radius){
+		else if(ball->position.y + ball->radius < racket->position.y && ball->position.y + ball->radius > racket->position.y - racket->radius){
 			
-			ball->y = racket->y - racket->radius - ball->radius;
+			ball->position.y = racket->position.y - racket->radius - ball->radius;
 			/* On renvoie la balle vers le bas */
 			ball->speed.y = -fabs(ball->speed.y);
 
 			return 1;
 		}
 	}
-	else if(ball->y - ball->radius < racket->y + racket->radius){ 
-		if(ball->y + ball->radius > racket->y - racket->radius){
+	else if(ball->position.y - ball->radius < racket->position.y + racket->radius){ 
+		if(ball->position.y + ball->radius > racket->position.y - racket->radius){
 
 			
-			float dist_x_r, dist_x_l =  ball->x - (racket->x - rckt_width_mi);
-			float dist_y = - racket->y + ball->y;
+			float dist_x_r, dist_x_l =  ball->position.x - (racket->position.x - rckt_width_mi);
+			float dist_y = - racket->position.y + ball->position.y;
 			
 			float dist_left = sqrt( dist_x_l*dist_x_l + dist_y*dist_y );
 			float dist_right = 0; 
 			
-			dist_x_r = - racket->x - rckt_width_mi + ball->x;
+			dist_x_r = - racket->position.x - rckt_width_mi + ball->position.x;
 			
 			dist_right = sqrt( dist_x_r*dist_x_r + dist_y*dist_y );
 			
@@ -123,25 +128,25 @@ int collision_ball_racket( Ball* ball, Racket* racket ){
 			/* La raquette a ete cognee par la gauche */
 			if(dist_left < dist){
 				tmp = dist / dist_left;
-				rack_x = racket->x - rckt_width_mi;
+				rack_x = racket->position.x - rckt_width_mi;
 				there_is_a_collision = 1;
 			}
 			/* La raquette a ete cognee par la droite */
 			else if(dist_right < dist){
 				tmp = dist / dist_right;
-				rack_x = racket->x + rckt_width_mi;
+				rack_x = racket->position.x + rckt_width_mi;
 				there_is_a_collision = 1;
 			}
 
 			if (there_is_a_collision)
 			{
 				/* place la balle b a la bonne distance de a */
-				ball->x = (ball->x - rack_x) * tmp + rack_x;
-				ball->y = (ball->y - racket->y) * tmp + racket->y;
+				ball->position.x = (ball->position.x - rack_x) * tmp + rack_x;
+				ball->position.y = (ball->position.y - racket->position.y) * tmp + racket->position.y;
 
 				/* on recupere l'axe de coball_allision sous forme de vecteur unitaire */
-				axe.x = (ball->x - rack_x) / dist;
-				axe.y = (ball->y - racket->y) / dist;
+				axe.x = (ball->position.x - rack_x) / dist;
+				axe.y = (ball->position.y - racket->position.y) / dist;
 
 				/* on recupere la compasante de la vitesse de la balle selon l'xe de collision */
 				norm = ball->speed.x * axe.x + ball->speed.y * axe.y;
@@ -166,8 +171,8 @@ int collision_ball_racket( Ball* ball, Racket* racket ){
 
 int collision_ball_ball( Ball* ball_a, Ball* ball_b ){
 
-	float dist_x = ball_b->x - ball_a->x;
-	float dist_y = ball_b->y - ball_a->y;
+	float dist_x = ball_b->position.x - ball_a->position.x;
+	float dist_y = ball_b->position.y - ball_a->position.y;
 	float dist = ball_a->radius + ball_b->radius;
 	
 	/* Distance entre les deux balles */
@@ -181,12 +186,12 @@ int collision_ball_ball( Ball* ball_a, Ball* ball_b ){
 	
 		/* place la balle b a la bonne distance de a */
 		tmp = dist / dist_bb;
-		ball_b->x = (ball_b->x - ball_a->x) * tmp + ball_a->x;
-		ball_b->y = (ball_b->y - ball_a->y) * tmp + ball_a->y;
+		ball_b->position.x = (ball_b->position.x - ball_a->position.x) * tmp + ball_a->position.x;
+		ball_b->position.y = (ball_b->position.y - ball_a->position.y) * tmp + ball_a->position.y;
 		
 		/* on recupere l'axe de collision sous forme de vecteur unitaire */
-		axe.x = (ball_b->x - ball_a->x) / dist;
-		axe.y = (ball_b->y - ball_a->y) / dist;
+		axe.x = (ball_b->position.x - ball_a->position.x) / dist;
+		axe.y = (ball_b->position.y - ball_a->position.y) / dist;
 
 		/* on separe les vitesse en deux vecteurs : un selon l'axe de collision (col), et l'autre selon l'axe normal a la collision (nor) */
 		norm = ball_a->speed.x * axe.x + ball_a->speed.y * axe.y;

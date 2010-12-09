@@ -1,13 +1,14 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "includes/Util.h"
+#include "includes/Coords.h"
 #include "includes/State.h"
 #include "includes/Ground.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/State_Game.h"
 #include "includes/Ball.h"
+#include "includes/Util.h"
 
 
 /**

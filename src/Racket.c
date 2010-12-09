@@ -1,4 +1,11 @@
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include "includes/Coords.h"
+#include "includes/State.h"
 #include "includes/Racket.h"
+#include "includes/Ground.h"
+#include "includes/Ball.h"
 #include "includes/State_Game.h"
 
 /**
@@ -13,7 +20,7 @@ void racket_draw( Racket* racket ){
 	glPushMatrix();
 	
 	/* Changement de repere pour positionner au bon endroit */
-	glTranslatef( racket->x - racket->width / 2 + racket->radius , racket->y , racket->z );
+	glTranslatef( racket->position.x - racket->width / 2 + racket->radius , racket->position.y , racket->position.z );
 	
 	/* Choix de la couleur */
 	glColor3ub( 255 , 0 , 0 );
@@ -91,10 +98,10 @@ void racket_move(void* v_env, char num_racket ){
 	}
 
 
-	racket->x += racket->speed;
+	racket->position.x += racket->speed;
 
-	if (racket->x < -grnd_width_mi + rckt_width_mi)
-		racket->x = -grnd_width_mi + rckt_width_mi;
-	else if (racket->x > grnd_width_mi - rckt_width_mi)
-		racket->x = grnd_width_mi - rckt_width_mi;
+	if (racket->position.x < -grnd_width_mi + rckt_width_mi)
+		racket->position.x = -grnd_width_mi + rckt_width_mi;
+	else if (racket->position.x > grnd_width_mi - rckt_width_mi)
+		racket->position.x = grnd_width_mi - rckt_width_mi;
 }

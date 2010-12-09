@@ -19,5 +19,7 @@
 	
 	void util_reflection_ball(Ball* ball, Ground* ground);
 
+	void util_reflection_racket(Racket* racket, Ground* ground);
+
 	
 #endif

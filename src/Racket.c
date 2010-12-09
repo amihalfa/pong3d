@@ -7,7 +7,6 @@
  */ 
 void racket_draw( Racket* racket ){
 	
-	
 	GLdouble eqn[4] = {-1.0, 0.0, 0.0, 0.0};
 		
 	/* On met en pile la matrice telle qu'elle est au depart */
@@ -22,7 +21,6 @@ void racket_draw( Racket* racket ){
 	glEnable (GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, racket->texture);
 
-	
 	glClipPlane (GL_CLIP_PLANE0, eqn); 
 	glEnable (GL_CLIP_PLANE0);
 	
@@ -33,7 +31,7 @@ void racket_draw( Racket* racket ){
 	gluQuadricTexture(params,GL_TRUE);
 	
 	/* On dessine la gauche */
-	gluSphere( params , racket->radius , 10 , 10 );
+	gluSphere( params , racket->radius , 15 , 15 );
 	
  	glDisable (GL_CLIP_PLANE0); 
 	

@@ -65,11 +65,11 @@ void state_menu_init(State_Menu_Env* env){
 	
 	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 , 0.0 , 1 };
 	
-	menu_item.texture = util_texture_load ("images/menu/jouer.jpg");
+	menu_item.texture = util_texture_load ("images/menu/jouer.png");
 	env->menu_item[0] = menu_item;
 	
 	menu_item.y = -10;
-	menu_item.texture = util_texture_load("images/menu/quitter.jpg");
+	menu_item.texture = util_texture_load("images/menu/quitter.png");
 	env->menu_item[1] = menu_item;
 
 	env->selected_item = 1;
@@ -95,7 +95,7 @@ void state_menu_draw(State_Menu_Env* env){
 	GLfloat spotDirection[]={0.8 , 1.2 , -1.0};
 	
 	/* On vide le buffer d'affichage */
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
 	
 	/* Matrice de manipulation des objets */
 	glMatrixMode( GL_MODELVIEW );

@@ -49,6 +49,7 @@ void window_create(){
 	glEnable(GL_LIGHTING);
 	glEnable(GL_COLOR_MATERIAL);
 
+
 }
 
 /**

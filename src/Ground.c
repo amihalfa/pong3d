@@ -22,7 +22,7 @@ void ground_draw( Ground* ground ){
 	
 	
 	glEnable(GL_BLEND);									
-	glColor4ub(255, 255, 255, 100);					
+	glColor4ub(10, 10, 10, 230);					
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	
 		
 	/* Debut de dessin */
@@ -38,6 +38,9 @@ void ground_draw( Ground* ground ){
 	glEnd();
 	
 	glDisable(GL_BLEND);
+	
+	
+	glColor4ub(40, 40, 40, 250);					
 	
 	glBegin( GL_QUADS );
 	

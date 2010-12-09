@@ -108,7 +108,7 @@ void state_game_draw(State_Game_Env* env){
 	GLfloat spotDirection[]={0.0 , 1.0 , -1.0};
 	
 	/* On vide le buffer d'affichage */
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
 	
 	/* Matrice de manipulation des objets */
 	glMatrixMode( GL_MODELVIEW );
@@ -130,9 +130,13 @@ void state_game_draw(State_Game_Env* env){
 		ball_draw( &(env->ball[i]) );
 	}
 	
-	ground_draw( &(env->ground) );
+	util_reflection_racket( &(env->racket_top), &(env->ground) );
 	racket_draw( &(env->racket_top) );
+	
+	util_reflection_racket( &(env->racket_bottom), &(env->ground) );
 	racket_draw( &(env->racket_bottom) );
+	
+	ground_draw( &(env->ground) );
 	
 	/* On s'assure que le dessin est termine */
 	glFlush();

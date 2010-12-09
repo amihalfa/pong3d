@@ -1,3 +1,4 @@
+#include <SDL/SDL.h>
 #include "includes/State.h" 
 
 

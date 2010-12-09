@@ -40,7 +40,7 @@ void ground_draw( Ground* ground ){
 	glDisable(GL_BLEND);
 	
 	
-	glColor4ub(40, 40, 40, 250);					
+	glColor4ub(20, 20, 20, 250);					
 	
 	glBegin( GL_QUADS );
 	

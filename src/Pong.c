@@ -1,26 +1,18 @@
 #include <SDL/SDL.h>
+#include <GL/gl.h>
 #include <stdio.h>
+#include "includes/Coords.h"
 #include "includes/Window.h"
-#include "includes/Util.h"
+#include "includes/State.h"
+#include "includes/Racket.h"
+#include "includes/Ball.h"
+#include "includes/Ground.h"
 #include "includes/State_Game.h"
+#include "includes/Menu_Item.h"
 #include "includes/State_Menu.h"
+#include "includes/Util.h"
 
 #define FRAME_DURATION 10
-
-
-	struct Coord2d {
-		float x, y;
-	};
-	
-	typedef struct Coord2d Coord2d;
-	
-		
-	struct Coord3d {
-		float x, y, z;
-	};
-	
-	typedef struct Coord3d Coord3d;
-	
 
 
 /**

@@ -16,9 +16,7 @@
 	struct Racket{
 		
 		/* Position */
-		float x;
-		float y;
-		float z;
+		Coord3d position;
 		
 		/* Dimensions de la raquette */
 		float width;

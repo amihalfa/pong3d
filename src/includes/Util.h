@@ -5,9 +5,6 @@
 	#define MAX(a,b)	((a)>(b))?(a):(b)
 	#define ABS(a)		((a)>0)?(a):(-a)
 
-		
-
-
 
 	/**
 	 *	Fonction de chargement d'une texture
@@ -16,7 +13,7 @@
 	 */
 	GLuint util_texture_load(char * path);
 	
-	int load_configuration(State_Game_Env* env_game);
+	int util_load_configuration(State_Game_Env* env_game);
 	
 	void util_reflection_ball(Ball* ball, Ground* ground);
 

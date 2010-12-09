@@ -3,7 +3,8 @@
 #include <GL/gl.h>
 #include <stdlib.h>
 #include <time.h>
-#include "includes/Util.h"
+#include "includes/Coords.h"
+#include "includes/State.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
@@ -11,6 +12,7 @@
 #include "includes/State_Game.h"
 #include "includes/State_Menu.h"
 #include "includes/Collisions.h"
+#include "includes/Util.h"
 
 State* state_game(int action){
 	static State* state_game = (State*)0;
@@ -72,7 +74,7 @@ void state_game_init(State_Game_Env* env){
 	/* Mise en place des eleme,ts dans la scene */
 	env->ground = g;
 	env->racket_top = r;
-	r.y = -18.0f;
+	r.position.y = -18.0f;
 	env->racket_bottom = r;
 	env->balls_nb = 10;
 	env->mouse_motion_x = 0;
@@ -83,8 +85,8 @@ void state_game_init(State_Game_Env* env){
 	Ball b = { 0.0f , 0.0f , 0.25f , 0.0f, 0.0f , 0.5f };
 	int nbcol = (int) sqrt(env->balls_nb); 
 	for (i = 0; i < env->balls_nb; i++){
-		b.x = (i%nbcol - nbcol/2)*(b.radius * 2.5f);
-		b.y = (i/nbcol - nbcol/2)*(b.radius * 2.5f);
+		b.position.x = (i%nbcol - nbcol/2)*(b.radius * 2.5f);
+		b.position.y = (i/nbcol - nbcol/2)*(b.radius * 2.5f);
 		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
 		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
 		env->ball[i] = b;

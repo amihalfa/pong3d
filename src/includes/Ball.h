@@ -10,7 +10,7 @@
 #define BALL_H
 
 	#define BALL_MAX_SPEED 0.06
-	#define BALL_HISTO 50
+	#define BALL_HISTO 40
 	
 	/**
 	 *	Structure permettant de gerer la balle

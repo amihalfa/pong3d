@@ -1,12 +1,13 @@
 #ifndef UTIL_H
 #define UTIL_H
 		
-	#include <GL/gl.h>
-	#include "State_Game.h"
-	
 	#define MIN(a,b)	((a)<(b))?(a):(b)
 	#define MAX(a,b)	((a)>(b))?(a):(b)
 	#define ABS(a)		((a)>0)?(a):(-a)
+
+		
+
+
 
 	/**
 	 *	Fonction de chargement d'une texture

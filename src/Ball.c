@@ -1,6 +1,14 @@
-#include "includes/Ball.h"
+#include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "includes/Util.h"
+#include "includes/State.h"
+#include "includes/Ground.h"
+#include "includes/Racket.h"
+#include "includes/Ball.h"
+#include "includes/State_Game.h"
+#include "includes/Ball.h"
+
 
 /**
  *	Dessin de la balle en OpenGL
@@ -12,7 +20,8 @@ void ball_draw( Ball* ball ){
 	glPushMatrix();
 	
 	/* On change le repere */
-	glTranslatef( ball->x , ball->y, ball->z );
+
+	glTranslatef( ball->position.x , ball->position.y, ball->position.z );
 	
 	/* On applique la couleur */
 	glColor3ub( 10 , 10 , 200 );
@@ -37,7 +46,7 @@ void ball_draw( Ball* ball ){
  */
 void ball_move( Ball* ball, Uint32 e_time ){
 
-	ball->x += ball->speed.x + (ball->speed.x / 10) * e_time ;
-	ball->y += ball->speed.y + (ball->speed.y / 10) * e_time;
+	ball->position.x += ball->speed.x + (ball->speed.x / 10) * e_time ;
+	ball->position.y += ball->speed.y + (ball->speed.y / 10) * e_time;
 	
 }

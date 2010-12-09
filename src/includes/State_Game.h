@@ -2,12 +2,7 @@
 #define	STATE_GAME
 
 	#define STATE_GAME_BALLS	500
-	#include <SDL/SDL.h>
-	#include "State.h"
-	#include "Ground.h"
-	#include "Racket.h"
-	#include "Ball.h"
-
+	
 
 	#define RACKET_BOTTOM 0
 	#define RACKET_TOP 1

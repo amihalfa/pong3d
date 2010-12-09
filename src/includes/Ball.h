@@ -10,6 +10,7 @@
 #define BALL_H
 
 	#define BALL_MAX_SPEED 0.06
+	#define BALL_HISTO 50
 	
 	/**
 	 *	Structure permettant de gerer la balle
@@ -24,6 +25,8 @@
 
 		/** Rayon de la balle */
 		float radius;
+		
+		Coord3d pos_histo[BALL_HISTO];
 		
 	} Ball;
 	

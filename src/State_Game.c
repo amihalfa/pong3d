@@ -13,6 +13,7 @@
 #include "includes/State_Menu.h"
 #include "includes/Collisions.h"
 #include "includes/Util.h"
+#include "includes/Animation.h"
 
 State* state_game(int action){
 	static State* state_game = (State*)0;
@@ -29,7 +30,7 @@ State* state_game(int action){
 		(( State_Game_Env* )state_game->env)->w_height = modes[0]->h;
 		(( State_Game_Env* )state_game->env)->w_width = modes[0]->w;
 		
-		load_configuration(( State_Game_Env* ) state_game->env);
+		util_load_configuration(( State_Game_Env* ) state_game->env);
 	}
 	else if( action == STATE_DESTROY && state_game ){
 	
@@ -57,7 +58,7 @@ void state_game_destroy(){
 
 void state_game_init(State_Game_Env* env){
 
-	int i;
+	int i,j;
 	
 	/* Initialisation des objets de la scene */
 	Ground g = { 2.0f , 40.0f , 30.0f , 0 };
@@ -82,11 +83,18 @@ void state_game_init(State_Game_Env* env){
 
 	/* initialisation de balles */
 	srand(time(NULL));
-	Ball b = { 0.0f , 0.0f , 0.25f , 0.0f, 0.0f , 0.5f };
+	Ball b;
+	b.radius = 0.5f;
+	b.position.z = 0.5f;
 	int nbcol = (int) sqrt(env->balls_nb); 
 	for (i = 0; i < env->balls_nb; i++){
 		b.position.x = (i%nbcol - nbcol/2)*(b.radius * 2.5f);
 		b.position.y = (i/nbcol - nbcol/2)*(b.radius * 2.5f);
+		for(j = 0 ; j < BALL_HISTO ; j++){
+			b.pos_histo[j].x = b.position.x;
+			b.pos_histo[j].y = b.position.y;
+			b.pos_histo[j].z = b.position.z;
+		}
 		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
 		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
 		env->ball[i] = b;
@@ -130,6 +138,7 @@ void state_game_draw(State_Game_Env* env){
 	for(i = 0 ; i< env->balls_nb ; i++){
 		util_reflection_ball( &(env->ball[i]), &(env->ground) );
 		ball_draw( &(env->ball[i]) );
+		animation_particules( &(env->ball[i]) );
 	}
 	
 	util_reflection_racket( &(env->racket_top), &(env->ground) );

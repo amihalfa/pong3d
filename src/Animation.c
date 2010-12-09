@@ -28,39 +28,37 @@ void animation_state_menu(State_Menu_Env* env, Uint32 e_time){
 void animation_particules( Ball* b ){
 	
 	int i,j;
-	float alea;
+	float alea, x,y,z;
 	srand(time(NULL));
 	for( i = 0 ; i < BALL_HISTO ; i++ ){
 	
 		/* On met la matrice actuelle dans la pile avant modif. */
 		glPushMatrix();
 		
-		for( j = 0; j < 5; j++){
+		for( j = 0; j < 10; j++){
 			
-			alea = (float)(rand()%200)/100.0 - 1.0;
+			alea = b->radius/1.5* ((float)(rand()%200)/100.0 - 1.0);
+			x = b->pos_histo[i].x + alea;
+			alea = b->radius/1.5* ((float)(rand()%200)/100.0 - 1.0);
+			y = b->pos_histo[i].y + alea;
+			alea = b->radius/1.5* ((float)(rand()%200)/100.0 - 1.0);
+			z = b->pos_histo[i].z + alea;
 			
-			glTranslatef( b->radius*alea , 0 , 0 );
-			
-			alea = (float)(rand()%360);
-			glRotatef(alea, 1.0f , 0.0f , 0.0f );
-			
-			/* On change le repere */
-			glTranslatef( b->pos_histo[i].x , b->pos_histo[i].y , b->pos_histo[i].z );
-			
-			/* On applique la couleur */
-			glColor3ub( 10 , 10 , 200 );
+			glEnable(GL_BLEND);
+			glColor4ub(10, 10, 255, i*3);					
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE);	
 			
 			glBegin( GL_QUADS );
-		
+	
 			/* Particule */
 			glNormal3f( 0.0f , 0.0f , 1.0f );
-			glTexCoord2i(0,1); glVertex3d( 0 , 0 , 0 );
-			glTexCoord2i(1,1); glVertex3d( 0.2 , 0, 0 );
-			glTexCoord2i(1,0); glVertex3d( 0.2 , 0.2 , 0 );
-			glTexCoord2i(0,0); glVertex3d( 0 , 0.2 , 0 );
+			glVertex3d( x , y , z + 0.1 );
+			glVertex3d( x + 0.2 , y , z + 0.1 );
+			glVertex3d( x + 0.2 , y + 0.2 , z + 0.1 );
+			glVertex3d( x , y + 0.1 , z + 0.1 );
 		
 			glEnd();
-		
+			glDisable(GL_BLEND);
 		}
 		
 		/* On remet la matrice mise en pile au depart */

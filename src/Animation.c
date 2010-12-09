@@ -37,11 +37,11 @@ void animation_particules( Ball* b ){
 		
 		for( j = 0; j < 10; j++){
 			
-			alea = b->radius/1.5* ((float)(rand()%200)/100.0 - 1.0);
+			alea = b->radius/1.5* ((float)(rand()%2000)/1000.0 - 1.0);
 			x = b->pos_histo[i].x + alea;
-			alea = b->radius/1.5* ((float)(rand()%200)/100.0 - 1.0);
+			alea = b->radius/1.5* ((float)(rand()%2000)/1000.0 - 1.0);
 			y = b->pos_histo[i].y + alea;
-			alea = b->radius/1.5* ((float)(rand()%200)/100.0 - 1.0);
+			alea = b->radius/1.5* ((float)(rand()%2000)/1000.0 - 1.0);
 			z = b->pos_histo[i].z + alea;
 			
 			glEnable(GL_BLEND);
@@ -52,10 +52,10 @@ void animation_particules( Ball* b ){
 	
 			/* Particule */
 			glNormal3f( 0.0f , 0.0f , 1.0f );
-			glVertex3d( x , y , z + 0.1 );
-			glVertex3d( x + 0.2 , y , z + 0.1 );
-			glVertex3d( x + 0.2 , y + 0.2 , z + 0.1 );
-			glVertex3d( x , y + 0.1 , z + 0.1 );
+			glVertex3d( x , y , z + 0.2 );
+			glVertex3d( x + 0.2 , y , z + 0.2 );
+			glVertex3d( x + 0.2 , y + 0.2 , z + 0.2 );
+			glVertex3d( x , y + 0.4 , z + 0.2 );
 		
 			glEnd();
 			glDisable(GL_BLEND);

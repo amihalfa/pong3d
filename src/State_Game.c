@@ -139,6 +139,7 @@ void state_game_draw(State_Game_Env* env){
 		util_reflection_ball( &(env->ball[i]), &(env->ground) );
 		ball_draw( &(env->ball[i]) );
 		animation_particules( &(env->ball[i]) );
+		util_reflection_particules( &(env->ball[i]) , &(env->ground) );
 	}
 	
 	util_reflection_racket( &(env->racket_top), &(env->ground) );

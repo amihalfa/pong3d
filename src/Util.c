@@ -7,8 +7,10 @@
 #include "includes/Ball.h"
 #include "includes/Ground.h"
 #include "includes/State_Game.h"
+#include "includes/Menu_Item.h"
+#include "includes/State_Menu.h"
 #include "includes/Util.h"
-
+#include "includes/Animation.h"
 /**
  *	Fonction de chargement de la texture en memoire graphique
  */
@@ -92,6 +94,31 @@ void util_reflection_racket(Racket* racket, Ground* ground){
 		glScalef(1.0f, 1.0f, -1.0f);
 		glTranslatef(0.0f, 0.0f, 0.5f);
 		racket_draw(racket);	
+	glPopMatrix();
+				
+	glDisable(GL_STENCIL_TEST);							
+}
+
+void util_reflection_particules(Ball* ball, Ground* ground){
+	
+	glColorMask(0,0,0,0);
+	glEnable(GL_STENCIL_TEST);
+	glStencilFunc(GL_ALWAYS, 1, 1);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	glDisable(GL_DEPTH_TEST);
+	
+	ground_draw(ground);
+	
+	glEnable(GL_DEPTH_TEST);
+	
+	glColorMask(1,1,1,1);
+	glStencilFunc(GL_EQUAL, 1, 1);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+		
+	glPushMatrix();					
+		glScalef(1.0f, 1.0f, -1.0f);
+		glTranslatef(0.0f, 0.0f, 0.5f);
+		animation_particules(ball);	
 	glPopMatrix();
 				
 	glDisable(GL_STENCIL_TEST);							

@@ -34,28 +34,40 @@ void animation_particules( Ball* b ){
 	
 		/* On met la matrice actuelle dans la pile avant modif. */
 		glPushMatrix();
-		
+
+	/*
+	glTranslatef( b->pos_histo[i].x , b->pos_histo[i].y, b->pos_histo[i].z );
+	glEnable(GL_BLEND);
+	glColor4ub(10, 10, 255, i*3);					
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE);	
+	GLUquadric* params = gluNewQuadric();
+	float size = b->radius * ((float)sqrt(i)/sqrt(BALL_HISTO));
+	gluSphere( params , size , 10 , 10 );
+	gluCylinder( params , size , size  , 1 , 20 , 1 );
+	glDisable(GL_BLEND);
+	gluDeleteQuadric(params);*/
+	
 		for( j = 0; j < 10; j++){
 			
-			alea = b->radius/1.5* ((float)(rand()%2000)/1000.0 - 1.0);
+			alea = b->radius/2.5* ((float)(rand()%2000)/1000.0 - 1.0);
 			x = b->pos_histo[i].x + alea;
-			alea = b->radius/1.5* ((float)(rand()%2000)/1000.0 - 1.0);
+			alea = b->radius/2.5* ((float)(rand()%2000)/1000.0 - 1.0);
 			y = b->pos_histo[i].y + alea;
-			alea = b->radius/1.5* ((float)(rand()%2000)/1000.0 - 1.0);
+			alea = b->radius/2.5* ((float)(rand()%2000)/1000.0 - 1.0);
 			z = b->pos_histo[i].z + alea;
 			
 			glEnable(GL_BLEND);
-			glColor4ub(10, 10, 255, i*3);					
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE);	
+			glColor4ub(0, 0, 255, i*2);					
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 			
 			glBegin( GL_QUADS );
 	
 			/* Particule */
 			glNormal3f( 0.0f , 0.0f , 1.0f );
-			glVertex3d( x , y , z + 0.2 );
-			glVertex3d( x + 0.2 , y , z + 0.2 );
-			glVertex3d( x + 0.2 , y + 0.2 , z + 0.2 );
-			glVertex3d( x , y + 0.4 , z + 0.2 );
+			glTexCoord2i(0,1); glVertex3d( x - 0.1 , y - 0.1 , z + 0.1 );
+			glTexCoord2i(1,1); glVertex3d( x + 0.1, y - 0.1 , z + 0.1 );
+			glTexCoord2i(1,0); glVertex3d( x + 0.4 , y + 0.1 , z + 0.1 );
+			glTexCoord2i(0,0); glVertex3d( x - 0.1 , y + 0.1 , z + 0.1 );
 		
 			glEnd();
 			glDisable(GL_BLEND);

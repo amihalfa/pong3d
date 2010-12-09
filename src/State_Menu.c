@@ -102,7 +102,7 @@ void state_menu_draw(State_Menu_Env* env){
 	glLoadIdentity();
 	
 	/* Changement de position de la camera */
-	gluLookAt(12.5,-40.0,40,12.5,-5,0,0,0,1);
+	gluLookAt(12.5,-40.0,40.0,12.5,-5,0,0,0,1);
 	
 	/* On place la lumiere dans la scene */
 	glLightfv(GL_LIGHT0,GL_POSITION,spotPosition);

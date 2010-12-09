@@ -9,11 +9,6 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
 
-	#include "Racket.h"
-	#include "Ball.h"
-	#include "Ground.h"
-	#include "State_Game.h"
-
 	#define COLLISION_LEFT		0
 	#define COLLISION_RIGHT		1
 

@@ -8,11 +8,6 @@
 #ifndef RACKET_H
 #define RACKET_H
 
-	#include <GL/gl.h>
-	#include <GL/glu.h>
-	#include <SDL/SDL.h>
-	#include "Ground.h"
-
 	#define RACKET_SPEED 0.05
    /**
 	*	Structure permettant de gerer une raquette

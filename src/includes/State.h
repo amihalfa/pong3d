@@ -1,8 +1,6 @@
 #ifndef STATE_H
 #define STATE_H
 
-	#include <SDL/SDL.h>
-
 	#define STATE_CREATE	0
 	#define STATE_GET		1
 	#define STATE_DESTROY	2

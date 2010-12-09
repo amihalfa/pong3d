@@ -1,5 +1,9 @@
-#include "includes/Animation.h"
+#include <SDL/SDL.h>
+#include <GL/gl.h>
+#include "includes/State.h"
+#include "includes/Menu_Item.h"
 #include "includes/State_Menu.h"
+#include "includes/Animation.h"
 
 void animation_state_menu(State_Menu_Env* env, Uint32 e_time){
 

@@ -1,10 +1,7 @@
 #ifndef STATE_MENU
 #define	STATE_MENU
 
-	#include <SDL/SDL.h>
-	#include "State.h"
-	#include "Menu_Item.h"
-
+	
 	/* Nombre d'elements du menu */
 	#define STATE_MENU_ITEMSNB		2
 	

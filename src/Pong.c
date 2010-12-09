@@ -7,6 +7,22 @@
 
 #define FRAME_DURATION 10
 
+
+	struct Coord2d {
+		float x, y;
+	};
+	
+	typedef struct Coord2d Coord2d;
+	
+		
+	struct Coord3d {
+		float x, y, z;
+	};
+	
+	typedef struct Coord3d Coord3d;
+	
+
+
 /**
  *	Programme principal Pong
  *	Creation de la fenetre

@@ -20,11 +20,13 @@ void ground_draw( Ground* ground ){
 	glShadeModel(GL_SMOOTH);
 	glBindTexture(GL_TEXTURE_2D, ground->texture);
 	
+	
+	glEnable(GL_BLEND);									
+	glColor4ub(255, 255, 255, 100);					
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	
+		
 	/* Debut de dessin */
 	glBegin( GL_QUADS );
-	
-	/* Couleur generale */
-	glColor3ub( 255 , 255 , 255 );
 	
 	/* Bas du terrain (visible) */
 	glNormal3f( 0.0f , 0.0f , 1.0f );
@@ -32,6 +34,12 @@ void ground_draw( Ground* ground ){
 	glTexCoord2i(1,1); glVertex3d( width_mi , -length_mi, 0 );
 	glTexCoord2i(1,0); glVertex3d( width_mi , length_mi , 0 );
 	glTexCoord2i(0,0); glVertex3d( -width_mi , length_mi , 0 );
+	
+	glEnd();
+	
+	glDisable(GL_BLEND);
+	
+	glBegin( GL_QUADS );
 	
 	/* Bas du terrain (non visible) */
 	glNormal3f( 0.0f , 0.0f , -1.0f );

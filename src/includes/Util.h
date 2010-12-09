@@ -15,6 +15,9 @@
 	 */
 	GLuint util_texture_load(char * path);
 	
-	char load_configuration(State_Game_Env* env_game);
+	int load_configuration(State_Game_Env* env_game);
+	
+	void util_reflection_ball(Ball* ball, Ground* ground);
+
 	
 #endif

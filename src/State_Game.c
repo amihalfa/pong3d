@@ -3,6 +3,7 @@
 #include <GL/gl.h>
 #include <stdlib.h>
 #include <time.h>
+#include "includes/Util.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
@@ -58,10 +59,10 @@ void state_game_init(State_Game_Env* env){
 	
 	/* Initialisation des objets de la scene */
 	Ground g = { 2.0f , 40.0f , 30.0f , 0 };
-	g.texture = util_texture_load ("images/game/wood.jpg");
+	g.texture = 0;
 	
 	Racket r = { 0.0f , 18.0f , 1.0f , 5.0f , 1.0f , 0.01f , 0 };
-	r.texture = util_texture_load ("images/game/steel.jpg");
+	r.texture = 0;
 	
 	/* Proprietes du spot d'eclairage */
 	GLfloat spotDif[] = {1.0f, 1.0f, 1.0f, 1.0f};
@@ -114,7 +115,7 @@ void state_game_draw(State_Game_Env* env){
 	glLoadIdentity();
 	
 	/* Changement de position de la camera */
-	gluLookAt(0,-40.0,40,0,-5,0,0,0,1);
+	gluLookAt(0,-40.0,30,0,-5,0,0,0,1);
 	
 	/* On place la lumiere dans la scene */
 	glLightfv(GL_LIGHT0,GL_POSITION,spotPosition);
@@ -124,8 +125,10 @@ void state_game_draw(State_Game_Env* env){
 	
 	/* Dessin des elements de la scene */
 	
-	for(i = 0 ; i< env->balls_nb ; i++)
+	for(i = 0 ; i< env->balls_nb ; i++){
+		util_reflection_ball( &(env->ball[i]), &(env->ground) );
 		ball_draw( &(env->ball[i]) );
+	}
 	
 	ground_draw( &(env->ground) );
 	racket_draw( &(env->racket_top) );

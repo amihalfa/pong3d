@@ -17,7 +17,7 @@ void racket_draw( Racket* racket ){
 	glTranslatef( racket->x - racket->width / 2 + racket->radius , racket->y , racket->z );
 	
 	/* Choix de la couleur */
-	glColor3ub( 255 , 255 , 255 );
+	glColor3ub( 255 , 0 , 0 );
 	
 	glEnable (GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, racket->texture);

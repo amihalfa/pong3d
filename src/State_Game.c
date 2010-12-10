@@ -15,6 +15,7 @@
 #include "includes/Util.h"
 #include "includes/Animation.h"
 
+
 State* state_game(int action){
 	static State* state_game = (State*)0;
 	

@@ -9,6 +9,8 @@
 	#define NB_CONFIG 1
 	#define MOUSE_SENSIBILITY 0
 
+	struct State;
+
 	struct State_Game_Env{
 		Ground ground;
 		Racket racket_top;
@@ -25,11 +27,11 @@
 	typedef struct State_Game_Env State_Game_Env;
 
 
-	State* state_game(int);
+	struct State* state_game(int);
 
 	void state_game_create();
 
-	State* state_game_get();
+	struct State* state_game_get();
 
 	void state_game_destroy();
 

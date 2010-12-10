@@ -5,7 +5,8 @@
 	/* Nombre d'elements du menu */
 	#define STATE_MENU_ITEMSNB		2
 	
-	
+	struct State;
+
 	/**
 	 *	Environnement pour l'etat menu
 	 */
@@ -24,7 +25,7 @@
 	 *	@param	flag	Drapeau pour savoir on cree, on recupere ou on detruit l'etat
 	 *	@return 		Pointeur vers l'etat de menu
 	 */
-	State* state_menu(int flag);
+	struct State* state_menu(int flag);
 	
 	/**
 	 *	Fonction permettant d'instancier l'etat menu
@@ -35,7 +36,7 @@
 	 *	Recuperation du pointeur vers l'etat menu
 	 *	@return			Pointeur vers l'instance de l'etat menu en cours
 	 */
-	State* state_get_menu();
+	struct State* state_get_menu();
 	
 	/**
 	 *	Destruction de l'etat menu

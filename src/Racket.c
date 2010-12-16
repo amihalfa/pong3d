@@ -75,9 +75,9 @@ void racket_move(void* v_env, char num_racket ){
 
 	Racket* racket;
 	if ( num_racket == RACKET_BOTTOM){
-		racket = &env->racket_bottom;
+		racket = &env->racket[RACKET_BOTTOM];
 	} else if ( num_racket == RACKET_TOP ){
-		racket = &env->racket_top;
+		racket = &env->racket[RACKET_TOP];
 	}
 
 	float rckt_width_mi = racket->width / 2;

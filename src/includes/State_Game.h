@@ -13,8 +13,7 @@
 
 	struct State_Game_Env{
 		Ground ground;
-		Racket racket_top;
-		Racket racket_bottom;
+		Racket racket[2];
 		Ball ball[STATE_GAME_BALLS];
 		int balls_nb;
 		Uint16 w_height, w_width;

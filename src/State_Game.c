@@ -75,9 +75,9 @@ void state_game_init(State_Game_Env* env){
 	
 	/* Mise en place des eleme,ts dans la scene */
 	env->ground = g;
-	env->racket_top = r;
+	env->racket[RACKET_TOP] = r;
 	r.position.y = -18.0f;
-	env->racket_bottom = r;
+	env->racket[RACKET_BOTTOM] = r;
 	env->balls_nb = 10;
 	env->mouse_motion_x = 0;
 	env->mouse_motion_y = 0;
@@ -143,11 +143,11 @@ void state_game_draw(State_Game_Env* env){
 		util_reflection_particules( &(env->ball[i]) , &(env->ground) );
 	}
 	
-	util_reflection_racket( &(env->racket_top), &(env->ground) );
-	racket_draw( &(env->racket_top) );
+	util_reflection_racket( &(env->racket[RACKET_TOP]), &(env->ground) );
+	racket_draw( &(env->racket[RACKET_TOP]) );
 	
-	util_reflection_racket( &(env->racket_bottom), &(env->ground) );
-	racket_draw( &(env->racket_bottom) );
+	util_reflection_racket( &(env->racket[RACKET_BOTTOM]), &(env->ground) );
+	racket_draw( &(env->racket[RACKET_BOTTOM]) );
 	
 	ground_draw( &(env->ground) );
 	

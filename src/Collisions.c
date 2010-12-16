@@ -17,8 +17,8 @@ int collision_state_game(State_Game_Env* env){
 	int i,j;
 	for(i = 0 ; i< env->balls_nb ; i++){
 	
-		collision_ball_racket(&env->ball[i], &env->racket_bottom);
-		collision_ball_racket(&env->ball[i], &env->racket_top);
+		collision_ball_racket(&env->ball[i], &env->racket[RACKET_BOTTOM]);
+		collision_ball_racket(&env->ball[i], &env->racket[RACKET_TOP]);
 		collision_ball_ground(&env->ball[i], &env->ground);
 		
 		for(j = env->balls_nb - 1; j > i ; j--){

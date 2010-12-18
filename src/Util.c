@@ -2,10 +2,12 @@
 #include <SDL/SDL_image.h>
 #include <GL/glu.h>
 #include "includes/Coords.h"
+#include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
+#include "includes/Config.h"
 #include "includes/State_Game.h"
 #include "includes/Menu_Item.h"
 #include "includes/State_Menu.h"
@@ -33,21 +35,6 @@ GLuint util_texture_load(char * path){
 	return texture_name;
 	
 }
-
-
-int util_load_configuration(State_Game_Env* env_game){
-	char* vars[NB_CONFIG] = {"mouse_sensibility=%f\n"};
-	int i;
-	FILE* config = fopen("config/config.cfg", "r+");
-	if (!config) {
-		return 0;
-	}
-	for (i = 0; i < NB_CONFIG; i++) {
-		fscanf(config, vars[i], &env_game->config[i]);
-	}
-	return 1;
-}
-
 
 void util_reflection_ball(Ball* ball, Ground* ground){
 	
@@ -94,31 +81,6 @@ void util_reflection_racket(Racket* racket, Ground* ground){
 		glScalef(1.0f, 1.0f, -1.0f);
 		glTranslatef(0.0f, 0.0f, 0.5f);
 		racket_draw(racket);	
-	glPopMatrix();
-				
-	glDisable(GL_STENCIL_TEST);							
-}
-
-void util_reflection_particules(Ball* ball, Ground* ground){
-	
-	glColorMask(0,0,0,0);
-	glEnable(GL_STENCIL_TEST);
-	glStencilFunc(GL_ALWAYS, 1, 1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glDisable(GL_DEPTH_TEST);
-	
-	ground_draw(ground);
-	
-	glEnable(GL_DEPTH_TEST);
-	
-	glColorMask(1,1,1,1);
-	glStencilFunc(GL_EQUAL, 1, 1);
-	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-		
-	glPushMatrix();					
-		glScalef(1.0f, 1.0f, -1.0f);
-		glTranslatef(0.0f, 0.0f, 0.5f);
-		animation_particules(ball);	
 	glPopMatrix();
 				
 	glDisable(GL_STENCIL_TEST);							

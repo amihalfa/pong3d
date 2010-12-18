@@ -10,11 +10,7 @@
 #define BALL_H
 
 	#define BALL_MAX_SPEED 0.06
-	#define BALL_HISTO 40
-	
-	/**
-	 *	Structure permettant de gerer la balle
-	 */
+
 	typedef struct Ball{
 		
 		/** Position de la balle */
@@ -26,7 +22,9 @@
 		/** Rayon de la balle */
 		float radius;
 		
-		Coord3d pos_histo[BALL_HISTO];
+		Particle particle[PARTICLES_NB];
+		
+		int particle_cursor;
 		
 	} Ball;
 	

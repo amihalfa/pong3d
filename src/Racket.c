@@ -2,10 +2,12 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "includes/Coords.h"
+#include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Racket.h"
 #include "includes/Ground.h"
 #include "includes/Ball.h"
+#include "includes/Config.h"
 #include "includes/State_Game.h"
 
 /**
@@ -83,9 +85,8 @@ void racket_move(void* v_env, char num_racket ){
 	float rckt_width_mi = racket->width / 2;
 	float grnd_width_mi = env->ground.width / 2;
 
-	if ( env->mouse_motion_x != 0 )
-	{
-		racket->speed = RACKET_SPEED * env->ellapsed_time * env->mouse_motion_x * env->config[MOUSE_SENSIBILITY];
+	if ( env->mouse_motion_x != 0 ){
+		racket->speed = RACKET_SPEED * env->ellapsed_time * env->mouse_motion_x * env->config[CONFIG_MOUSE_SENSIBILITY];
 	}
 	else if ( env->keystates[SDLK_RIGHT] ){
 		racket->speed = RACKET_SPEED * env->ellapsed_time;

@@ -2,14 +2,9 @@
 #define	STATE_GAME
 
 	#define STATE_GAME_BALLS	500
-	
 
 	#define RACKET_BOTTOM 0
 	#define RACKET_TOP 1
-	#define NB_CONFIG 1
-	#define MOUSE_SENSIBILITY 0
-
-	struct State;
 
 	struct State_Game_Env{
 		Ground ground;
@@ -20,17 +15,17 @@
 		Sint16 mouse_motion_x, mouse_motion_y;
 		Uint8 *keystates;
 		Uint32 ellapsed_time;
-		float config[NB_CONFIG];
+		float config[CONFIG_NB];
 	};
 
 	typedef struct State_Game_Env State_Game_Env;
 
 
-	struct State* state_game(int);
+	State* state_game(int);
 
 	void state_game_create();
 
-	struct State* state_game_get();
+	State* state_game_get();
 
 	void state_game_destroy();
 

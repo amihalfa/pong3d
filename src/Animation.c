@@ -3,6 +3,7 @@
 #include <GL/glu.h>
 #include <time.h>
 #include "includes/Coords.h"
+#include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Ball.h"
 #include "includes/Menu_Item.h"
@@ -25,14 +26,13 @@ void animation_state_menu(State_Menu_Env* env, Uint32 e_time){
 	
 }
 
-void animation_particules( Ball* b ){
+/**void animation_particules( Ball* b ){
 	
 	int i,j;
 	float alea, x,y,z;
-	srand(time(NULL));
 	for( i = 0 ; i < BALL_HISTO ; i++ ){
 	
-		/* On met la matrice actuelle dans la pile avant modif. */
+		/* On met la matrice actuelle dans la pile avant modif. *-/
 		glPushMatrix();
 
 	/*
@@ -45,7 +45,7 @@ void animation_particules( Ball* b ){
 	gluSphere( params , size , 10 , 10 );
 	gluCylinder( params , size , size  , 1 , 20 , 1 );
 	glDisable(GL_BLEND);
-	gluDeleteQuadric(params);*/
+	gluDeleteQuadric(params);*-/
 	
 		for( j = 0; j < 10; j++){
 			
@@ -62,7 +62,7 @@ void animation_particules( Ball* b ){
 			
 			glBegin( GL_QUADS );
 	
-			/* Particule */
+			/* Particule *-/
 			glNormal3f( 0.0f , 0.0f , 1.0f );
 			glTexCoord2i(0,1); glVertex3d( x - 0.1 , y - 0.1 , z + 0.1 );
 			glTexCoord2i(1,1); glVertex3d( x + 0.1, y - 0.1 , z + 0.1 );
@@ -73,8 +73,8 @@ void animation_particules( Ball* b ){
 			glDisable(GL_BLEND);
 		}
 		
-		/* On remet la matrice mise en pile au depart */
+		/* On remet la matrice mise en pile au depart *-/
 		glPopMatrix();
 		
 	}
-}
+}*/

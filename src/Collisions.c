@@ -3,10 +3,12 @@
 #include <SDL/SDL.h>
 #include <math.h>
 #include "includes/Coords.h"
+#include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Ground.h"
 #include "includes/Ball.h"
 #include "includes/Racket.h"
+#include "includes/Config.h"
 #include "includes/State_Game.h"
 #include "includes/Collisions.h" 
 #include "includes/Racket.h"

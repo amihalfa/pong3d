@@ -1,13 +1,14 @@
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "includes/Config.h"
 #include "includes/Coords.h"
+#include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Ground.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/State_Game.h"
-#include "includes/Ball.h"
 #include "includes/Util.h"
 
 
@@ -21,7 +22,6 @@ void ball_draw( Ball* ball ){
 	glPushMatrix();
 	
 	/* On change le repere */
-
 	glTranslatef( ball->position.x , ball->position.y, ball->position.z );
 	
 	/* On applique la couleur */
@@ -49,9 +49,9 @@ void ball_move( Ball* ball, Uint32 e_time ){
 
 	int i;
 	
-	/* Sauvegarde des anciennes positions pour faire les particules */
+	/* Sauvegarde des anciennes positions pour faire les particules 
 	for( i = 0; i < BALL_HISTO-1; i++ ){
-		/* Decalage */
+		/* Decalage *
 		ball->pos_histo[i].x = ball->pos_histo[i+1].x;
 		ball->pos_histo[i].y = ball->pos_histo[i+1].y;
 	}

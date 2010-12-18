@@ -1,8 +1,8 @@
-#include "includes/Window.h"
 #include <SDL/SDL.h>
 #include <SDL/SDL_mouse.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "includes/Window.h"
 
 /**
  *	Initialisation de la fenetre et de l'affichage 

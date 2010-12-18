@@ -4,11 +4,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include "includes/Coords.h"
+#include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
 #include "includes/Menu_Item.h"
+#include "includes/Config.h"
 #include "includes/State_Game.h"
 #include "includes/State_Menu.h"
 #include "includes/Collisions.h"
@@ -31,13 +33,12 @@ State* state_game(int action){
 		(( State_Game_Env* )state_game->env)->w_height = modes[0]->h;
 		(( State_Game_Env* )state_game->env)->w_width = modes[0]->w;
 		
-		util_load_configuration(( State_Game_Env* ) state_game->env);
+		config_load(( State_Game_Env* ) state_game->env);
 	}
 	else if( action == STATE_DESTROY && state_game ){
 	
 		free(state_game->env);
 		free(state_game);
-		
 		state_game = (State*)0;
 	}
 	return state_game;
@@ -65,7 +66,7 @@ void state_game_init(State_Game_Env* env){
 	Ground g = { 2.0f , 40.0f , 30.0f , 0 };
 	g.texture = 0;
 	
-	Racket r = { 0.0f , 18.0f , 1.0f , 5.0f , 1.0f , 0.01f , 0 };
+	Racket r = { 0.0f , 18.0f , 0.8f , 5.0f , 0.8f , 0.01f , 0 };
 	r.texture = 0;
 	
 	/* Proprietes du spot d'eclairage */
@@ -73,7 +74,7 @@ void state_game_init(State_Game_Env* env){
 	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
-	/* Mise en place des eleme,ts dans la scene */
+	/* Mise en place des elements dans la scene */
 	env->ground = g;
 	env->racket[RACKET_TOP] = r;
 	r.position.y = -18.0f;
@@ -91,11 +92,6 @@ void state_game_init(State_Game_Env* env){
 	for (i = 0; i < env->balls_nb; i++){
 		b.position.x = (i%nbcol - nbcol/2)*(b.radius * 2.5f);
 		b.position.y = (i/nbcol - nbcol/2)*(b.radius * 2.5f);
-		for(j = 0 ; j < BALL_HISTO ; j++){
-			b.pos_histo[j].x = b.position.x;
-			b.pos_histo[j].y = b.position.y;
-			b.pos_histo[j].z = b.position.z;
-		}
 		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
 		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
 		env->ball[i] = b;
@@ -135,18 +131,23 @@ void state_game_draw(State_Game_Env* env){
 	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 5);
 	
 	/* Dessin des elements de la scene */
-	
 	for(i = 0 ; i< env->balls_nb ; i++){
-		util_reflection_ball( &(env->ball[i]), &(env->ground) );
+		
+		if(env->config[CONFIG_REFLECTION]){
+			util_reflection_ball( &(env->ball[i]), &(env->ground) );
+		}
 		ball_draw( &(env->ball[i]) );
-		animation_particules( &(env->ball[i]) );
-		util_reflection_particules( &(env->ball[i]) , &(env->ground) );
+	
 	}
 	
-	util_reflection_racket( &(env->racket[RACKET_TOP]), &(env->ground) );
+	if(env->config[CONFIG_REFLECTION]){
+		util_reflection_racket( &(env->racket[RACKET_TOP]), &(env->ground) );
+	}
 	racket_draw( &(env->racket[RACKET_TOP]) );
 	
-	util_reflection_racket( &(env->racket[RACKET_BOTTOM]), &(env->ground) );
+	if(env->config[CONFIG_REFLECTION]){
+		util_reflection_racket( &(env->racket[RACKET_BOTTOM]), &(env->ground) );
+	}
 	racket_draw( &(env->racket[RACKET_BOTTOM]) );
 	
 	ground_draw( &(env->ground) );

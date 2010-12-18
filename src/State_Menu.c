@@ -1,11 +1,13 @@
 #include <SDL/SDL.h>
 #include <GL/glu.h>
 #include "includes/Coords.h"
+#include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Racket.h"
 #include "includes/Ball.h"
 #include "includes/Ground.h"
 #include "includes/Menu_Item.h"
+#include "includes/Config.h"
 #include "includes/State_Game.h"
 #include "includes/State_Menu.h"
 #include "includes/Collisions.h"

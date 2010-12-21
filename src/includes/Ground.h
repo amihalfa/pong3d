@@ -23,10 +23,17 @@
 		/** Largeur du terrain */
 		float width;
 		
-		/** Identifiant de la texture a appliquer au terrain */
-		GLuint texture;
+		/** Identifiants du buffer */
+		GLuint buffer[2];
 		
 	} Ground;
+	
+	/**
+	 * Initialisation du dessin du terrain en OpenGL
+	 * On prépare les donnees a envoyer a la carte graphique
+	 * @param	ground		Pointeur vers la structure a utiliser designant le terrain
+	 */		
+	void ground_init_draw( Ground* ground);
 	
 	/**
 	 *	Dessin du terrain en OpenGL

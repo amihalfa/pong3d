@@ -62,11 +62,20 @@ void state_game_init(State_Game_Env* env){
 
 	int i,j;
 	
-	/* Initialisation des objets de la scene */
-	Ground g = { 2.0f , 40.0f , 30.0f , 0 };
-	g.texture = 0;
+	/* Initialisation des donnees du terrain */
+	Ground g;
+	g.height = 2.0f;
+	g.length = 40.0f;
+	g.width = 30.0f;
 	
-	Racket r = { 0.0f , 18.0f , 0.8f , 5.0f , 0.8f , 0.01f , 0 };
+	/* Initialisation des donnees pour la raquette */
+	Racket r;
+	r.position.x = 0.0f;
+	r.position.y = 18.0f;
+	r.position.z = 0.8;
+	r.width = 5.0f;
+	r.radius = 0.8f;
+	r.speed = 0.01f;
 	r.texture = 0;
 	
 	/* Proprietes du spot d'eclairage */
@@ -94,8 +103,15 @@ void state_game_init(State_Game_Env* env){
 		b.position.y = (i/nbcol - nbcol/2)*(b.radius * 2.5f);
 		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
 		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
+		b.particle_cursor = 0;
+		for(j=0; j<PARTICLES_NB; j++){
+			b.particle[j].position = b.position;
+		}
 		env->ball[i] = b;
 	}
+	
+	
+	ground_init_draw( &env->ground );
 	
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);

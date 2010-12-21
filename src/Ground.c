@@ -75,6 +75,7 @@ void ground_draw ( Ground* ground ) {
 	glEnable(GL_BLEND);	
 	glEnableClientState( GL_VERTEX_ARRAY );
 	
+	/* Lancement du dessin */
 	glDrawElements(GL_QUADS, 32, GL_UNSIGNED_INT, 0);
 	
 	/* Désactivation des options precedemment activees */

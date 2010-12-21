@@ -22,9 +22,7 @@
 		/** Rayon de la balle */
 		float radius;
 		
-		Particle particle[PARTICLES_NB];
-		
-		int particle_cursor;
+		Particles particles;
 		
 	} Ball;
 	

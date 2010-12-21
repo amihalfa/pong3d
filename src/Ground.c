@@ -47,11 +47,11 @@ void ground_init_draw ( Ground* ground ) {
 	
 	/* On attache le buffer de points au tableau ci-dessus */
 	glBindBuffer(GL_ARRAY_BUFFER, ground->buffer[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ground_array), ground_array, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(ground_array), ground_array, GL_STATIC_DRAW);
 	
 	/* Idem pour le tableau d'indices */
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ground->buffer[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ground_i_array), ground_i_array, GL_DYNAMIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ground_i_array), ground_i_array, GL_STATIC_DRAW);
 	
 }
 

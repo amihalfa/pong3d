@@ -25,7 +25,7 @@ void ball_draw( Ball* ball ){
 	glTranslatef( ball->position.x , ball->position.y, ball->position.z );
 	
 	/* On applique la couleur */
-	glColor3ub( 10 , 10 , 200 );
+	glColor3f( 0.04f , 0.04f , 0.9f);
 	
 	/* On alloue dynamiquement les parametres pour notre quadrique */
 	GLUquadric* params = gluNewQuadric();

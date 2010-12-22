@@ -19,6 +19,6 @@
 
 	void util_reflection_racket(Racket* racket, Ground* ground);
 	
-	void util_reflection_particules(Ball* ball, Ground* ground);
+	void util_reflection_particles(Particles* particles, Ground* ground);
 	
 #endif

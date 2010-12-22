@@ -145,28 +145,36 @@ void state_game_draw(State_Game_Env* env){
 	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDirection);
 	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 5);
 	
-	/* Dessin des elements de la scene */
-	for(i = 0 ; i< env->balls_nb ; i++){
-		
-		if(env->config[CONFIG_REFLECTION]){
+	/* Dessin des reflets des balles et des particules */
+	if(env->config[CONFIG_REFLECTION]){
+		for(i = 0 ; i< env->balls_nb ; i++){
+			util_reflection_particles( &(env->ball[i].particles), &(env->ground) );
 			util_reflection_ball( &(env->ball[i]), &(env->ground) );
 		}
-		ball_draw( &(env->ball[i]) );
-		particles_draw( &(env->ball[i].particles) );
-	
 	}
 	
+	/* Dessin du reflet de la raquette sur le plateau */
 	if(env->config[CONFIG_REFLECTION]){
 		util_reflection_racket( &(env->racket[RACKET_TOP]), &(env->ground) );
 	}
-	racket_draw( &(env->racket[RACKET_TOP]) );
 	
+	/* Dessin du reflet la raquette sur le plateau */
 	if(env->config[CONFIG_REFLECTION]){
 		util_reflection_racket( &(env->racket[RACKET_BOTTOM]), &(env->ground) );
 	}
-	racket_draw( &(env->racket[RACKET_BOTTOM]) );
 	
+	/* Dessin du terrain */
 	ground_draw( &(env->ground) );
+	
+	/* Dessin de la balle et de ses particules */
+	for(i = 0 ; i< env->balls_nb ; i++){
+		particles_draw( &(env->ball[i].particles) );
+		ball_draw( &(env->ball[i]) );
+	}
+	
+	/* Dessin des deux raquettes */
+	racket_draw( &(env->racket[RACKET_TOP]) );
+	racket_draw( &(env->racket[RACKET_BOTTOM]) );
 	
 	/* On s'assure que le dessin est termine */
 	glFlush();

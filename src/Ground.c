@@ -19,15 +19,23 @@ void ground_init_draw ( Ground* ground ) {
     GLfloat h = ground->height;
 	
 	/* Coordonnees des points permettant de dessiner le terrain */
-	GLfloat ground_array[48] = {
-        -w, -l, 0.0f, -w, l, 0.0f,
-        w, l, 0.0f, w, -l, 0.0f,
-        w, -l, h, w, l, h,
-        w+0.2f, l, h, w+0.2f, -l, h,
-        w+0.2f, -l, -0.2f, w+0.2f, l, -0.2f,
-        -w-0.2f, l, -0.2f, -w-0.2f, -l, -0.2f,
-		-w-0.2f, -l, h, -w-0.2f, l, h,
-		-w, l, h, -w, -l, h
+	GLfloat ground_array[112] = {
+        -w, -l, 0.0f, 			0.15f, 0.15f, 0.15f, 0.9f,
+		-w, l, 0.0f,			0.05f, 0.05f, 0.05f, 0.9f,
+        w, l, 0.0f, 			0.15f, 0.15f, 0.15f, 0.9f,
+		w, -l, 0.0f,			0.05f, 0.05f, 0.05f, 0.9f,
+        w, -l, h, 				0.15f, 0.15f, 0.15f, 1.0f,
+		w, l, h,				0.02f, 0.02f, 0.02f, 1.0f,
+		w+0.2f, l, h, 			1.0f, 0.1f, 0.1f, 1.0f,
+		w+0.2f, -l, h,			1.0f, 0.1f, 0.1f, 1.0f,
+        w+0.2f, -l, -0.2f, 		1.0f, 0.1f, 0.1f, 1.0f,
+		w+0.2f, l, -0.2f,		1.0f, 0.1f, 0.1f, 1.0f,
+        -w-0.2f, l, -0.2f, 		1.0f, 0.1f, 0.1f, 1.0f,
+		-w-0.2f, -l, -0.2f,		1.0f, 0.1f, 0.1f, 1.0f,
+		-w-0.2f, -l, h, 		1.0f, 0.1f, 0.1f, 1.0f,
+		-w-0.2f, l, h,			1.0f, 0.1f, 0.1f, 1.0f,
+		-w, l, h, 				0.15f, 0.15f, 0.15f, 1.0f,
+		-w, -l, h,				0.05f, 0.05f, 0.05f, 1.0f
     };
 	
 	/* Organisation des indices des points pour dessiner le terrain  */
@@ -68,17 +76,21 @@ void ground_draw ( Ground* ground ) {
     glBindBuffer(GL_ARRAY_BUFFER, ground->buffer[0]);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ground->buffer[1]);
 	
-	/* Coordonnees sur 3 float non separes (consecutifs) */
-	glVertexPointer( 3, GL_FLOAT, 3 * sizeof(GLfloat), (float*)0 );
+	/* Coordonnees sur 3 floats separes */
+	glVertexPointer( 3, GL_FLOAT, 7 * sizeof(GLfloat), (float*)0 );
+	glColorPointer( 4, GL_FLOAT, 7 * sizeof(GLfloat), (float*)0+3 );
 	
-	/* Activation de la transparence et des tableaux de vertices */
-	glEnable(GL_BLEND);	
+	/* Activation des tableaux de vertices */
 	glEnableClientState( GL_VERTEX_ARRAY );
+	glEnableClientState( GL_COLOR_ARRAY );
+	glEnable(GL_BLEND);	
 	
 	/* Lancement du dessin */
 	glDrawElements(GL_QUADS, 32, GL_UNSIGNED_INT, 0);
 	
 	/* Désactivation des options precedemment activees */
 	glDisable(GL_BLEND);	
+	glDisableClientState( GL_COLOR_ARRAY );
 	glDisableClientState( GL_VERTEX_ARRAY );
+	
 }

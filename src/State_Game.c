@@ -148,8 +148,10 @@ void state_game_draw(State_Game_Env* env){
 	/* Dessin des reflets des balles et des particules */
 	if(env->config[CONFIG_REFLECTION]){
 		for(i = 0 ; i< env->balls_nb ; i++){
-			util_reflection_particles( &(env->ball[i].particles), &(env->ground) );
-			util_reflection_ball( &(env->ball[i]), &(env->ground) );
+			if(env->config[CONFIG_PARTICLES])
+				util_reflection_particles( &(env->ball[i].particles), &(env->ground) );
+			
+				util_reflection_ball( &(env->ball[i]), &(env->ground) );
 		}
 	}
 	
@@ -168,7 +170,8 @@ void state_game_draw(State_Game_Env* env){
 	
 	/* Dessin de la balle et de ses particules */
 	for(i = 0 ; i< env->balls_nb ; i++){
-		particles_draw( &(env->ball[i].particles) );
+		if(env->config[CONFIG_PARTICLES])
+			particles_draw( &(env->ball[i].particles) );
 		ball_draw( &(env->ball[i]) );
 	}
 	
@@ -226,7 +229,8 @@ void state_game_main(State_Game_Env* env, Uint32 e_time){
 	collision_state_game(env);
 	
 	for(i = 0 ; i< env->balls_nb ; i++){
-		particles_add_position(&env->ball[i].particles, &env->ball[i].position);
+		if(env->config[CONFIG_PARTICLES])
+			particles_add_position(&env->ball[i].particles, &env->ball[i].position);
 		ball_move(&env->ball[i], e_time );
 	}
 	state_game_draw(env);

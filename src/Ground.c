@@ -62,7 +62,7 @@ void ground_init_draw ( Ground* ground ) {
 void ground_draw ( Ground* ground ) {
 
 	/* Couleur du terrain, gris transparent */
-	glColor4f( 0.2f, 0.2f, 0.2f, 0.8f);
+	glColor4f( 0.25f, 0.25f, 0.25f, 0.8f);
 	
 	/* On recupere les buffers pour le dessin du terrain */
     glBindBuffer(GL_ARRAY_BUFFER, ground->buffer[0]);

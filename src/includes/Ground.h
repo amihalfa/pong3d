@@ -23,10 +23,6 @@ typedef struct Ground {
     /** Largeur du terrain */
     float width;
 
-    GLfloat draw_array[112];
-	
-	GLuint draw_i_array[32];
-
 } Ground;
 
 /**

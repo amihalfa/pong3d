@@ -16,9 +16,6 @@ typedef struct Particles {
 	/** Curseur indiquant la prochaine particule a effacer */
     int cursor;
 	
-	/** Identifiant de buffer en carte graphque */
-	GLuint buffer[1];
-	
 } Particles;
 
 /**

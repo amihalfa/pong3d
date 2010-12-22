@@ -1,5 +1,5 @@
 #include <SDL/SDL.h>
-#include "GL/gl.h"
+#include <GL/gl.h>
 #include "includes/Coords.h"
 #include "includes/Particles.h"
 #include "includes/State.h"

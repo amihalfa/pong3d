@@ -16,9 +16,9 @@
  */
 void particles_init_draw(Particles* particles){
 	
-	glGenBuffers( 1, particles->buffer );
+	/*glGenBuffers( 1, particles->buffer );
 	glBindBuffer(GL_ARRAY_BUFFER, particles->buffer[0]);
-	glBufferData(GL_ARRAY_BUFFER, 7*PARTICLES_NB*sizeof(GLfloat), &(particles->elements[0][0]), GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, 7*PARTICLES_NB*sizeof(GLfloat), &(particles->elements[0][0]), GL_DYNAMIC_DRAW);*/
 }
 
 /**
@@ -46,16 +46,13 @@ void particles_init(Particles* particles, Coord3d* position){
  */
 void particles_draw(Particles* particles){
 	
-	glBindBuffer(GL_ARRAY_BUFFER, particles->buffer[0]);
-	glBufferData(GL_ARRAY_BUFFER, 7*PARTICLES_NB*sizeof(GLfloat), &(particles->elements[0][0]), GL_DYNAMIC_DRAW);
-	
-	glVertexPointer( 3, GL_FLOAT, 7 * sizeof(float), (float*)0 + 4 );
-	glColorPointer( 4, GL_FLOAT, 7 * sizeof(float), (float*)(0) );
-	
 	glEnableClientState( GL_VERTEX_ARRAY );
 	glEnableClientState( GL_COLOR_ARRAY );
 	glEnable(GL_BLEND);
 	glDisable(GL_DEPTH_TEST);
+	
+	glVertexPointer( 3, GL_FLOAT, 7 * sizeof(float), &(particles->elements[0][0]) + 4 );
+	glColorPointer( 4, GL_FLOAT, 7 * sizeof(float), &(particles->elements[0][0]) );
 	
 	glPointSize(2);
 	glDrawArrays(GL_POINTS, 0, PARTICLES_NB);

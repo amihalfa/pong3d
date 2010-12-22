@@ -38,6 +38,8 @@ void menu_item_draw(Menu_Item * menu_item){
 	/* On remet la matrice mise en pile au depart */
 	glPopMatrix();
 	
+	glDisable (GL_TEXTURE_2D);
+	
 	glDisable(GL_BLEND);
 
 }

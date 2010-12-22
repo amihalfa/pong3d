@@ -47,17 +47,6 @@ void ball_draw( Ball* ball ){
  */
 void ball_move( Ball* ball, Uint32 e_time ){
 
-	int i;
-	
-	/* Sauvegarde des anciennes positions pour faire les particules 
-	for( i = 0; i < BALL_HISTO-1; i++ ){
-		/* Decalage *
-		ball->pos_histo[i].x = ball->pos_histo[i+1].x;
-		ball->pos_histo[i].y = ball->pos_histo[i+1].y;
-	}
-	ball->pos_histo[BALL_HISTO-1].x = ball->position.x;
-	ball->pos_histo[BALL_HISTO-1].y = ball->position.y;
-	
 	/* Nouvelle position */
 	ball->position.x += ball->speed.x + (ball->speed.x / 10) * e_time ;
 	ball->position.y += ball->speed.y + (ball->speed.y / 10) * e_time;

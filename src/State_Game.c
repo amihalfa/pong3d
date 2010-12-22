@@ -103,12 +103,12 @@ void state_game_init(State_Game_Env* env){
 		b.position.y = (i/nbcol - nbcol/2)*(b.radius * 2.5f);
 		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
 		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
-		for(j=0; j<PARTICLES_NB; j++){
-			b.particles.elements[j].position = b.position;
-		}
+		
+		particles_init( &b.particles, &b.position);
+		
 		env->ball[i] = b;
+		particles_init_draw( &env->ball[i].particles );
 	}
-	
 	
 	ground_init_draw( &env->ground );
 	

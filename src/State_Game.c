@@ -104,10 +104,10 @@ void state_game_init(State_Game_Env* env){
 		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
 		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
 		
-		particles_init( &b.particles, &b.position);
-		
 		env->ball[i] = b;
-		particles_init_draw( &env->ball[i].particles );
+		
+		particles_init( &env->ball[i].particles, &b.position);
+		particles_init_draw( &(env->ball[i].particles) );
 	}
 	
 	ground_init_draw( &env->ground );
@@ -152,6 +152,7 @@ void state_game_draw(State_Game_Env* env){
 			util_reflection_ball( &(env->ball[i]), &(env->ground) );
 		}
 		ball_draw( &(env->ball[i]) );
+		particles_draw( &(env->ball[i].particles) );
 	
 	}
 	
@@ -216,9 +217,10 @@ void state_game_main(State_Game_Env* env, Uint32 e_time){
 	
 	collision_state_game(env);
 	
-	for(i = 0 ; i< env->balls_nb ; i++)
+	for(i = 0 ; i< env->balls_nb ; i++){
+		particles_add_position(&env->ball[i].particles, &env->ball[i].position);
 		ball_move(&env->ball[i], e_time );
-	
+	}
 	state_game_draw(env);
 }
 

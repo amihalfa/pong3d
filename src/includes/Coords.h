@@ -10,7 +10,9 @@
 	
 		
 	struct Coord3d {
-		float x, y, z;
+		GLfloat x;
+		GLfloat y;
+		GLfloat z;
 	};
 	
 	typedef struct Coord3d Coord3d;

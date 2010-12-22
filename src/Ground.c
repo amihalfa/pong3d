@@ -14,10 +14,20 @@
  */
 void ground_init_draw ( Ground* ground ) {
 
+    printf("ok");
+	
+}
+
+/**
+ *	Dessin du terrain en OpenGL
+ *	@param	ground		Pointeur vers la structure a utiliser pour le dessin
+ */
+void ground_draw ( Ground* ground ) {
+	
     GLfloat l = ground->length / 2.0;
     GLfloat w = ground->width / 2.0;
     GLfloat h = ground->height;
-	
+
 	/* Coordonnees des points permettant de dessiner le terrain */
 	GLfloat ground_array[112] = {
         -w, -l, 0.0f, 			0.15f, 0.15f, 0.15f, 0.9f,
@@ -38,6 +48,7 @@ void ground_init_draw ( Ground* ground ) {
 		-w, -l, h,				0.05f, 0.05f, 0.05f, 1.0f
     };
 	
+	
 	/* Organisation des indices des points pour dessiner le terrain  */
     GLuint ground_i_array[32] = {
 		0, 1, 2, 3,
@@ -49,48 +60,25 @@ void ground_init_draw ( Ground* ground ) {
 		12,13,14,15,
 		14,15,0,1
     };
-
-	/* Generation des buffers pour stocker les 2 tableau en memoire graphique */
-	glGenBuffers( 2, ground->buffer );
-	
-	/* On attache le buffer de points au tableau ci-dessus */
-	glBindBuffer(GL_ARRAY_BUFFER, ground->buffer[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(ground_array), ground_array, GL_STATIC_DRAW);
-	
-	/* Idem pour le tableau d'indices */
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ground->buffer[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ground_i_array), ground_i_array, GL_STATIC_DRAW);
-	
-}
-
-/**
- *	Dessin du terrain en OpenGL
- *	@param	ground		Pointeur vers la structure a utiliser pour le dessin
- */
-void ground_draw ( Ground* ground ) {
-
-	/* Couleur du terrain, gris transparent */
-	glColor4f( 0.15f, 0.15f, 0.15f, 0.9f);
-	
-	/* On recupere les buffers pour le dessin du terrain */
-    glBindBuffer(GL_ARRAY_BUFFER, ground->buffer[0]);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ground->buffer[1]);
-	
-	/* Coordonnees sur 3 floats separes */
-	glVertexPointer( 3, GL_FLOAT, 7 * sizeof(GLfloat), (float*)0 );
-	glColorPointer( 4, GL_FLOAT, 7 * sizeof(GLfloat), (float*)0+3 );
 	
 	/* Activation des tableaux de vertices */
 	glEnableClientState( GL_VERTEX_ARRAY );
 	glEnableClientState( GL_COLOR_ARRAY );
-	glEnable(GL_BLEND);	
+	glEnable(GL_BLEND);
+	
+	/* Coordonnees sur 3 floats separes */
+	glVertexPointer( 3, GL_FLOAT, 7 * sizeof(GLfloat), ground_array );
+	glColorPointer( 4, GL_FLOAT, 7 * sizeof(GLfloat), ground_array+3 );
 	
 	/* Lancement du dessin */
-	glDrawElements(GL_QUADS, 32, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_QUADS, 32, GL_UNSIGNED_INT, ground_i_array);
 	
 	/* Désactivation des options precedemment activees */
-	glDisable(GL_BLEND);	
+	glDisable(GL_BLEND);
 	glDisableClientState( GL_COLOR_ARRAY );
 	glDisableClientState( GL_VERTEX_ARRAY );
+	
+	
+	
 	
 }

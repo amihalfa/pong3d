@@ -1,6 +1,6 @@
 #include <SDL/SDL.h>
-#include <GL/glu.h>
 #include <GL/gl.h>
+#include <GL/glu.h>
 #include <stdlib.h>
 #include <time.h>
 #include "includes/Coords.h"
@@ -107,10 +107,8 @@ void state_game_init(State_Game_Env* env){
 		env->ball[i] = b;
 		
 		particles_init( &env->ball[i].particles, &b.position);
-		particles_init_draw( &(env->ball[i].particles) );
+		/*particles_init_draw( &(env->ball[i].particles) );*/
 	}
-	
-	ground_init_draw( &env->ground );
 	
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);

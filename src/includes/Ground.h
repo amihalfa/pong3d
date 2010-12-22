@@ -23,8 +23,9 @@ typedef struct Ground {
     /** Largeur du terrain */
     float width;
 
-    /** Identifiants du buffer */
-    GLuint buffer[2];
+    GLfloat draw_array[112];
+	
+	GLuint draw_i_array[32];
 
 } Ground;
 

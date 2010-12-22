@@ -6,7 +6,7 @@
 
 CC = gcc
 CFLAGS = -w -ansi -Wall -pedantic
-LDFLAGS = -lGL -lGLU -lSDL -lSDL_image -L.
+LDFLAGS = -lGL -lGLU -lSDL -lSDL_image 
 EXEC = Pong
 DIR_EXEC = bin
 DIR_OBJ = obj

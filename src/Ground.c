@@ -78,7 +78,4 @@ void ground_draw ( Ground* ground ) {
 	glDisableClientState( GL_COLOR_ARRAY );
 	glDisableClientState( GL_VERTEX_ARRAY );
 	
-	
-	
-	
 }

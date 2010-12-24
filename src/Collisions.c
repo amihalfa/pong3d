@@ -159,12 +159,6 @@ int collision_ball_racket( Ball* ball, Racket* racket ){
 				ball->speed.x -= 2*speed_col.x;
 				ball->speed.y -= 2*speed_col.y;
 			}
-			/* On evite que la balle aille trop vite */
-			/*if (fabs(ball->speed.y) > BALL_MAX_SPEED)
-				ball->speed.y = FSIGNE(ball->speed.y)*BALL_MAX_SPEED;
-
-			if (fabs(ball->speed.x) > BALL_MAX_SPEED)
-				ball->speed.x = FSIGNE(ball->speed.x)*BALL_MAX_SPEED;*/
 		}
 	}
 	return 0;

@@ -60,54 +60,52 @@ void state_game_destroy(){
 
 void state_game_init(State_Game_Env* env){
 
-	int i,j;
+	float ratio;
+	int i, j, nbcols;
 	
-	/* Initialisation des donnees du terrain */
-	Ground g;
-	g.height = 2.0f;
-	g.length = 40.0f;
-	g.width = 30.0f;
+	/* Resolutions possibles sous la config actuelle */
+	SDL_Rect **modes;
 	
-	/* Initialisation des donnees pour la raquette */
-	Racket r;
-	r.position.x = 0.0f;
-	r.position.y = 18.0f;
-	r.position.z = 0.8;
-	r.width = 5.0f;
-	r.radius = 0.8f;
-	r.speed = 0.01f;
-	r.texture = 0;
+	/* Initialisation du gen. de nbrs aleatoires, positions et vitesses des balles */
+	srand(time(NULL));
 	
 	/* Proprietes du spot d'eclairage */
 	GLfloat spotDif[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
-	/* Mise en place des elements dans la scene */
-	env->ground = g;
-	env->racket[RACKET_TOP] = r;
-	r.position.y = -18.0f;
-	env->racket[RACKET_BOTTOM] = r;
+	/* Mise en place du terrain dans la scene */
+	env->ground.height = 2.0f;
+	env->ground.length = 40.0f;
+	env->ground.width = 30.0f;
+	
+	/* ... Raquette du haut... */
+	env->racket[RACKET_TOP].position.x = 0.0f;
+	env->racket[RACKET_TOP].position.y = 18.0f;
+	env->racket[RACKET_TOP].position.z = 0.8f;
+	env->racket[RACKET_TOP].width = 5.0f;
+	env->racket[RACKET_TOP].radius = 0.8f;
+	env->racket[RACKET_TOP].speed = 0.01f;
+
+	/* ... Raquette du bas ... */
+	env->racket[RACKET_BOTTOM] = env->racket[RACKET_TOP];
+	env->racket[RACKET_BOTTOM].position.y = -18.0f;
+	
+	/* ... Donnees de l'env ... */
 	env->balls_nb = 10;
 	env->mouse_motion_x = 0;
 	env->mouse_motion_y = 0;
-
-	/* initialisation de balles */
-	srand(time(NULL));
-	Ball b;
-	b.radius = 0.5f;
-	b.position.z = 0.5f;
-	int nbcol = (int) sqrt(env->balls_nb); 
-	for (i = 0; i < env->balls_nb; i++){
-		b.position.x = (i%nbcol - nbcol/2)*(b.radius * 2.5f);
-		b.position.y = (i/nbcol - nbcol/2)*(b.radius * 2.5f);
-		b.speed.x = (float) (rand()%200 - 100) / 1000.0f;
-		b.speed.y = (float) (rand()%200 - 100) / 1000.0f;
-		
-		env->ball[i] = b;
-		
-		particles_init( &env->ball[i].particles, &b.position);
-		/*particles_init_draw( &(env->ball[i].particles) );*/
+	
+	/*   Mise en place des balles    */
+	nbcols = (int) sqrt(env->balls_nb); 
+	for (i = 0; i < env->balls_nb; i++){	
+		env->ball[i].radius = 0.5f;
+		env->ball[i].position.x = (i%nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
+		env->ball[i].position.y = (i/nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
+		env->ball[i].position.z = 0.5f;
+		env->ball[i].speed.x = (float) (rand()%200 - 100) / 1000.0f;
+		env->ball[i].speed.y = (float) (rand()%200 - 100) / 1000.0f;
+		particles_init( &env->ball[i].particles, &env->ball[i].position);
 	}
 	
 	/* Activation de la lumiere */
@@ -115,6 +113,25 @@ void state_game_init(State_Game_Env* env){
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);
 	glLightfv(GL_LIGHT0, GL_SPECULAR, spotSpec);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, spotAmb);
+	
+	/* Pour gerer les zIndex */
+	glEnable(GL_DEPTH_TEST);
+	
+	/* Mise en place des spots d'eclairage */
+	glEnable(GL_LIGHTING);
+	glEnable(GL_COLOR_MATERIAL);
+	
+	/* Recuperation des resolutions possibles */
+	modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_OPENGL);
+
+	/* Calcul du ratio de la resolution */
+	ratio = (float) modes[0]->w / modes[0]->h;
+	
+	/* Mise en place de la projection en perspective */
+	glMatrixMode( GL_PROJECTION );
+	glLoadIdentity();
+	gluPerspective( 40 , ratio , 1 , 1000);
+	
 }
 
 void state_game_draw(State_Game_Env* env){

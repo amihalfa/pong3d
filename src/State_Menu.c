@@ -68,29 +68,31 @@ void state_menu_destroy(){
  *	@param	env		Envirronnement de l'etat menu
  */
 void state_menu_init(State_Menu_Env* env){
-		
-	/* Proprietes du spot d'eclairage */
-	GLfloat spotDif[] = {0.8f, 0.8f, 0.8f, 1.0f};
-	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
-	Menu_Item menu_item = { 0.0 , 0.0 , 0.0 , 1.0 , 10.0 , 25.0 , 0 , 0.0 , 1 };
+	env->menu_item[0].position.x = 0.0f;
+	env->menu_item[0].position.y = 500.0f;
+	env->menu_item[0].texture = util_texture_load ("images/menu/jouer.png");
+	env->menu_item[0].anim_step = 0.0f;
+	env->menu_item[0].anim_dir = 1;
 	
-	menu_item.texture = util_texture_load ("images/menu/jouer.png");
-	env->menu_item[0] = menu_item;
+	env->menu_item[1].position.x = 0.0f;
+	env->menu_item[1].position.y = 400.0f;
+	env->menu_item[1].texture = util_texture_load ("images/menu/quitter.png");
+	env->menu_item[1].anim_step = 0.0f;
+	env->menu_item[1].anim_dir = 1;
 	
-	menu_item.y = -10;
-	menu_item.texture = util_texture_load("images/menu/quitter.png");
-	env->menu_item[1] = menu_item;
-
 	env->selected_item = 1;
+
+	/* Pour gerer les zIndex */
+	glDisable(GL_DEPTH_TEST);
 	
-	/* Activation de la lumiere */
-	glEnable(GL_LIGHT0);
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);
-	glLightfv(GL_LIGHT0, GL_SPECULAR, spotSpec);
-	glLightfv(GL_LIGHT0, GL_AMBIENT, spotAmb);
+	/* On enleve les params de la 3D */
+	glDisable(GL_LIGHTING);
+	glDisable(GL_COLOR_MATERIAL);
 	
+	glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+	gluOrtho2D(0, 800, 0, 600);
 }
 
 /**
@@ -99,27 +101,12 @@ void state_menu_init(State_Menu_Env* env){
  */
 void state_menu_draw(State_Menu_Env* env){
 	
-	/* Position du spot d'eclairage */
-	GLfloat spotPosition[] = {-20.0 , -30.0 , 40.0 , 1.0};
-	
-	/* Direction du spot d'eclairage */
-	GLfloat spotDirection[]={0.8 , 1.2 , -1.0};
-	
 	/* On vide le buffer d'affichage */
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT );
+	glClear( GL_COLOR_BUFFER_BIT );
 	
 	/* Matrice de manipulation des objets */
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
-	
-	/* Changement de position de la camera */
-	gluLookAt(12.5,-40.0,40.0,12.5,-5,0,0,0,1);
-	
-	/* On place la lumiere dans la scene */
-	glLightfv(GL_LIGHT0,GL_POSITION,spotPosition);
-	glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, 45.0);
-	glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spotDirection);
-	glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, 5);
 	
 	/* On dessinne les objets de la scene */
 	menu_item_draw( &(env->menu_item[0]) );

@@ -54,7 +54,7 @@ void particles_draw(Particles* particles){
 	glVertexPointer( 3, GL_FLOAT, 7 * sizeof(float), &(particles->elements[0][0]) + 4 );
 	glColorPointer( 4, GL_FLOAT, 7 * sizeof(float), &(particles->elements[0][0]) );
 	
-	glPointSize(2);
+	glPointSize(1);
 	glDrawArrays(GL_POINTS, 0, PARTICLES_NB);
 	
 	glEnable(GL_DEPTH_TEST);
@@ -73,9 +73,9 @@ void particles_add_position(Particles* particles, Coord3d* position){
 	
 	for(i = 0; i < PARTICLES_PPP; i++){
 		particles->elements[particles->cursor][3] = 0.75f;
-		particles->elements[particles->cursor][4] = position->x + 0.25 * ((float)(rand()%200 -100)/100.0);
-		particles->elements[particles->cursor][5] = position->y + 0.25 * ((float)(rand()%200 -100)/100.0);
-		particles->elements[particles->cursor][6] = position->z + 0.25 * ((float)(rand()%200 -100)/100.0);
+		particles->elements[particles->cursor][4] = position->x + 0.30 * ((float)(rand()%200 -100)/100.0);
+		particles->elements[particles->cursor][5] = position->y + 0.30 * ((float)(rand()%200 -100)/100.0);
+		particles->elements[particles->cursor][6] = position->z + 0.30 * ((float)(rand()%200 -100)/100.0);
 		particles->cursor++;
 		if(particles->cursor >= PARTICLES_NB){
 			particles->cursor = particles->cursor%PARTICLES_NB;

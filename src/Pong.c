@@ -45,7 +45,7 @@ int main(int argc, char **argv){
 		/* Fonction principale de l'etat courant */
 		current_state_main( e_time );
 
-		/* on recupere le temps que la focntion principale a duree */
+		/* on recupere le temps que la fonction principale a dure */
 		e_time = SDL_GetTicks() - s_time;
 
 		/* et on fait un delai si ce temps est inferieur au temps d'une frame */
@@ -55,12 +55,13 @@ int main(int argc, char **argv){
 		
 		/* on recupere le temps ecoule effectif */
 		e_time = SDL_GetTicks() - s_time;
+		
 		/* et le temps de fin de boucle */
 		s_time = SDL_GetTicks();
 	}
 	
+	/* Destruction de la fenetre et des etats */
 	window_destroy();
-	
 	state_menu_destroy();
 	state_game_destroy();
 	

@@ -1,17 +1,10 @@
 #ifndef MENU_ITEM_H
 #define MENU_ITEM_H
 
-	struct Menu_Item {
+	typedef struct Menu_Item {
 
 		/* Position */
-		float x;
-		float y;
-		float z;
-		
-		/* Dimensions */
-		float height;
-		float length;
-		float width;
+		Coord2d position;
 		
 		/* Id de l'image affichee dessus */
 		GLuint texture;
@@ -19,9 +12,7 @@
 		float anim_step;
 		int anim_dir;
 
-	};
-
-	typedef struct Menu_Item Menu_Item;
+	} Menu_Item;
 
 	/**
 	 *	Dessin d'un item de menu

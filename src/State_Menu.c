@@ -104,6 +104,8 @@ void state_menu_init(State_Menu_Env* env){
 	
 	env->logo_texture = util_texture_load("images/menu/logo.png");
 	env->top_texture = util_texture_load("images/menu/haut.png");
+	env->bottom_texture = util_texture_load("images/menu/bas_fond.png");
+	env->footer_texture = util_texture_load("images/menu/bas.png");
 	
 	/* Pour gerer les zIndex */
 	glDisable(GL_DEPTH_TEST);
@@ -136,6 +138,11 @@ void state_menu_draw(State_Menu_Env* env){
 	
 	/* On dessinne le logo par dessus le panneau du haut */
  	util_texture_display(env->logo_texture, env->w_width/2.0f - 180.0f, 520.0f, 320.0f, 80.0f);
+	
+	/* On dessinne le bas de page */
+ 	util_texture_display(env->bottom_texture, 0.0f, 0.0f, env->w_width, 16.0f);
+	util_texture_display(env->footer_texture, env->w_width/2.0f - 128.0f, 0, 256.0f, 32.0f);
+	
 	
 	/* On dessinne les objets de la scene */
 	menu_item_draw( &(env->menu_item[0]) );

@@ -28,6 +28,12 @@
 		/** Identifiant de la texture du haut */
 		GLuint top_texture;
 		
+		/** Identidiant de la texture pied de page */
+		GLuint footer_texture;
+		
+		/** Identidiant de la texture du bas */
+		GLuint bottom_texture;
+		
 		/** Largeur/Hauteur de fenetre utilisee */
 		GLfloat w_width, w_height;
 		

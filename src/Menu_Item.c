@@ -64,7 +64,7 @@ void menu_item_animate_to_0(Menu_Item * menu_item, Uint32 e_time){
 		if(menu_item->anim_step <= 0.01){
 			menu_item->anim_step = 0.0f;
 		} else {
-			menu_item->anim_step -= e_time / 1000.0f;
+			menu_item->anim_step -= e_time / 200.0f;
 		}
 	}
 }

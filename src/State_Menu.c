@@ -80,19 +80,27 @@ void state_menu_destroy(){
  */
 void state_menu_init(State_Menu_Env* env){
 	
-	env->menu_item[0].position.x = 100.0f;
+	GLfloat first_item_x = env->w_width/2-150.0*3.0/2.0;
+	
+	env->menu_item[0].position.x = first_item_x;
 	env->menu_item[0].position.y = 250.0f;
 	env->menu_item[0].texture = util_texture_load ("images/menu/jouer.png");
 	env->menu_item[0].anim_step = 0.0f;
 	env->menu_item[0].anim_dir = 1;
 	
-	env->menu_item[1].position.x = 250.0f;
+	env->menu_item[1].position.x = first_item_x +150;
 	env->menu_item[1].position.y = 250.0f;
-	env->menu_item[1].texture = util_texture_load ("images/menu/quitter.png");
+	env->menu_item[1].texture = util_texture_load ("images/menu/config.png");
 	env->menu_item[1].anim_step = 0.0f;
 	env->menu_item[1].anim_dir = 1;
 	
-	env->selected_item = 1;
+	env->menu_item[2].position.x = first_item_x+300;
+	env->menu_item[2].position.y = 250.0f;
+	env->menu_item[2].texture = util_texture_load ("images/menu/quitter.png");
+	env->menu_item[2].anim_step = 0.0f;
+	env->menu_item[2].anim_dir = 1;
+	
+	env->selected_item = 0;
 	
 	env->logo_texture = util_texture_load("images/menu/logo.png");
 	env->top_texture = util_texture_load("images/menu/haut.png");
@@ -132,6 +140,8 @@ void state_menu_draw(State_Menu_Env* env){
 	/* On dessinne les objets de la scene */
 	menu_item_draw( &(env->menu_item[0]) );
 	menu_item_draw( &(env->menu_item[1]) );
+	menu_item_draw( &(env->menu_item[2]) );
+	
 	
 	/* On s'assure que le dessin est termine */
 	glFlush();
@@ -150,18 +160,37 @@ int state_menu_events(State_Menu_Env* env){
 	/* Variable de gestion des evenements */
 	SDL_Event event;
 	
-	/* Etat des touches */
-	Uint8 *keystates;
-
-	while( SDL_PollEvent(&event) ){ 	
-		if( event.type == SDL_QUIT ){ 
-			return 0; 
-		}
+	/* Pour recuperer la touche pressee */
+	int key_pressed;
+	
+	/* Recuperation d'un evenement */
+	SDL_PollEvent(&event);
+	
+	/* Analyse de l'evenement */
+	switch(event.type){
+		case SDL_QUIT:
+			return 0;
+		break;
+		case SDL_KEYDOWN:
+			switch(event.key.keysym.sym){
+				case SDLK_RETURN:
+					key_pressed = SDLK_RETURN;
+				break;
+				case SDLK_LEFT:
+					key_pressed = SDLK_LEFT;
+				break;
+				case SDLK_RIGHT:
+					key_pressed = SDLK_RIGHT;
+				break;
+				default:
+					return 1;
+				break;
+			}
+		break;
 	}
 	
-	keystates = SDL_GetKeyState( NULL );
-		
-	if( keystates[ SDLK_RETURN ] ) { 
+	/* Touche entree pressee */
+	if( key_pressed == SDLK_RETURN ) { 
 		switch(env->selected_item){
 			case 0:
 				state_set_current(state_game_get());
@@ -171,13 +200,15 @@ int state_menu_events(State_Menu_Env* env){
 			break;	
 		}
 	}
-		
-	if( keystates[ SDLK_RIGHT ] ) { 
+	
+	/* Fleche gauche pressee */
+	else if(key_pressed == SDLK_RIGHT) { 
 		if(env->selected_item+1 < STATE_MENU_ITEMSNB)
 			env->selected_item++;
 	}
 	
-	if( keystates[ SDLK_LEFT ] ) { 
+	/* Fleche droite pressee */
+	else if(key_pressed == SDLK_LEFT) { 
 		if(env->selected_item > 0)
 			env->selected_item--;
 	}

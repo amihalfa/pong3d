@@ -4,7 +4,7 @@
 
 	
 	/* Nombre d'elements du menu */
-	#define STATE_MENU_ITEMSNB		2
+	#define STATE_MENU_ITEMSNB		3
 	
 	struct State;
 

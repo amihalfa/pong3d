@@ -9,8 +9,8 @@
 		/* Id de l'image affichee dessus */
 		GLuint texture;
 		
-		float anim_step;
-		int anim_dir;
+		GLfloat anim_step;
+		short int anim_dir;
 
 	} Menu_Item;
 

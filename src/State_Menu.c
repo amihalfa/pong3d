@@ -24,10 +24,21 @@ State* state_menu(int action){
 	if( action == STATE_CREATE && !state_menu ){
 		
 		state_menu = ( State* ) malloc( sizeof(State) );
-		state_menu->env = ( State_Menu_Env* ) malloc( sizeof(State_Menu_Env) );
+		state_menu->env = (State_Menu_Env*) malloc( sizeof(State_Menu_Env) );
 		state_menu->init_handler = &state_menu_init;
 		state_menu->main_handler = &state_menu_main;
 		state_menu->events_handler = &state_menu_events;
+		
+		SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_OPENGL);
+		GLfloat ratio = (GLfloat)modes[0]->w/(GLfloat)modes[0]->h;
+		
+ 		if(ratio >= 1.33){
+			((State_Menu_Env*)(state_menu->env))->w_width = 600.0f * ratio; 
+			((State_Menu_Env*)(state_menu->env))->w_height = 600.0f;
+		} else {
+			((State_Menu_Env*)(state_menu->env))->w_width = 800.0f; 
+			((State_Menu_Env*)(state_menu->env))->w_height = 800.0f * ratio;
+		} 
 		
 	}
 	else if( action == STATE_DESTROY && state_menu ){
@@ -69,20 +80,23 @@ void state_menu_destroy(){
  */
 void state_menu_init(State_Menu_Env* env){
 	
-	env->menu_item[0].position.x = 0.0f;
-	env->menu_item[0].position.y = 500.0f;
+	env->menu_item[0].position.x = 100.0f;
+	env->menu_item[0].position.y = 250.0f;
 	env->menu_item[0].texture = util_texture_load ("images/menu/jouer.png");
 	env->menu_item[0].anim_step = 0.0f;
 	env->menu_item[0].anim_dir = 1;
 	
-	env->menu_item[1].position.x = 0.0f;
-	env->menu_item[1].position.y = 400.0f;
+	env->menu_item[1].position.x = 250.0f;
+	env->menu_item[1].position.y = 250.0f;
 	env->menu_item[1].texture = util_texture_load ("images/menu/quitter.png");
 	env->menu_item[1].anim_step = 0.0f;
 	env->menu_item[1].anim_dir = 1;
 	
 	env->selected_item = 1;
-
+	
+	env->logo_texture = util_texture_load("images/menu/logo.png");
+	env->top_texture = util_texture_load("images/menu/haut.png");
+	
 	/* Pour gerer les zIndex */
 	glDisable(GL_DEPTH_TEST);
 	
@@ -92,7 +106,8 @@ void state_menu_init(State_Menu_Env* env){
 	
 	glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-	gluOrtho2D(0, 800, 0, 600);
+	
+	gluOrtho2D(0.0f, env->w_width, 0.0f, env->w_height);
 }
 
 /**
@@ -107,6 +122,12 @@ void state_menu_draw(State_Menu_Env* env){
 	/* Matrice de manipulation des objets */
 	glMatrixMode( GL_MODELVIEW );
 	glLoadIdentity();
+	
+	/* On dessinne le panneau du haut */
+ 	util_texture_display(env->top_texture, 0.0f, 500.0f, env->w_width, 100.0f);
+	
+	/* On dessinne le logo par dessus le panneau du haut */
+ 	util_texture_display(env->logo_texture, env->w_width/2.0f - 180.0f, 520.0f, 320.0f, 80.0f);
 	
 	/* On dessinne les objets de la scene */
 	menu_item_draw( &(env->menu_item[0]) );
@@ -151,12 +172,12 @@ int state_menu_events(State_Menu_Env* env){
 		}
 	}
 		
-	if( keystates[ SDLK_DOWN ] ) { 
+	if( keystates[ SDLK_RIGHT ] ) { 
 		if(env->selected_item+1 < STATE_MENU_ITEMSNB)
 			env->selected_item++;
 	}
 	
-	if( keystates[ SDLK_UP ] ) { 
+	if( keystates[ SDLK_LEFT ] ) { 
 		if(env->selected_item > 0)
 			env->selected_item--;
 	}

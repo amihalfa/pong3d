@@ -1,5 +1,6 @@
 #ifndef STATE_MENU
 #define	STATE_MENU
+#include <GL/gl.h>
 
 	
 	/* Nombre d'elements du menu */
@@ -12,10 +13,23 @@
 	 */
 	struct State_Menu_Env{
 		
+		/** Tableau des elements du menu */
 		Menu_Item menu_item[STATE_MENU_ITEMSNB];
 		
+		/** Element du menu selectionne */
 		int selected_item;
+		
+		/** Temps de latence */
 		Uint32 ellapsed_time;
+		
+		/** Identifiant de la texture de logo */
+		GLuint logo_texture;
+		
+		/** Identifiant de la texture du haut */
+		GLuint top_texture;
+		
+		/** Largeur/Hauteur de fenetre utilisee */
+		GLfloat w_width, w_height;
 		
 	};
 	typedef struct State_Menu_Env State_Menu_Env;

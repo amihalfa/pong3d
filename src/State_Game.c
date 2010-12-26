@@ -254,8 +254,7 @@ void state_game_main(State_Game_Env* env, Uint32 e_time){
 				particles_add_position(&env->ball[i].particles, &env->ball[i].position);
 			ball_move(&env->ball[i], e_time );
 		}
-	
-	
+		
 	state_game_draw(env);
 }
 

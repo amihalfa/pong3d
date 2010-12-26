@@ -1,10 +1,13 @@
 #ifndef STATE_MENU
 #define	STATE_MENU
-#include <GL/gl.h>
 
-	
 	/* Nombre d'elements du menu */
-	#define STATE_MENU_ITEMSNB		3
+	#define STATE_MENU_ITEMSNB_MAX	5
+	
+	#define STATE_MENU_PAGES		3
+	#define STATE_MENU_HOME			0
+	#define STATE_MENU_CONTINUE		1
+	#define STATE_MENU_CONFIG		2
 	
 	struct State;
 
@@ -14,7 +17,13 @@
 	struct State_Menu_Env{
 		
 		/** Tableau des elements du menu */
-		Menu_Item menu_item[STATE_MENU_ITEMSNB];
+		Menu_Item menu_item[STATE_MENU_PAGES][STATE_MENU_ITEMSNB_MAX];
+		
+		/** Nombre d'elements des pages, home, reprendre, reglages */
+		int itemsnb[STATE_MENU_PAGES];
+		
+		/** Page du menu selectionnee */
+		int selected_page;
 		
 		/** Element du menu selectionne */
 		int selected_item;
@@ -78,6 +87,8 @@
 	 *	Gestionnaire des evenements de l'etat de jeu
 	 */
 	int state_menu_events(State_Menu_Env* env);
+	
+	int state_menu_select_item(int page, int item);
 	
 	void state_menu_main(State_Menu_Env* env, Uint32 e_time);
 	

@@ -48,6 +48,10 @@
 	 */
 	int state_game_events(State_Game_Env* env);
 	
+	int state_game_pause(int pause);
+	int state_game_get_pause();
+	void state_game_set_pause(int pause);
+	
 
 
 #endif

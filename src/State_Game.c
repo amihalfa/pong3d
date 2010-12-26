@@ -74,40 +74,44 @@ void state_game_init(State_Game_Env* env){
 	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
 	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f}; 
 	
-	/* Mise en place du terrain dans la scene */
-	env->ground.height = 2.0f;
-	env->ground.length = 40.0f;
-	env->ground.width = 30.0f;
-	
-	/* ... Raquette du haut... */
-	env->racket[RACKET_TOP].position.x = 0.0f;
-	env->racket[RACKET_TOP].position.y = 18.0f;
-	env->racket[RACKET_TOP].position.z = 0.8f;
-	env->racket[RACKET_TOP].width = 5.0f;
-	env->racket[RACKET_TOP].radius = 0.8f;
-	env->racket[RACKET_TOP].speed = 0.01f;
+	if(state_game_get_pause() == 0){
+		
+		/* Mise en place du terrain dans la scene */
+		env->ground.height = 2.0f;
+		env->ground.length = 40.0f;
+		env->ground.width = 30.0f;
+		
+		/* ... Raquette du haut... */
+		env->racket[RACKET_TOP].position.x = 0.0f;
+		env->racket[RACKET_TOP].position.y = 18.0f;
+		env->racket[RACKET_TOP].position.z = 0.8f;
+		env->racket[RACKET_TOP].width = 5.0f;
+		env->racket[RACKET_TOP].radius = 0.8f;
+		env->racket[RACKET_TOP].speed = 0.01f;
 
-	/* ... Raquette du bas ... */
-	env->racket[RACKET_BOTTOM] = env->racket[RACKET_TOP];
-	env->racket[RACKET_BOTTOM].position.y = -18.0f;
-	
-	/* ... Donnees de l'env ... */
-	env->balls_nb = 10;
-	env->mouse_motion_x = 0;
-	env->mouse_motion_y = 0;
-	
-	/*   Mise en place des balles    */
-	nbcols = (int) sqrt(env->balls_nb); 
-	for (i = 0; i < env->balls_nb; i++){	
-		env->ball[i].radius = 0.5f;
-		env->ball[i].position.x = (i%nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
-		env->ball[i].position.y = (i/nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
-		env->ball[i].position.z = 0.5f;
-		env->ball[i].speed.x = (float) (rand()%200 - 100) / 1000.0f;
-		env->ball[i].speed.y = (float) (rand()%200 - 100) / 1000.0f;
-		particles_init( &env->ball[i].particles, &env->ball[i].position);
+		/* ... Raquette du bas ... */
+		env->racket[RACKET_BOTTOM] = env->racket[RACKET_TOP];
+		env->racket[RACKET_BOTTOM].position.y = -18.0f;
+		
+		/* ... Donnees de l'env ... */
+		env->balls_nb = 10;
+		env->mouse_motion_x = 0;
+		env->mouse_motion_y = 0;
+		
+		/*   Mise en place des balles    */
+		nbcols = (int) sqrt(env->balls_nb); 
+		for (i = 0; i < env->balls_nb; i++){	
+			env->ball[i].radius = 0.5f;
+			env->ball[i].position.x = (i%nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
+			env->ball[i].position.y = (i/nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
+			env->ball[i].position.z = 0.5f;
+			env->ball[i].speed.x = (float) (rand()%200 - 100) / 1000.0f;
+			env->ball[i].speed.y = (float) (rand()%200 - 100) / 1000.0f;
+			particles_init( &env->ball[i].particles, &env->ball[i].position);
+		}
 	}
-	
+	state_game_set_pause(1);
+		
 	/* Activation de la lumiere */
 	glEnable(GL_LIGHT0);
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);
@@ -229,6 +233,10 @@ int state_game_events(State_Game_Env* env){
 		state_set_current(state_get_menu());
 	}
 	
+	if( env->keystates[ SDLK_SPACE ] ) {
+		state_game_set_pause(2);
+	}
+	
 	racket_move(env, RACKET_BOTTOM);
 	
 	return 1;
@@ -243,11 +251,30 @@ void state_game_main(State_Game_Env* env, Uint32 e_time){
 	
 	collision_state_game(env);
 	
-	for(i = 0 ; i< env->balls_nb ; i++){
-		if(env->config[CONFIG_PARTICLES])
-			particles_add_position(&env->ball[i].particles, &env->ball[i].position);
-		ball_move(&env->ball[i], e_time );
-	}
+	if(state_game_get_pause() != 1)
+		for(i = 0 ; i< env->balls_nb ; i++){
+			if(env->config[CONFIG_PARTICLES])
+				particles_add_position(&env->ball[i].particles, &env->ball[i].position);
+			ball_move(&env->ball[i], e_time );
+		}
+	
+	
 	state_game_draw(env);
 }
 
+
+int state_game_pause(int pause){
+	static int p = 0;
+	if(pause != -1){
+		p = pause;
+	}
+	return p;
+}
+
+int state_game_get_pause(){
+	return state_game_pause(-1);
+}
+
+void state_game_set_pause(int pause){
+	state_game_pause(pause);
+}

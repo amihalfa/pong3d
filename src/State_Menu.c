@@ -81,7 +81,7 @@ void state_menu_init(State_Menu_Env* env){
 	/* Enregistrements des nombres d'elements par menu */
 	env->itemsnb[STATE_MENU_HOME] = 3;
 	env->itemsnb[STATE_MENU_CONTINUE] = 4;
-	env->itemsnb[STATE_MENU_CONFIG] = 5;
+	env->itemsnb[STATE_MENU_PLAY] = 4;
 	
 	for(i = 0; i < STATE_MENU_PAGES; i++){
 		
@@ -103,6 +103,11 @@ void state_menu_init(State_Menu_Env* env){
 	env->menu_item[STATE_MENU_CONTINUE][1].texture = util_texture_load ("images/menu/jouer.png");
 	env->menu_item[STATE_MENU_CONTINUE][2].texture = util_texture_load ("images/menu/config.png");
 	env->menu_item[STATE_MENU_CONTINUE][3].texture = util_texture_load ("images/menu/quitter.png");
+	
+	env->menu_item[STATE_MENU_PLAY][0].texture = util_texture_load ("images/menu/facile.png");
+	env->menu_item[STATE_MENU_PLAY][1].texture = util_texture_load ("images/menu/moyen.png");
+	env->menu_item[STATE_MENU_PLAY][2].texture = util_texture_load ("images/menu/difficile.png");
+	env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load ("images/menu/retour.png");
 	
 	
 	env->selected_item = 0;
@@ -205,7 +210,7 @@ int state_menu_events(State_Menu_Env* env){
 	
 	/* Touche entree pressee */
 	if( key_pressed == SDLK_RETURN ) { 
-		return state_menu_select_item(env->selected_page, env->selected_item);
+		return state_menu_select_item(env);
 	}
 	
 	/* Fleche gauche pressee */
@@ -223,12 +228,13 @@ int state_menu_events(State_Menu_Env* env){
 	return 1;
 }
 
-int state_menu_select_item(int page, int item){
-	switch(page){
+int state_menu_select_item(State_Menu_Env* env){
+	switch(env->selected_page){
 		case STATE_MENU_HOME:
-			switch(item){
+			switch(env->selected_item){
 				case 0:
-					state_set_current(state_game_get());
+					env->selected_item = 0;
+					env->selected_page = STATE_MENU_PLAY;
 					break;
 				case 1:
 					break;
@@ -240,13 +246,13 @@ int state_menu_select_item(int page, int item){
 			}
 			break;
 		case STATE_MENU_CONTINUE:
-			switch(item){
+			switch(env->selected_item){
 				case 0:
 					state_set_current(state_game_get());
 					break;
 				case 1:
-					state_game_set_pause(0);
-					state_set_current(state_game_get());
+					env->selected_item = 0;
+					env->selected_page = STATE_MENU_PLAY;
 					break;
 				case 3:
 					return 0;
@@ -255,6 +261,27 @@ int state_menu_select_item(int page, int item){
 					break;
 			}
 			break;
+		case STATE_MENU_PLAY:
+			switch(env->selected_item){
+				case 0:
+					state_game_set_pause(0);
+					state_set_current(state_game_get());
+					break;
+				case 1:
+					state_game_set_pause(0);
+					state_set_current(state_game_get());
+					break;
+				case 3:
+					env->selected_item = 0;
+					if(state_game_get_pause() != 0)
+						env->selected_page = STATE_MENU_CONTINUE;
+					else
+						env->selected_page = STATE_MENU_HOME;
+					break;
+				default:
+					break;
+			}
+			break;	
 		default:
 			break;
 	}

@@ -7,7 +7,7 @@
 	#define STATE_MENU_PAGES		3
 	#define STATE_MENU_HOME			0
 	#define STATE_MENU_CONTINUE		1
-	#define STATE_MENU_CONFIG		2
+	#define STATE_MENU_PLAY			2
 	
 	struct State;
 
@@ -88,7 +88,7 @@
 	 */
 	int state_menu_events(State_Menu_Env* env);
 	
-	int state_menu_select_item(int page, int item);
+	int state_menu_select_item(State_Menu_Env* env);
 	
 	void state_menu_main(State_Menu_Env* env, Uint32 e_time);
 	

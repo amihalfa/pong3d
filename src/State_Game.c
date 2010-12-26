@@ -218,6 +218,7 @@ int state_game_events(State_Game_Env* env){
 		}
 		else if (event.type == SDL_MOUSEMOTION)
 		{
+			state_game_set_pause(2);
 			env->mouse_motion_x += event.motion.xrel;
 			env->mouse_motion_y += event.motion.yrel;
 		}
@@ -231,10 +232,6 @@ int state_game_events(State_Game_Env* env){
 	
 	if( env->keystates[ SDLK_ESCAPE ] ) {
 		state_set_current(state_get_menu());
-	}
-	
-	if( env->keystates[ SDLK_SPACE ] ) {
-		state_game_set_pause(2);
 	}
 	
 	racket_move(env, RACKET_BOTTOM);

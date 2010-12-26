@@ -38,17 +38,13 @@ State* state_menu(int action){
 		} else {
 			((State_Menu_Env*)(state_menu->env))->w_width = 800.0f; 
 			((State_Menu_Env*)(state_menu->env))->w_height = 800.0f * ratio;
-		} 
-		
+		}	
 	}
-	else if( action == STATE_DESTROY && state_menu ){
-			
+	else if( action == STATE_DESTROY && state_menu ){	
 		free(state_menu->env);
 		free(state_menu);
 		state_menu = (State*)0;
 	}
-	
-
 	return state_menu;
 }
 
@@ -80,37 +76,48 @@ void state_menu_destroy(){
  */
 void state_menu_init(State_Menu_Env* env){
 	
-	GLfloat first_item_x = env->w_width/2-150.0*3.0/2.0;
+	int i, j;
 	
-	env->menu_item[0].position.x = first_item_x;
-	env->menu_item[0].position.y = 250.0f;
-	env->menu_item[0].texture = util_texture_load ("images/menu/jouer.png");
-	env->menu_item[0].anim_step = 0.0f;
-	env->menu_item[0].anim_dir = 1;
+	/* Enregistrements des nombres d'elements par menu */
+	env->itemsnb[STATE_MENU_HOME] = 3;
+	env->itemsnb[STATE_MENU_CONTINUE] = 4;
+	env->itemsnb[STATE_MENU_CONFIG] = 5;
 	
-	env->menu_item[1].position.x = first_item_x +150;
-	env->menu_item[1].position.y = 250.0f;
-	env->menu_item[1].texture = util_texture_load ("images/menu/config.png");
-	env->menu_item[1].anim_step = 0.0f;
-	env->menu_item[1].anim_dir = 1;
+	for(i = 0; i < STATE_MENU_PAGES; i++){
+		
+		GLfloat first_item_x = env->w_width / 2 - 150.0 * (GLfloat)(env->itemsnb[i]) / 2.0;
+		for(j = 0; j < env->itemsnb[i]; j++){
+			
+			env->menu_item[i][j].position.x = first_item_x + j * 150;
+			env->menu_item[i][j].position.y = 250.0f;
+			env->menu_item[i][j].anim_step = 0.0f;
+			env->menu_item[i][j].anim_dir = 1;
+		}
+	}
 	
-	env->menu_item[2].position.x = first_item_x+300;
-	env->menu_item[2].position.y = 250.0f;
-	env->menu_item[2].texture = util_texture_load ("images/menu/quitter.png");
-	env->menu_item[2].anim_step = 0.0f;
-	env->menu_item[2].anim_dir = 1;
+	env->menu_item[STATE_MENU_HOME][0].texture = util_texture_load ("images/menu/jouer.png");
+	env->menu_item[STATE_MENU_HOME][1].texture = util_texture_load ("images/menu/config.png");
+	env->menu_item[STATE_MENU_HOME][2].texture = util_texture_load ("images/menu/quitter.png");
+	
+	env->menu_item[STATE_MENU_CONTINUE][0].texture = util_texture_load ("images/menu/reprendre.png");
+	env->menu_item[STATE_MENU_CONTINUE][1].texture = util_texture_load ("images/menu/jouer.png");
+	env->menu_item[STATE_MENU_CONTINUE][2].texture = util_texture_load ("images/menu/config.png");
+	env->menu_item[STATE_MENU_CONTINUE][3].texture = util_texture_load ("images/menu/quitter.png");
+	
 	
 	env->selected_item = 0;
+	if(state_game_get_pause() == 0)
+		env->selected_page = STATE_MENU_HOME;
+	else
+		env->selected_page = STATE_MENU_CONTINUE;
 	
 	env->logo_texture = util_texture_load("images/menu/logo.png");
 	env->top_texture = util_texture_load("images/menu/haut.png");
 	env->bottom_texture = util_texture_load("images/menu/bas_fond.png");
 	env->footer_texture = util_texture_load("images/menu/bas.png");
 	
-	/* Pour gerer les zIndex */
-	glDisable(GL_DEPTH_TEST);
-	
 	/* On enleve les params de la 3D */
+	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
 	glDisable(GL_COLOR_MATERIAL);
 	
@@ -125,6 +132,8 @@ void state_menu_init(State_Menu_Env* env){
  *	@param	env		Envirronnement de l'etat menu
  */
 void state_menu_draw(State_Menu_Env* env){
+	
+	int i;
 	
 	/* On vide le buffer d'affichage */
 	glClear( GL_COLOR_BUFFER_BIT );
@@ -143,12 +152,10 @@ void state_menu_draw(State_Menu_Env* env){
  	util_texture_display(env->bottom_texture, 0.0f, 0.0f, env->w_width, 16.0f);
 	util_texture_display(env->footer_texture, env->w_width/2.0f - 128.0f, 0, 256.0f, 32.0f);
 	
-	
 	/* On dessinne les objets de la scene */
-	menu_item_draw( &(env->menu_item[0]) );
-	menu_item_draw( &(env->menu_item[1]) );
-	menu_item_draw( &(env->menu_item[2]) );
-	
+	for(i = 0; i < env->itemsnb[env->selected_page]; i++){
+		menu_item_draw( &(env->menu_item[env->selected_page][i]) );
+	}
 	
 	/* On s'assure que le dessin est termine */
 	glFlush();
@@ -198,19 +205,12 @@ int state_menu_events(State_Menu_Env* env){
 	
 	/* Touche entree pressee */
 	if( key_pressed == SDLK_RETURN ) { 
-		switch(env->selected_item){
-			case 0:
-				state_set_current(state_game_get());
-			break;
-			default:
-				return 0;
-			break;	
-		}
+		return state_menu_select_item(env->selected_page, env->selected_item);
 	}
 	
 	/* Fleche gauche pressee */
 	else if(key_pressed == SDLK_RIGHT) { 
-		if(env->selected_item+1 < STATE_MENU_ITEMSNB)
+		if(env->selected_item+1 < env->itemsnb[env->selected_page])
 			env->selected_item++;
 	}
 	
@@ -223,6 +223,43 @@ int state_menu_events(State_Menu_Env* env){
 	return 1;
 }
 
+int state_menu_select_item(int page, int item){
+	switch(page){
+		case STATE_MENU_HOME:
+			switch(item){
+				case 0:
+					state_set_current(state_game_get());
+					break;
+				case 1:
+					break;
+				case 2:
+					return 0;
+					break;
+				default:
+					break;
+			}
+			break;
+		case STATE_MENU_CONTINUE:
+			switch(item){
+				case 0:
+					state_set_current(state_game_get());
+					break;
+				case 1:
+					state_game_set_pause(0);
+					state_set_current(state_game_get());
+					break;
+				case 3:
+					return 0;
+					break;
+				default:
+					break;
+			}
+			break;
+		default:
+			break;
+	}
+	return 1;
+}
 
 void state_menu_main(State_Menu_Env* env, Uint32 e_time){
 	

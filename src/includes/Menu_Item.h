@@ -23,6 +23,7 @@
 	void menu_item_animate(Menu_Item* menu_item, Uint32 e_time);
 	
 	void menu_item_animate_to_0(Menu_Item * menu_item, Uint32 e_time);
+	
 	int menu_item_mouse_over(Menu_Item* menu_item, Coord2d* mouse);
 
 #endif

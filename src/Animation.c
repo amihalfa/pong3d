@@ -22,6 +22,7 @@ void animation_state_menu(State_Menu_Env* env, Uint32 e_time){
 	}
 	
 	/* On anime l'element selectionne */
-	menu_item_animate(&env->menu_item[env->selected_page][env->selected_item], e_time);
+	if(env->selected_item != -1)
+		menu_item_animate(&env->menu_item[env->selected_page][env->selected_item], e_time);
 	
 }

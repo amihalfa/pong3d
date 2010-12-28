@@ -213,14 +213,21 @@ int state_game_events(State_Game_Env* env){
 	env->mouse_motion_x = env->mouse_motion_y = 0;
 
 	while( SDL_PollEvent(&event) ){ 	
-		if( event.type == SDL_QUIT ){ 
-			state_set_current(state_get_menu());
-		}
-		else if (event.type == SDL_MOUSEMOTION)
-		{
-			state_game_set_pause(2);
-			env->mouse_motion_x += event.motion.xrel;
-			env->mouse_motion_y += event.motion.yrel;
+		switch(event.type){
+			case SDL_QUIT:
+				return 0;
+				break;
+		
+			case SDL_MOUSEMOTION:
+				if(state_game_get_pause() == 2){
+					env->mouse_motion_x += event.motion.xrel;
+					env->mouse_motion_y += event.motion.yrel;
+				}
+				break;
+				
+			case SDL_MOUSEBUTTONDOWN:
+				state_game_set_pause(2);
+				break;
 		}
 	}
 	env->keystates = SDL_GetKeyState( NULL );
@@ -229,7 +236,8 @@ int state_game_events(State_Game_Env* env){
 		state_set_current(state_get_menu());
 	}
 	
-	racket_move(env, RACKET_BOTTOM);
+	if(state_game_get_pause() == 2)
+		racket_move(env, RACKET_BOTTOM);
 	
 	return 1;
 

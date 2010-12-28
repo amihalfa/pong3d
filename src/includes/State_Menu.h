@@ -8,8 +8,6 @@
 	#define STATE_MENU_HOME			0
 	#define STATE_MENU_CONTINUE		1
 	#define STATE_MENU_PLAY			2
-	
-	struct State;
 
 	/**
 	 *	Environnement pour l'etat menu
@@ -45,6 +43,14 @@
 		
 		/** Largeur/Hauteur de fenetre utilisee */
 		GLfloat w_width, w_height;
+		
+		/** Position de la souris */
+		Coord2d mouse;
+		
+		/** Mouvement de la souris */
+		Coord2d mouse_motion;
+		
+		GLuint mouse_texture;
 		
 	};
 	typedef struct State_Menu_Env State_Menu_Env;
@@ -92,5 +98,6 @@
 	
 	void state_menu_main(State_Menu_Env* env, Uint32 e_time);
 	
+	int state_menu_cursor_handler(void* e);
 	
 #endif

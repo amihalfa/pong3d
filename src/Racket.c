@@ -76,11 +76,7 @@ void racket_move(void* v_env, char num_racket ){
 	State_Game_Env* env = (State_Game_Env*) v_env;
 
 	Racket* racket;
-	if ( num_racket == RACKET_BOTTOM){
-		racket = &env->racket[RACKET_BOTTOM];
-	} else if ( num_racket == RACKET_TOP ){
-		racket = &env->racket[RACKET_TOP];
-	}
+	racket = &env->racket[num_racket];
 
 	float rckt_width_mi = racket->width / 2;
 	float grnd_width_mi = env->ground.width / 2;

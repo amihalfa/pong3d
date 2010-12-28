@@ -38,7 +38,12 @@ State* state_menu(int action){
 		} else {
 			((State_Menu_Env*)(state_menu->env))->w_width = 800.0f; 
 			((State_Menu_Env*)(state_menu->env))->w_height = 800.0f * ratio;
-		}	
+		}
+		((State_Menu_Env*)(state_menu->env))->mouse.x = ((State_Menu_Env*)(state_menu->env))->w_width / 2.0f;
+		((State_Menu_Env*)(state_menu->env))->mouse.y = ((State_Menu_Env*)(state_menu->env))->w_height / 2.0f;
+		
+		SDL_Thread *mon_thread = SDL_CreateThread(state_menu_cursor_handler, state_menu->env);
+	
 	}
 	else if( action == STATE_DESTROY && state_menu ){	
 		free(state_menu->env);
@@ -77,6 +82,7 @@ void state_menu_destroy(){
 void state_menu_init(State_Menu_Env* env){
 	
 	int i, j;
+	env->mouse_texture = util_texture_load("images/menu/souris.png");
 	
 	/* Enregistrements des nombres d'elements par menu */
 	env->itemsnb[STATE_MENU_HOME] = 3;
@@ -162,6 +168,10 @@ void state_menu_draw(State_Menu_Env* env){
 		menu_item_draw( &(env->menu_item[env->selected_page][i]) );
 	}
 	
+	/* Dessin de la souris */
+	util_texture_display(env->mouse_texture, env->mouse.x, env->mouse.y, 32.0f, 32.0f);
+	
+	
 	/* On s'assure que le dessin est termine */
 	glFlush();
 	
@@ -183,48 +193,53 @@ int state_menu_events(State_Menu_Env* env){
 	int key_pressed;
 	
 	/* Recuperation d'un evenement */
-	SDL_PollEvent(&event);
+	while(SDL_PollEvent(&event)){
 	
-	/* Analyse de l'evenement */
-	switch(event.type){
-		case SDL_QUIT:
-			return 0;
-		break;
-		case SDL_KEYDOWN:
-			switch(event.key.keysym.sym){
-				case SDLK_RETURN:
-					key_pressed = SDLK_RETURN;
+		env->mouse_motion.x = 0;
+		env->mouse_motion.y = 0;
+		
+		/* Analyse de l'evenement */
+		switch(event.type){
+			case SDL_QUIT:
+				return 0;
+			break;
+			case SDL_MOUSEMOTION:
 				break;
-				case SDLK_LEFT:
-					key_pressed = SDLK_LEFT;
+			case SDL_KEYDOWN:
+				switch(event.key.keysym.sym){
+					case SDLK_RETURN:
+						key_pressed = SDLK_RETURN;
+						break;
+					case SDLK_LEFT:
+						key_pressed = SDLK_LEFT;
+						break;
+					case SDLK_RIGHT:
+						key_pressed = SDLK_RIGHT;
+						break;
+					default:
+						return 1;
+						break;
+				}
 				break;
-				case SDLK_RIGHT:
-					key_pressed = SDLK_RIGHT;
-				break;
-				default:
-					return 1;
-				break;
-			}
-		break;
+		}
+		
+		/* Touche entree pressee */
+		if( key_pressed == SDLK_RETURN ) { 
+			return state_menu_select_item(env);
+		}
+		
+		/* Fleche gauche pressee */
+		else if(key_pressed == SDLK_RIGHT) { 
+			if(env->selected_item+1 < env->itemsnb[env->selected_page])
+				env->selected_item++;
+		}
+		
+		/* Fleche droite pressee */
+		else if(key_pressed == SDLK_LEFT) { 
+			if(env->selected_item > 0)
+				env->selected_item--;
+		}
 	}
-	
-	/* Touche entree pressee */
-	if( key_pressed == SDLK_RETURN ) { 
-		return state_menu_select_item(env);
-	}
-	
-	/* Fleche gauche pressee */
-	else if(key_pressed == SDLK_RIGHT) { 
-		if(env->selected_item+1 < env->itemsnb[env->selected_page])
-			env->selected_item++;
-	}
-	
-	/* Fleche droite pressee */
-	else if(key_pressed == SDLK_LEFT) { 
-		if(env->selected_item > 0)
-			env->selected_item--;
-	}
-
 	return 1;
 }
 
@@ -290,7 +305,51 @@ int state_menu_select_item(State_Menu_Env* env){
 
 void state_menu_main(State_Menu_Env* env, Uint32 e_time){
 	
+	env->ellapsed_time = e_time;
 	animation_state_menu(env, e_time);
 	state_menu_draw(env);
 	
+}
+
+void state_menu_move_cursor(State_Menu_Env* env){
+	
+	Coord2d move;
+	
+	/* S'il ya eu reellement un mouvement */
+	if ( env->mouse_motion.x != 0 && env->mouse_motion.y != 0){
+		/* Si la souris ne sort pas de l'ecran */
+		move.x = env->mouse.x + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.x;
+		move.y = env->mouse.y + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.y;
+		
+		if(move.x >= 0 && move.x <= env->w_width)
+			env->mouse.x = move.x;
+		
+		if(move.y > 0 && move.y <= env->w_height)
+			env->mouse.y = move.y;
+	}
+	
+}
+
+
+/**
+ *	Thread pour changer la position de la souris
+ */ 
+int state_menu_cursor_handler(void* e){
+	
+	State_Menu_Env* env = e;
+	int rel_x, rel_y;
+	
+	while(1){
+		
+		SDL_Delay(10);
+		
+		/* Recuperation d'un evenement */
+		SDL_GetRelativeMouseState(&rel_x, &rel_y);	
+		
+		env->mouse_motion.y = -(GLfloat)rel_y;
+		env->mouse_motion.x = (GLfloat)rel_x;
+		
+		state_menu_move_cursor(env);
+	}
+	return 0;
 }

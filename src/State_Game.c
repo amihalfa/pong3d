@@ -223,11 +223,6 @@ int state_game_events(State_Game_Env* env){
 			env->mouse_motion_y += event.motion.yrel;
 		}
 	}
-
-	/* on replace la souris au centre et on enleve l'evenement ainsi genere */
-	SDL_WarpMouse(env->w_width/2, env->w_height/2);
-	while( SDL_PollEvent(&event) );
-
 	env->keystates = SDL_GetKeyState( NULL );
 	
 	if( env->keystates[ SDLK_ESCAPE ] ) {

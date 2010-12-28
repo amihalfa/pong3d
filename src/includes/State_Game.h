@@ -52,7 +52,9 @@
 	int state_game_get_pause();
 	void state_game_set_pause(int pause);
 	
-
+	int state_game_level(int level);
+	int state_game_get_level();
+	void state_game_set_level(int level);
 
 #endif
 

@@ -5,7 +5,7 @@
 	#define STATE_GET		1
 	#define STATE_DESTROY	2
 
-	struct State{
+	typedef struct State{
 
 		/** 
 		 *	Environnement associe a l'etat en cours de l'application 
@@ -30,9 +30,7 @@
 		 */
 		int ( *events_handler )( void*, Uint32 );
 
-	};
-
-	typedef struct State State;
+	} State;
 
 
 	/**

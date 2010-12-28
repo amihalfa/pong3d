@@ -68,3 +68,15 @@ void menu_item_animate_to_0(Menu_Item * menu_item, Uint32 e_time){
 		}
 	}
 }
+
+int menu_item_mouse_over(Menu_Item* menu_item, Coord2d* mouse){
+	
+	/* Si la souris est sur l'item en x */
+	if(mouse->x > menu_item->position.x && mouse->x < menu_item->position.x + 128.0f){
+		/* Si la souris est sur l'item en y */
+		if(mouse->y > menu_item->position.y && mouse->y < menu_item->position.y + 128.0f){
+			return 1;
+		}
+	}
+	return 0;
+}

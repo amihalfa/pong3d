@@ -194,50 +194,22 @@ int state_menu_events(State_Menu_Env* env){
 	
 	/* Recuperation d'un evenement */
 	while(SDL_PollEvent(&event)){
-	
-		env->mouse_motion.x = 0;
-		env->mouse_motion.y = 0;
-		
 		/* Analyse de l'evenement */
 		switch(event.type){
 			case SDL_QUIT:
 				return 0;
 			break;
-			case SDL_MOUSEMOTION:
-				break;
 			case SDL_KEYDOWN:
-				switch(event.key.keysym.sym){
-					case SDLK_RETURN:
-						key_pressed = SDLK_RETURN;
-						break;
-					case SDLK_LEFT:
-						key_pressed = SDLK_LEFT;
-						break;
-					case SDLK_RIGHT:
-						key_pressed = SDLK_RIGHT;
-						break;
-					default:
-						return 1;
-						break;
+				if(event.key.keysym.sym == SDLK_ESCAPE)
+					return 0;
+				break;
+			case SDL_MOUSEBUTTONDOWN:
+				if(state_menu_select_item(env) == 0){
+					return 0;
 				}
 				break;
-		}
-		
-		/* Touche entree pressee */
-		if( key_pressed == SDLK_RETURN ) { 
-			return state_menu_select_item(env);
-		}
-		
-		/* Fleche gauche pressee */
-		else if(key_pressed == SDLK_RIGHT) { 
-			if(env->selected_item+1 < env->itemsnb[env->selected_page])
-				env->selected_item++;
-		}
-		
-		/* Fleche droite pressee */
-		else if(key_pressed == SDLK_LEFT) { 
-			if(env->selected_item > 0)
-				env->selected_item--;
+			default:
+				break;
 		}
 	}
 	return 1;
@@ -337,19 +309,26 @@ void state_menu_move_cursor(State_Menu_Env* env){
 int state_menu_cursor_handler(void* e){
 	
 	State_Menu_Env* env = e;
-	int rel_x, rel_y;
+	int rel_x, rel_y, i;
 	
 	while(1){
 		
 		SDL_Delay(10);
 		
-		/* Recuperation d'un evenement */
+		/* Recuperation de la position relative de la souris */
 		SDL_GetRelativeMouseState(&rel_x, &rel_y);	
 		
 		env->mouse_motion.y = -(GLfloat)rel_y;
 		env->mouse_motion.x = (GLfloat)rel_x;
 		
 		state_menu_move_cursor(env);
+		
+		for(i = 0; i < env->itemsnb[env->selected_page]; i++){
+			if( menu_item_mouse_over(&(env->menu_item[env->selected_page][i]), &env->mouse) ){
+				env->selected_item = i;
+			}
+		}
+		
 	}
 	return 0;
 }

@@ -116,7 +116,7 @@ void state_menu_init(State_Menu_Env* env){
 	env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load ("images/menu/retour.png");
 	
 	
-	env->selected_item = 0;
+	env->selected_item = -1;
 	if(state_game_get_pause() == 0)
 		env->selected_page = STATE_MENU_HOME;
 	else
@@ -169,7 +169,7 @@ void state_menu_draw(State_Menu_Env* env){
 	}
 	
 	/* Dessin de la souris */
-	util_texture_display(env->mouse_texture, env->mouse.x, env->mouse.y, 32.0f, 32.0f);
+	util_texture_display(env->mouse_texture, env->mouse.x, env->mouse.y-32.0f, 32.0f, 32.0f);
 	
 	
 	/* On s'assure que le dessin est termine */
@@ -216,6 +216,7 @@ int state_menu_events(State_Menu_Env* env){
 }
 
 int state_menu_select_item(State_Menu_Env* env){
+	if(env->selected_item != -1)
 	switch(env->selected_page){
 		case STATE_MENU_HOME:
 			switch(env->selected_item){
@@ -322,7 +323,7 @@ int state_menu_cursor_handler(void* e){
 		env->mouse_motion.x = (GLfloat)rel_x;
 		
 		state_menu_move_cursor(env);
-		
+		env->selected_item = -1;
 		for(i = 0; i < env->itemsnb[env->selected_page]; i++){
 			if( menu_item_mouse_over(&(env->menu_item[env->selected_page][i]), &env->mouse) ){
 				env->selected_item = i;

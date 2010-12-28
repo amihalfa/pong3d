@@ -252,11 +252,18 @@ int state_menu_select_item(State_Menu_Env* env){
 		case STATE_MENU_PLAY:
 			switch(env->selected_item){
 				case 0:
+					state_game_set_level(1);
 					state_game_set_pause(0);
 					state_set_current(state_game_get());
 					break;
 				case 1:
+					state_game_set_level(2);
 					state_game_set_pause(0);
+					state_set_current(state_game_get());
+					break;
+				case 2:
+					state_game_set_pause(0);
+					state_game_set_level(3);
 					state_set_current(state_game_get());
 					break;
 				case 3:

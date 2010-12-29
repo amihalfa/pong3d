@@ -291,25 +291,6 @@ void state_menu_main(State_Menu_Env* env, Uint32 e_time){
 	
 }
 
-void state_menu_move_cursor(State_Menu_Env* env){
-	
-	Coord2d move;
-	
-	/* S'il ya eu reellement un mouvement */
-	if ( env->mouse_motion.x != 0 && env->mouse_motion.y != 0){
-		/* Si la souris ne sort pas de l'ecran */
-		move.x = env->mouse.x + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.x;
-		move.y = env->mouse.y + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.y;
-		
-		if(move.x >= 0 && move.x <= env->w_width)
-			env->mouse.x = move.x;
-		
-		if(move.y > 0 && move.y <= env->w_height)
-			env->mouse.y = move.y;
-	}
-	
-}
-
 
 /**
  *	Thread pour changer la position de la souris
@@ -329,7 +310,23 @@ int state_menu_cursor_handler(void* e){
 		env->mouse_motion.y = -(GLfloat)rel_y;
 		env->mouse_motion.x = (GLfloat)rel_x;
 		
-		state_menu_move_cursor(env);
+		
+			Coord2d move;
+	
+	/* S'il ya eu reellement un mouvement */
+	if ( env->mouse_motion.x != 0 && env->mouse_motion.y != 0){
+		/* Si la souris ne sort pas de l'ecran */
+		move.x = env->mouse.x + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.x;
+		move.y = env->mouse.y + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.y;
+		
+		if(move.x >= 0 && move.x <= env->w_width)
+			env->mouse.x = move.x;
+		
+		if(move.y > 0 && move.y <= env->w_height)
+			env->mouse.y = move.y;
+	}
+		
+		
 		env->selected_item = -1;
 		for(i = 0; i < env->itemsnb[env->selected_page]; i++){
 			if( menu_item_mouse_over(&(env->menu_item[env->selected_page][i]), &env->mouse) ){

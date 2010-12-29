@@ -16,6 +16,7 @@
 #include "includes/Collisions.h"
 #include "includes/Util.h"
 #include "includes/Animation.h"
+#include "includes/AI.h"
 
 
 State* state_game(int action) {
@@ -99,12 +100,15 @@ void state_game_init(State_Game_Env* env) {
 		printf("%d", state_game_get_level());
 		if(state_game_get_level() == 1){
 			env->balls_nb = 1;
+			env->AI_handler = *AI_easy;
 		} 
 		else if(state_game_get_level() == 2){
 			env->balls_nb = 5;
+			env->AI_handler = *AI_easy;
 		}
 		else if(state_game_get_level() == 3){
 			env->balls_nb = 10;
+			env->AI_handler = *AI_easy;
 		}
         
 		env->mouse_motion_x = 0;
@@ -261,6 +265,8 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
     int i;
     env->ellapsed_time = e_time;
 
+	env->AI_handler(env);
+	
     collision_state_game(env);
 
     if (state_game_get_pause() != 1)

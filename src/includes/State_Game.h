@@ -6,7 +6,9 @@
 	#define RACKET_BOTTOM 0
 	#define RACKET_TOP 1
 
-	struct State_Game_Env{
+	struct State_Game_Env;
+
+	typedef struct State_Game_Env{
 		Ground ground;
 		Racket racket[2];
 		Ball ball[STATE_GAME_BALLS];
@@ -16,9 +18,12 @@
 		Uint8 *keystates;
 		Uint32 ellapsed_time;
 		float config[CONFIG_NB];
-	};
+		
+		/** Fonction de gestion de l'IA */
+		void (*AI_handler)(struct State_Game_Env* env);
+	} State_Game_Env;
 
-	typedef struct State_Game_Env State_Game_Env;
+	
 
 
 	State* state_game(int);

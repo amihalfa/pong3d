@@ -265,7 +265,7 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
     int i;
     env->ellapsed_time = e_time;
 
-	env->AI_handler(env);
+	env->AI_handler(env, RACKET_TOP);
 	
     collision_state_game(env);
 

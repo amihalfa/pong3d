@@ -9,10 +9,11 @@
 #include "includes/Ground.h"
 #include "includes/Config.h"
 #include "includes/State_Game.h"
+#include "includes/Collisions.h"
 #include "includes/AI.h"
 
-void AI_easy(State_Game_Env* env){
-	
-	env->racket
+void AI_easy(State_Game_Env* env, int racket_id){
+
+	env->racket[racket_id].position.x = env->ball[0].position.x;
 	
 }

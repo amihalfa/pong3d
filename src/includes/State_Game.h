@@ -20,7 +20,8 @@
 		float config[CONFIG_NB];
 		
 		/** Fonction de gestion de l'IA */
-		void (*AI_handler)(struct State_Game_Env* env);
+		void (*AI_handler)(struct State_Game_Env* env, int racket_id);
+		
 	} State_Game_Env;
 
 	

@@ -14,6 +14,36 @@
 
 void AI_easy(State_Game_Env* env, int racket_id){
 
-	env->racket[racket_id].position.x = env->ball[0].position.x;
-	
+	Ball* ball = &env->ball[0];
+	Racket* racket = &env->racket[racket_id];
+	GLfloat dist;
+	if( (ball->speed.y > 0 && racket->position.y < ball->position.y) || (ball->speed.y < 0 && racket->position.y > ball->position.y)  ){
+		racket->speed = 0.0f;	
+	}
+	else {
+		if(fabs(ball->position.y-racket->position.y) < env->ground.length/2.0f ){
+			
+			dist = racket->position.x - ball->position.x;
+			
+			if( dist > racket->width/3.0f){
+				if(racket->speed > -RACKET_SPEED_MAX){
+					racket->speed -= fabs(ball->speed.x)/20.0f;
+				}
+				else {
+					racket->speed = -RACKET_SPEED_MAX;
+				}
+			}
+			else if( dist < -racket->width/3.0f){
+				if(racket->speed < RACKET_SPEED_MAX){
+					racket->speed += fabs(ball->speed.x)/20.0f;
+				}
+				else{
+					racket->speed = RACKET_SPEED_MAX;
+				}
+			}
+			else {
+					racket->speed /= 1.3f;
+			}
+		}
+	}
 }

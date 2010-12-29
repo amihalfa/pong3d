@@ -9,9 +9,6 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
 
-	#define COLLISION_LEFT		0
-	#define COLLISION_RIGHT		1
-
 	/**
 	 *	Gestion generale des collisions de l'etat Jeu
 	 *	@param	env			Envirronement du jeu 
@@ -19,7 +16,7 @@
 	 */
 	int collision_state_game( State_Game_Env* env );
 
-	int collision_racket_ground( Racket* racket , Ground* ground, int position);
+	int collision_racket_ground( Racket* racket , Ground* ground);
 
 	int collision_ball_ground( Ball* ball, Ground* ground );
 

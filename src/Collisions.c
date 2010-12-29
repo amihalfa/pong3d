@@ -28,22 +28,23 @@ int collision_state_game(State_Game_Env* env){
 			
 		}
 	}
+	for(i = 0; i < 2; i++)
+		collision_racket_ground(&env->racket[i], &env->ground);
 
 	return 0;
 }
 
-int collision_racket_ground( Racket* racket, Ground* ground, int position ){
+int collision_racket_ground( Racket* racket, Ground* ground){
 
 	float rckt_width_mi = racket->width / 2;
 	float grnd_width_mi = ground->width / 2;
-	if(position == COLLISION_LEFT){
-		if( racket->position.x - rckt_width_mi <= -grnd_width_mi ){
-			return 1;
-		}
-	} else if(position == COLLISION_RIGHT){
-		if( racket->position.x + rckt_width_mi >= grnd_width_mi ){
-			return 1;
-		}
+	if( racket->position.x - rckt_width_mi <= -grnd_width_mi ){
+		racket->position.x = -grnd_width_mi + rckt_width_mi;
+		return 1;
+	}
+	if( racket->position.x + rckt_width_mi >= grnd_width_mi ){
+		racket->position.x = - rckt_width_mi + grnd_width_mi;
+		return 1;
 	}
 	return 0;
 

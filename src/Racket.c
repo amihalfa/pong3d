@@ -71,10 +71,10 @@ void racket_draw( Racket* racket ){
 	
 }
 
-void racket_move(void* v_env, char num_racket ){
+void racket_mouse_move(void* v_env, char num_racket ){
 
-	State_Game_Env* env = (State_Game_Env*) v_env;
-
+	State_Game_Env* env = (State_Game_Env *) v_env;
+	
 	Racket* racket;
 	racket = &env->racket[num_racket];
 
@@ -83,11 +83,22 @@ void racket_move(void* v_env, char num_racket ){
 
 	
 	if ( env->mouse_motion_x != 0 ){
-		racket->speed = RACKET_SPEED * env->ellapsed_time * env->mouse_motion_x * env->config[CONFIG_MOUSE_SENSIBILITY];
+		racket->speed = env->ellapsed_time/10.0 * env->mouse_motion_x * env->config[CONFIG_MOUSE_SENSIBILITY];
+		if(fabs(racket->speed) > RACKET_SPEED_MAX){
+			if(racket->speed > 0){
+				racket->speed = RACKET_SPEED_MAX;
+			} else {
+				racket->speed = -RACKET_SPEED_MAX;
+			}
+		}
 	}
 	else{
 		racket->speed = 0;
 	}
+}
 
+void racket_move(Racket* racket){
+	
 	racket->position.x += racket->speed;
+
 }

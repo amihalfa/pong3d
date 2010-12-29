@@ -9,8 +9,6 @@
 #ifndef BALL_H
 #define BALL_H
 
-	#define BALL_MAX_SPEED 0.06
-
 	typedef struct Ball{
 		
 		/** Position de la balle */

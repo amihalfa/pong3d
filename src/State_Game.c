@@ -88,7 +88,7 @@ void state_game_init(State_Game_Env* env) {
         env->racket[RACKET_TOP].position.z = 0.8f;
         env->racket[RACKET_TOP].width = 5.0f;
         env->racket[RACKET_TOP].radius = 0.8f;
-        env->racket[RACKET_TOP].speed = 0.01f;
+        env->racket[RACKET_TOP].speed = 0.0f;
 
         /* ... Raquette du bas ... */
         env->racket[RACKET_BOTTOM] = env->racket[RACKET_TOP];
@@ -121,9 +121,15 @@ void state_game_init(State_Game_Env* env) {
             env->ball[i].position.x = (i%nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
             env->ball[i].position.y = (i/nbcols - nbcols/2)*(env->ball[i].radius * 2.5f);
             env->ball[i].position.z = 0.5f;
-            env->ball[i].speed.x = (float) (rand()%200 - 100) / 1000.0f;
-            env->ball[i].speed.y = (float) (rand()%200 - 100) / 1000.0f;
-            particles_init( &env->ball[i].particles, &env->ball[i].position);
+            env->ball[i].speed.x = (float) (rand()%50 + 50) / 1000.0f;
+			if(rand()%2){
+				env->ball[i].speed.x *= -1;
+			}
+            env->ball[i].speed.y = (float) (rand()%50 + 50) / 1000.0f;
+            if(rand()%2){
+				env->ball[i].speed.y *= -1;
+			}
+			particles_init( &env->ball[i].particles, &env->ball[i].position);
         }
     }
     state_game_set_pause(1);
@@ -252,9 +258,6 @@ int state_game_events(State_Game_Env* env) {
         state_set_current(state_get_menu());
     }
 
-    if (state_game_get_pause() == 2)
-        racket_move(env, RACKET_BOTTOM);
-
     return 1;
 
 }
@@ -267,15 +270,19 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
 
 	env->AI_handler(env, RACKET_TOP);
 	
-    collision_state_game(env);
-
-    if (state_game_get_pause() != 1)
+	if (state_game_get_pause() != 1){   
+		racket_mouse_move(env, RACKET_BOTTOM);
+		for(i=0; i<2; i++){
+			racket_move(&env->racket[i]);
+		}
+		collision_state_game(env);
         for (i = 0 ; i< env->balls_nb ; i++) {
             if (env->config[CONFIG_PARTICLES])
                 particles_add_position(&env->ball[i].particles, &env->ball[i].position);
             ball_move(&env->ball[i], e_time );
         }
-
+	}
+	
     state_game_draw(env);
 }
 

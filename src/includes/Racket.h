@@ -8,7 +8,7 @@
 #ifndef RACKET_H
 #define RACKET_H
 
-	#define RACKET_SPEED 0.05
+	#define RACKET_SPEED_MAX 1.0f
    /**
 	*	Structure permettant de gerer une raquette
 	*/
@@ -40,9 +40,13 @@
 	/**
 	 * Actualise la vitesse de la rackette et la bouge
 	 * @param env			Environement
-	 * @param num_racket	numero de la rackette a bouger
+	 * @param num_racket	numero de la raquette a bouger
 	 */
-	void racket_move(void* v_env, char num_racket );
+	void racket_mouse_move(void* v_env, char num_racket );
 
+	/**
+	 * Faire bouger la raquette
+	 */
+	void racket_move(Racket* racket);
 #endif
 

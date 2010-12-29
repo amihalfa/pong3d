@@ -42,7 +42,7 @@ void AI_easy(State_Game_Env* env, int racket_id){
 				}
 			}
 			else {
-					racket->speed /= 1.3f;
+					racket->speed /= 1.5f;
 			}
 		}
 	}

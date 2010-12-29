@@ -1,6 +1,10 @@
 #ifndef MENU_ITEM_H
 #define MENU_ITEM_H
 
+#define MENU_ITEM_DEFAULT
+#define MENU_ITEM_CHECKBOX
+#define MENU_ITEM_SLIDER
+
 	typedef struct Menu_Item {
 
 		/* Position */
@@ -10,7 +14,12 @@
 		GLuint texture;
 		
 		GLfloat anim_step;
-		short int anim_dir;
+		
+		int anim_dir;
+		
+		int type;
+		
+		int value;
 
 	} Menu_Item;
 

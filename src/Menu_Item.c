@@ -37,7 +37,19 @@ void menu_item_draw(Menu_Item * menu_item){
 	glDisable (GL_TEXTURE_2D);
 	
 	if(menu_item->type == MENU_ITEM_CHECKBOX){	
-		/* Debut de dessin */
+		menu_item_draw_checkbox(menu_item);
+	}
+	
+	/* On remet la matrice mise en pile au depart */
+	glPopMatrix();
+	
+	/* On desactive texturing et transparence */
+	glDisable(GL_BLEND);
+
+}
+
+void menu_item_draw_checkbox(Menu_Item* menu_item){
+	/* Debut de dessin */
 		glBegin( GL_QUADS );
 			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 			glVertex2f(96.0f, 28.0f);
@@ -58,14 +70,6 @@ void menu_item_draw(Menu_Item * menu_item){
 			glVertex2f(123.0f, 33.0f);
 			
 		glEnd();
-	}
-	
-	/* On remet la matrice mise en pile au depart */
-	glPopMatrix();
-	
-	/* On desactive texturing et transparence */
-	glDisable(GL_BLEND);
-
 }
 
 void menu_item_animate(Menu_Item * menu_item, Uint32 e_time){

@@ -97,6 +97,8 @@
 	
 	int state_menu_select_item(State_Menu_Env* env);
 	
+	void state_menu_select_config_item(State_Menu_Env* env);
+	
 	void state_menu_main(State_Menu_Env* env, Uint32 e_time);
 	
 	int state_menu_cursor_handler(State_Menu_Env* env);

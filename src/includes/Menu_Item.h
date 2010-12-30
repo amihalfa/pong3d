@@ -31,6 +31,8 @@
 	
 	void menu_item_draw_checkbox(Menu_Item* menu_item);
 	
+	void menu_item_draw_slider(Menu_Item* menu_item);
+	
 	void menu_item_animate(Menu_Item* menu_item, Uint32 e_time);
 	
 	void menu_item_animate_to_0(Menu_Item * menu_item, Uint32 e_time);

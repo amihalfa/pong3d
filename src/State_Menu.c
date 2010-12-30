@@ -87,6 +87,7 @@ void state_menu_init(State_Menu_Env* env){
 	env->itemsnb[STATE_MENU_HOME] = 3;
 	env->itemsnb[STATE_MENU_CONTINUE] = 4;
 	env->itemsnb[STATE_MENU_PLAY] = 4;
+	env->itemsnb[STATE_MENU_CONFIG] = 5;
 
 	for(i = 0; i < STATE_MENU_PAGES; i++){
 
@@ -100,20 +101,29 @@ void state_menu_init(State_Menu_Env* env){
 		}
 	}
 
+	/* Menu d'accueil */
 	env->menu_item[STATE_MENU_HOME][0].texture = util_texture_load ("images/menu/jouer.png");
 	env->menu_item[STATE_MENU_HOME][1].texture = util_texture_load ("images/menu/config.png");
 	env->menu_item[STATE_MENU_HOME][2].texture = util_texture_load ("images/menu/quitter.png");
 
+	/* Menu suite au jeu (avec bouton reprendre) */
 	env->menu_item[STATE_MENU_CONTINUE][0].texture = util_texture_load ("images/menu/reprendre.png");
-	env->menu_item[STATE_MENU_CONTINUE][1].texture = util_texture_load ("images/menu/jouer.png");
-	env->menu_item[STATE_MENU_CONTINUE][2].texture = util_texture_load ("images/menu/config.png");
-	env->menu_item[STATE_MENU_CONTINUE][3].texture = util_texture_load ("images/menu/quitter.png");
+	env->menu_item[STATE_MENU_CONTINUE][1].texture = env->menu_item[STATE_MENU_HOME][0].texture;
+	env->menu_item[STATE_MENU_CONTINUE][2].texture = env->menu_item[STATE_MENU_HOME][1].texture;
+	env->menu_item[STATE_MENU_CONTINUE][3].texture = env->menu_item[STATE_MENU_HOME][2].texture;
 
+	/* Menu de choix de niveau */
 	env->menu_item[STATE_MENU_PLAY][0].texture = util_texture_load ("images/menu/facile.png");
 	env->menu_item[STATE_MENU_PLAY][1].texture = util_texture_load ("images/menu/moyen.png");
 	env->menu_item[STATE_MENU_PLAY][2].texture = util_texture_load ("images/menu/difficile.png");
 	env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load ("images/menu/retour.png");
 
+	/* Menu de config */
+	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][2].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][3].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][4].texture = util_texture_load ("images/menu/retour.png");
 
 	env->selected_item = -1;
 	if(state_game_get_pause() == 0)
@@ -229,6 +239,8 @@ int state_menu_select_item(State_Menu_Env* env){
 					env->selected_page = STATE_MENU_PLAY;
 					break;
 				case 1:
+					env->selected_item = -1;
+					env->selected_page = STATE_MENU_CONFIG;
 					break;
 				case 2:
 					return 0;
@@ -245,6 +257,10 @@ int state_menu_select_item(State_Menu_Env* env){
 				case 1:
 					env->selected_item = -1;
 					env->selected_page = STATE_MENU_PLAY;
+					break;
+				case 2:
+					env->selected_item = -1;
+					env->selected_page = STATE_MENU_CONFIG;
 					break;
 				case 3:
 					return 0;
@@ -271,6 +287,27 @@ int state_menu_select_item(State_Menu_Env* env){
 					state_set_current(state_game_get());
 					break;
 				case 3:
+					env->selected_item = -1;
+					if(state_game_get_pause() != 0)
+						env->selected_page = STATE_MENU_CONTINUE;
+					else
+						env->selected_page = STATE_MENU_HOME;
+					break;
+				default:
+					break;
+			}
+			break;
+		case STATE_MENU_CONFIG:
+			switch(env->selected_item){
+				case 0:
+					break;
+				case 1:
+					break;
+				case 2:
+					break;
+				case 3:
+					break;
+				case 4:
 					env->selected_item = -1;
 					if(state_game_get_pause() != 0)
 						env->selected_page = STATE_MENU_CONTINUE;

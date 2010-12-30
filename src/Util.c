@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <GL/gl.h>
@@ -27,6 +28,11 @@ GLuint util_texture_load(char * path) {
 
     texture = IMG_Load(path);
 
+	if(!texture){
+		fprintf(stderr, "Erreur :: Impossible d'ouvrir le fichier '%s' \n", path);
+		exit(10);
+	}
+	
     glTexImage2D (GL_TEXTURE_2D, 0, texture->format->BytesPerPixel, texture->w, texture->h, 0, GL_RGBA, GL_UNSIGNED_BYTE, texture-> pixels);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);

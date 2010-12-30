@@ -98,6 +98,6 @@
 	
 	void state_menu_main(State_Menu_Env* env, Uint32 e_time);
 	
-	int state_menu_cursor_handler(void* e);
+	int state_menu_cursor_handler(State_Menu_Env* env);
 	
 #endif

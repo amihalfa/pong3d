@@ -4,10 +4,11 @@
 	/* Nombre d'elements du menu */
 	#define STATE_MENU_ITEMSNB_MAX	5
 	
-	#define STATE_MENU_PAGES		3
+	#define STATE_MENU_PAGES		4
 	#define STATE_MENU_HOME			0
 	#define STATE_MENU_CONTINUE		1
 	#define STATE_MENU_PLAY			2
+	#define STATE_MENU_CONFIG		3
 
 	/**
 	 *	Environnement pour l'etat menu

@@ -14,69 +14,105 @@
 #include "includes/Collisions.h"
 #include "includes/Util.h"
 #include "includes/State_Menu_Items.h"
+#include "includes/Animation.h"
 
 /**
- *	Fonction generale de manipulation de l'etat menu
+ *	Fonction generique permettant d'instancier le singleton etat_menu
+ *	@param	flag	Drapeau pour savoir si on cree, on recupere ou on detruit l'etat
+ *	@return 		Pointeur vers l'etat de menu
  */
 State* state_menu(int action){
 
+	/* Pointeur vers l'etat menu */
 	static State* state_menu = (State*)0;
 
+	/* Creation si l'etat n'existe pas */
 	if( action == STATE_CREATE && !state_menu ){
-
+		
 		state_menu = ( State* ) malloc( sizeof(State) );
 		state_menu->env = (State_Menu_Env*) malloc( sizeof(State_Menu_Env) );
 		state_menu->init_handler = &state_menu_init;
 		state_menu->main_handler = &state_menu_main;
 		state_menu->events_handler = &state_menu_events;
 
+		State_Menu_Env* e = (State_Menu_Env*)(state_menu->env);
+		
+		/* Gestion de la taille de l'ecran */
 		SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN|SDL_OPENGL);
 		GLfloat ratio = (GLfloat)modes[0]->w/(GLfloat)modes[0]->h;
-
- 		if(ratio >= 1.33){
-			((State_Menu_Env*)(state_menu->env))->w_width = 600.0f * ratio;
-			((State_Menu_Env*)(state_menu->env))->w_height = 600.0f;
+ 		
+		/* Au dessus ou en dessous des 4/3 */
+		if(ratio >= 1.33){
+			e->w_width = 600.0f * ratio;
+			e->w_height = 600.0f;
 		} else {
-			((State_Menu_Env*)(state_menu->env))->w_width = 800.0f;
-			((State_Menu_Env*)(state_menu->env))->w_height = 800.0f * ratio;
+			e->w_width = 800.0f;
+			e->w_height = 800.0f * ratio;
 		}
-		((State_Menu_Env*)(state_menu->env))->mouse.x = ((State_Menu_Env*)(state_menu->env))->w_width / 2.0f;
-		((State_Menu_Env*)(state_menu->env))->mouse.y = ((State_Menu_Env*)(state_menu->env))->w_height / 2.0f;
+		
+		/* Mise en position du curseur de souris */
+		e->mouse.x = ((State_Menu_Env*)(state_menu->env))->w_width / 2.0f;
+		e->mouse.y = ((State_Menu_Env*)(state_menu->env))->w_height / 2.0f;
+		
+		/* Recuperation du fichier de config */
 		config_load_state_menu((State_Menu_Env*)(state_menu->env));
 	}
+	
+	/* Destruction de l'etat menu */
 	else if( action == STATE_DESTROY && state_menu ){
 		free(state_menu->env);
 		free(state_menu);
 		state_menu = (State*)0;
 	}
+	
+	/* Retour du pointeur vers l'etat menu */
 	return state_menu;
 }
 
 /**
- *	Creation de l'etat menu
+ *	Fonction permettant d'instancier l'etat menu
  */
 void state_menu_create(){
 	state_menu( STATE_CREATE );
 }
 
 /**
- *	Recuperation de l'etat menu
- *	@return 	pointeur vers l'etat menu
+ *	Recuperation du pointeur vers l'etat menu
+ *	@return			Pointeur vers l'instance de l'etat menu en cours
  */
 State* state_get_menu(){
 	return state_menu( STATE_GET );
 }
 
 /**
- *	Liberation des ressources occupees par l'etat menu
+ *	Destruction de l'etat menu
  */
 void state_menu_destroy(){
 	state_menu( STATE_DESTROY );
 }
 
 /**
+ * Fonction maitresse de l'etat menu, appelee a chaque tour de boucle,
+ * elle s'occupe de coordonner moteur physique et moteur graphique
+ * @param env		Environnement de menu
+ * @param e_time	Temps de latence donne par la boucle principale
+ */
+void state_menu_main(State_Menu_Env* env, Uint32 e_time){
+
+	/* Recuperation du temps de latence */
+	env->ellapsed_time = e_time;
+	
+	/* Animation du menu */
+	animation_state_menu(env, e_time);
+	
+	/* Dessin du menu */
+	state_menu_draw(env);
+
+}
+
+/**
  *	Initialisation de l'etat menu
- *	@param	env		Envirronnement de l'etat menu
+ *	@param	env		Environnement de l'etat menu
  */
 void state_menu_init(State_Menu_Env* env){
 
@@ -104,6 +140,11 @@ void state_menu_init(State_Menu_Env* env){
 			env->menu_item[i][j].value = 0;
 		}
 	}
+	
+	/* Types d'items particuliers pour la config */
+	env->menu_item[STATE_MENU_CONFIG][0].type = MENU_ITEM_SLIDER;
+	env->menu_item[STATE_MENU_CONFIG][1].type = MENU_ITEM_CHECKBOX;
+	env->menu_item[STATE_MENU_CONFIG][2].type = MENU_ITEM_CHECKBOX;
 
 	/* Chargement des textures des items */
 	state_menu_items_init_textures(env);
@@ -129,7 +170,6 @@ void state_menu_init(State_Menu_Env* env){
 	env->footer_texture = util_texture_load("images/menu/bas.png");
 	env->mouse_texture = util_texture_load("images/menu/souris.png");
 
-	
 	/* On enleve les params de la 3D */
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
@@ -138,13 +178,12 @@ void state_menu_init(State_Menu_Env* env){
 	/* On dimensionne le point de vue */
 	glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-
 	gluOrtho2D(0.0f, env->w_width, 0.0f, env->w_height);
 }
 
 /**
  *	Affichage de l'etat menu
- *	@param	env		Envirronnement de l'etat menu
+ *	@param	env		Environnement de l'etat menu
  */
 void state_menu_draw(State_Menu_Env* env){
 
@@ -184,8 +223,9 @@ void state_menu_draw(State_Menu_Env* env){
 }
 
 /**
- *	Gestion des evenements de l'etat menu
- *	@param	env		Envirronnement de l'etat menu
+ *	Gestionnaire des evenements de l'etat menu
+ * @param env		Environnement du menu
+ * @return			0 pour quitter l'appli et 1 sinon
  */
 int state_menu_events(State_Menu_Env* env){
 
@@ -199,15 +239,12 @@ int state_menu_events(State_Menu_Env* env){
 
 	/* Recuperation d'un evenement */
 	while(SDL_PollEvent(&event)){
+		
 		/* Analyse de l'evenement */
 		switch(event.type){
 			case SDL_QUIT:
 				return 0;
 			break;
-			case SDL_KEYDOWN:
-				if(event.key.keysym.sym == SDLK_ESCAPE)
-					return 0;
-				break;
 			case SDL_MOUSEBUTTONDOWN:
 				if(state_menu_items_select(env) == 0){
 					return 0;
@@ -220,52 +257,63 @@ int state_menu_events(State_Menu_Env* env){
 	return 1;
 }
 
-void state_menu_main(State_Menu_Env* env, Uint32 e_time){
-
-	env->ellapsed_time = e_time;
-	animation_state_menu(env, e_time);
-	state_menu_draw(env);
-
-}
-
+/**
+ * Fait bouger le curseur dans l'etat menu
+ * @param env		Environnement du menu
+ */
 void state_menu_move_cursor(State_Menu_Env* env){
 
     Coord2d move;
+	
 	/* S'il ya eu reellement un mouvement */
 	if ( env->mouse_motion.x != 0 && env->mouse_motion.y != 0){
+		
 		/* Si la souris ne sort pas de l'ecran */
 		move.x = env->mouse.x + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.x;
 		move.y = env->mouse.y + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.y;
 
+		/* A l'horizontale */
 		if(move.x >= 0 && move.x <= env->w_width)
 			env->mouse.x = move.x;
 
+		/* A la verticale */
 		if(move.y > 0 && move.y <= env->w_height)
 			env->mouse.y = move.y;
 	}
 }
 
 /**
- * pour changer la position de la souris
+ * Gestionnaire du curseur de souris
+ * S'occupe des mouvement et du survol d'elements
+ * @param env		Environnement du menu
  */
-int state_menu_cursor_handler(State_Menu_Env* env){
+void state_menu_cursor_handler(State_Menu_Env* env){
 
 	int rel_x, rel_y, i;
 
     /* Recuperation de la position relative de la souris */
 	SDL_GetRelativeMouseState(&rel_x, &rel_y);
+	
+	/* Deduction du mouvement a faire a la souris */
 	env->mouse_motion.y = -(GLfloat)rel_y;
 	env->mouse_motion.x = (GLfloat)rel_x;
+	
+	/* On fait bouger le curseur */
 	state_menu_move_cursor(env);
+	
+	/* On retrouve l'item sur lequel se trouve le curseur, -1 si aucun */
 	env->selected_item = -1;
 	for(i = 0; i < env->itemsnb[env->selected_page]; i++){
         if( menu_item_mouse_over(&(env->menu_item[env->selected_page][i]), &env->mouse) ){
             env->selected_item = i;
         }
     }
-	return 0;
 }
 
+/**
+ * Actionne la sauvegarde de la config du menu config vers le fichier de config
+ * @param env		Environnement du menu
+ */
 void state_menu_save_config_items(State_Menu_Env* env){
 	
 	/* On repasse à l'envirronement les valeurs des items de config */

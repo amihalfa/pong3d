@@ -24,8 +24,6 @@
 		
 	} State_Game_Env;
 
-	
-
 
 	State* state_game(int);
 

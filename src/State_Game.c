@@ -98,7 +98,6 @@ void state_game_init(State_Game_Env* env) {
         /* ... Donnees de l'env ... */
 		
 		/* Nombre de balles suivant le niveau */
-		printf("%d", state_game_get_level());
 		if(state_game_get_level() == 1){
 			env->balls_nb = 1;
 			env->AI_handler = *AI_easy;

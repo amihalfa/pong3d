@@ -35,12 +35,9 @@ void state_menu_items_init_textures(State_Menu_Env* env){
 	env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load ("images/menu/retour.png");
 
 	/* Menu de config */
-	env->menu_item[STATE_MENU_CONFIG][0].type = MENU_ITEM_SLIDER;
-	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load ("images/menu/retour.png");
-	env->menu_item[STATE_MENU_CONFIG][1].type = MENU_ITEM_CHECKBOX;
-	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load ("images/menu/retour.png");
-	env->menu_item[STATE_MENU_CONFIG][2].type = MENU_ITEM_CHECKBOX;
-	env->menu_item[STATE_MENU_CONFIG][2].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load ("images/menu/souris.png");
+	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load ("images/menu/reflets.png");
+	env->menu_item[STATE_MENU_CONFIG][2].texture = util_texture_load ("images/menu/particules.png");
 	env->menu_item[STATE_MENU_CONFIG][3].texture = util_texture_load ("images/menu/retour.png");
 	env->menu_item[STATE_MENU_CONFIG][4].texture = util_texture_load ("images/menu/retour.png");
 	

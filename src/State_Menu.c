@@ -122,6 +122,7 @@ void state_menu_init(State_Menu_Env* env){
 
 	/* Menu de config */
 	env->menu_item[STATE_MENU_CONFIG][0].type = MENU_ITEM_SLIDER;
+	env->menu_item[STATE_MENU_CONFIG][0].value = 0;
 	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load ("images/menu/retour.png");
 	env->menu_item[STATE_MENU_CONFIG][1].type = MENU_ITEM_CHECKBOX;
 	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load ("images/menu/retour.png");
@@ -185,7 +186,6 @@ void state_menu_draw(State_Menu_Env* env){
 	/* Dessin de la souris */
 	util_texture_display(env->mouse_texture, env->mouse.x, env->mouse.y-32.0f, 32.0f, 32.0f);
 
-
 	/* On s'assure que le dessin est termine */
 	glFlush();
 
@@ -224,9 +224,6 @@ int state_menu_events(State_Menu_Env* env){
 					return 0;
 				}
 				break;
-            case SDL_MOUSEMOTION:
-
-                break;
 			default:
 				break;
 		}
@@ -303,30 +300,49 @@ int state_menu_select_item(State_Menu_Env* env){
 			}
 			break;
 		case STATE_MENU_CONFIG:
-			switch(env->selected_item){
-				case 0:
-					break;
-				case 1:
-					break;
-				case 2:
-					break;
-				case 3:
-					break;
-				case 4:
-					env->selected_item = -1;
-					if(state_game_get_pause() != 0)
-						env->selected_page = STATE_MENU_CONTINUE;
-					else
-						env->selected_page = STATE_MENU_HOME;
-					break;
-				default:
-					break;
+			if(env->selected_item == 4){
+				env->selected_item = -1;
+				if(state_game_get_pause() != 0) {
+					env->selected_page = STATE_MENU_CONTINUE;
+				} else {
+					env->selected_page = STATE_MENU_HOME;
+				}
+			}
+			else {
+				state_menu_select_config_item(env);
 			}
 			break;
 		default:
 			break;
 	}
 	return 1;
+}
+
+void state_menu_select_config_item(State_Menu_Env* env){
+	Menu_Item* item = &(env->menu_item[env->selected_page][env->selected_item]);
+	
+	if(item->type == MENU_ITEM_CHECKBOX){
+		if(item->value > 0){
+			item->value = 0;
+		}
+		else {
+			item->value = 1;
+		}		
+	}
+	else if(item->type == MENU_ITEM_SLIDER){
+		GLfloat y_min, y_max;
+		y_min = item->position.y + 40.0f;
+		y_max = item->position.y + 128.0f - 8.0f;
+		if(env->mouse.y > y_min && env->mouse.y < y_max){
+			item->value = (int)(env->mouse.y - y_min);
+		}
+		else if(env->mouse.y < y_min){
+			item->value = 0;
+		}
+		else{
+			item->value = 80;
+		}
+	}
 }
 
 void state_menu_main(State_Menu_Env* env, Uint32 e_time){

@@ -40,6 +40,10 @@ void menu_item_draw(Menu_Item * menu_item){
 		menu_item_draw_checkbox(menu_item);
 	}
 	
+	if(menu_item->type == MENU_ITEM_SLIDER){	
+		menu_item_draw_slider(menu_item);
+	}
+	
 	/* On remet la matrice mise en pile au depart */
 	glPopMatrix();
 	
@@ -57,10 +61,13 @@ void menu_item_draw_checkbox(Menu_Item* menu_item){
 			glVertex2f(128.0f, 60.0f);
 			glVertex2f(128.0f, 28.0f);
 			
-			glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+			glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
 			glVertex2f(97.0f, 29.0f);
+			glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
 			glVertex2f(97.0, 59.0f);
+			glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
 			glVertex2f(127.0f, 59.0f);
+			glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
 			glVertex2f(127.0f, 29.0f);
 			
 			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
@@ -68,8 +75,57 @@ void menu_item_draw_checkbox(Menu_Item* menu_item){
 			glVertex2f(101.0, 55.0f);
 			glVertex2f(123.0f, 55.0f);
 			glVertex2f(123.0f, 33.0f);
-			
 		glEnd();
+		if(menu_item->value > 0){
+			glBegin( GL_QUADS );
+				glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+				glVertex2f(103.0f, 35.0f);
+				glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
+				glVertex2f(103.0, 53.0f);
+				glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
+				glVertex2f(121.0f, 53.0f);
+				glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
+				glVertex2f(121.0f, 35.0f);
+			glEnd();	
+		}
+}
+
+void menu_item_draw_slider(Menu_Item* menu_item){
+	/* Debut de dessin */
+		glBegin( GL_QUADS );
+			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+			glVertex2f(96.0f, 28.0f);
+			glVertex2f(96.0, 128.0f);
+			glVertex2f(128.0f, 128.0f);
+			glVertex2f(128.0f, 28.0f);
+			
+			glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
+			glVertex2f(97.0f, 29.0f);
+			glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
+			glVertex2f(97.0, 127.0f);
+			glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
+			glVertex2f(127.0f, 127.0f);
+			glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+			glVertex2f(127.0f, 29.0f);
+			
+			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+			glVertex2f(101.0f, 33.0f);
+			glVertex2f(101.0, 122.0f);
+			glVertex2f(123.0f, 122.0f);
+			glVertex2f(123.0f, 33.0f);
+		glEnd();
+		if(menu_item->value >= 0){
+			glBegin( GL_QUADS );
+				glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+				glVertex2f(103.0f, 35.0f);
+				glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
+				glVertex2f(103.0, 40.0f + menu_item->value);
+				glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
+				glVertex2f(121.0f, 40.0f + menu_item->value);
+				glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
+				glVertex2f(121.0f, 35.0f);
+			glEnd();	
+		}
 }
 
 void menu_item_animate(Menu_Item * menu_item, Uint32 e_time){

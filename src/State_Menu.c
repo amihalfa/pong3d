@@ -79,6 +79,8 @@ void state_menu_destroy(){
 void state_menu_init(State_Menu_Env* env){
 
 	int i, j;
+	
+	/* Chargement de la texture pour le curseur de la souris */
 	env->mouse_texture = util_texture_load("images/menu/souris.png");
 
 	/* Enregistrements des nombres d'elements par menu */
@@ -313,9 +315,8 @@ void state_menu_move_cursor(State_Menu_Env* env){
 /**
  * pour changer la position de la souris
  */
-int state_menu_cursor_handler(void* e){
+int state_menu_cursor_handler(State_Menu_Env* env){
 
-	State_Menu_Env* env = e;
 	int rel_x, rel_y, i;
 
     /* Recuperation de la position relative de la souris */

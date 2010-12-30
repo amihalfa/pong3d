@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <SDL/SDL.h>
 #include <GL/gl.h>
 #include "includes/Coords.h"
@@ -20,7 +21,8 @@ int config_load(float* config){
 	int i;
 	FILE* file_config = fopen("config/config.cfg", "r+");
 	if (!file_config) {
-		return 0;
+		fprintf(stderr, "Erreur :: Impossible d'ouvrir le fichier de config 'config/config.cfg' \n");
+		exit(11);
 	}
 	for (i = 0; i < CONFIG_NB; i++) {
 		fscanf(file_config, vars[i], &config[i]);
@@ -38,6 +40,9 @@ int config_load_state_game(void* game_env){
 			env->config[i] = config[i];
 		}
 		return 1;
+	} else {
+		fprintf(stderr, "Erreur :: Impossible d'ouvrir le fichier de config 'config/config.cfg' \n");
+		exit(11);
 	}
 	return 0;
 }
@@ -54,6 +59,10 @@ int config_load_state_menu(void* menu_env){
 		
 		return 1;
 	}
+	else {
+		fprintf(stderr, "Erreur :: Impossible d'ouvrir le fichier de config 'config/config.cfg' \n");
+		exit(11);
+	}
 	return 0;
 }
 
@@ -65,8 +74,10 @@ int config_save_state_menu(int* config){
 	};
 	FILE* file_config = fopen("config/config.cfg", "w");
 	if (!file_config) {
-		return 0;
+		fprintf(stderr, "Erreur :: Impossible d'ouvrir le fichier de config 'config/config.cfg' \n");
+		exit(11);
 	}
+	
 	fprintf(file_config, vars[CONFIG_MOUSE_SENSIBILITY], (float)config[CONFIG_MOUSE_SENSIBILITY]/80.0f);
 	fprintf(file_config, vars[CONFIG_REFLECTION], (float)config[CONFIG_REFLECTION]);
 	fprintf(file_config, vars[CONFIG_PARTICLES], (float)config[CONFIG_PARTICLES]);

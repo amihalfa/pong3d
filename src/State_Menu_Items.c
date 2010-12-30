@@ -18,28 +18,28 @@
 void state_menu_items_init_textures(State_Menu_Env* env){
 	
 	/* Menu d'accueil */
-	env->menu_item[STATE_MENU_HOME][0].texture = util_texture_load ("images/menu/jouer.png");
-	env->menu_item[STATE_MENU_HOME][1].texture = util_texture_load ("images/menu/config.png");
-	env->menu_item[STATE_MENU_HOME][2].texture = util_texture_load ("images/menu/quitter.png");
+	env->menu_item[STATE_MENU_HOME][0].texture = util_texture_load("images/menu/jouer.png");
+	env->menu_item[STATE_MENU_HOME][1].texture = util_texture_load("images/menu/config.png");
+	env->menu_item[STATE_MENU_HOME][2].texture = util_texture_load("images/menu/quitter.png");
 
 	/* Menu suite au jeu (avec bouton reprendre) */
-	env->menu_item[STATE_MENU_CONTINUE][0].texture = util_texture_load ("images/menu/reprendre.png");
+	env->menu_item[STATE_MENU_CONTINUE][0].texture = util_texture_load("images/menu/reprendre.png");
 	env->menu_item[STATE_MENU_CONTINUE][1].texture = env->menu_item[STATE_MENU_HOME][0].texture;
 	env->menu_item[STATE_MENU_CONTINUE][2].texture = env->menu_item[STATE_MENU_HOME][1].texture;
 	env->menu_item[STATE_MENU_CONTINUE][3].texture = env->menu_item[STATE_MENU_HOME][2].texture;
 
 	/* Menu de choix de niveau */
-	env->menu_item[STATE_MENU_PLAY][0].texture = util_texture_load ("images/menu/facile.png");
-	env->menu_item[STATE_MENU_PLAY][1].texture = util_texture_load ("images/menu/moyen.png");
-	env->menu_item[STATE_MENU_PLAY][2].texture = util_texture_load ("images/menu/difficile.png");
-	env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_PLAY][0].texture = util_texture_load("images/menu/facile.png");
+	env->menu_item[STATE_MENU_PLAY][1].texture = util_texture_load("images/menu/moyen.png");
+	env->menu_item[STATE_MENU_PLAY][2].texture = util_texture_load("images/menu/difficile.png");
+	env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load("images/menu/retour.png");
 
 	/* Menu de config */
-	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load ("images/menu/souris.png");
-	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load ("images/menu/reflets.png");
-	env->menu_item[STATE_MENU_CONFIG][2].texture = util_texture_load ("images/menu/particules.png");
-	env->menu_item[STATE_MENU_CONFIG][3].texture = util_texture_load ("images/menu/retour.png");
-	env->menu_item[STATE_MENU_CONFIG][4].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load("images/menu/souris.png");
+	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load("images/menu/reflets.png");
+	env->menu_item[STATE_MENU_CONFIG][2].texture = util_texture_load("images/menu/particules.png");
+	env->menu_item[STATE_MENU_CONFIG][3].texture = util_texture_load("images/menu/valider.png");
+	env->menu_item[STATE_MENU_CONFIG][4].texture = env->menu_item[STATE_MENU_PLAY][3].texture;
 	
 }
 

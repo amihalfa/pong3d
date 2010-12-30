@@ -20,10 +20,10 @@ void menu_item_draw(Menu_Item * menu_item){
 	/* Changement de repere pour positionner au bon endroit */
 	glTranslated( menu_item->position.x, menu_item->position.y , 0 );
 	
+	glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+	
 	/* Debut de dessin */
 	glBegin( GL_QUADS );
-	
-		glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
 		glTexCoord2i(0,1);
 		glVertex2f(0.0f, -128.0f);
 		glTexCoord2i(0,0);
@@ -32,14 +32,38 @@ void menu_item_draw(Menu_Item * menu_item){
 		glVertex2f(128.0f, 128.0f);
 		glTexCoord2i(1,1);
 		glVertex2f(128.0f, -128.0f);
-	
 	glEnd();
+	
+	glDisable (GL_TEXTURE_2D);
+	
+	if(menu_item->type == MENU_ITEM_CHECKBOX){	
+		/* Debut de dessin */
+		glBegin( GL_QUADS );
+			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+			glVertex2f(96.0f, 28.0f);
+			glVertex2f(96.0, 60.0f);
+			glVertex2f(128.0f, 60.0f);
+			glVertex2f(128.0f, 28.0f);
+			
+			glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+			glVertex2f(97.0f, 29.0f);
+			glVertex2f(97.0, 59.0f);
+			glVertex2f(127.0f, 59.0f);
+			glVertex2f(127.0f, 29.0f);
+			
+			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+			glVertex2f(101.0f, 33.0f);
+			glVertex2f(101.0, 55.0f);
+			glVertex2f(123.0f, 55.0f);
+			glVertex2f(123.0f, 33.0f);
+			
+		glEnd();
+	}
 	
 	/* On remet la matrice mise en pile au depart */
 	glPopMatrix();
 	
 	/* On desactive texturing et transparence */
-	glDisable (GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 
 }

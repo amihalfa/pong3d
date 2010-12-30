@@ -98,6 +98,8 @@ void state_menu_init(State_Menu_Env* env){
 			env->menu_item[i][j].position.y = 250.0f;
 			env->menu_item[i][j].anim_step = 0.0f;
 			env->menu_item[i][j].anim_dir = 1;
+			env->menu_item[i][j].type = MENU_ITEM_DEFAULT;
+			env->menu_item[i][j].value = 0;
 		}
 	}
 
@@ -119,8 +121,11 @@ void state_menu_init(State_Menu_Env* env){
 	env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load ("images/menu/retour.png");
 
 	/* Menu de config */
+	env->menu_item[STATE_MENU_CONFIG][0].type = MENU_ITEM_SLIDER;
 	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][1].type = MENU_ITEM_CHECKBOX;
 	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load ("images/menu/retour.png");
+	env->menu_item[STATE_MENU_CONFIG][2].type = MENU_ITEM_CHECKBOX;
 	env->menu_item[STATE_MENU_CONFIG][2].texture = util_texture_load ("images/menu/retour.png");
 	env->menu_item[STATE_MENU_CONFIG][3].texture = util_texture_load ("images/menu/retour.png");
 	env->menu_item[STATE_MENU_CONFIG][4].texture = util_texture_load ("images/menu/retour.png");

@@ -1,9 +1,9 @@
 #ifndef MENU_ITEM_H
 #define MENU_ITEM_H
 
-#define MENU_ITEM_DEFAULT
-#define MENU_ITEM_CHECKBOX
-#define MENU_ITEM_SLIDER
+#define MENU_ITEM_DEFAULT	0
+#define MENU_ITEM_CHECKBOX	1
+#define MENU_ITEM_SLIDER	2
 
 	typedef struct Menu_Item {
 

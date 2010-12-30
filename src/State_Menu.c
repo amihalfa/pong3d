@@ -41,6 +41,7 @@ State* state_menu(int action){
 		}
 		((State_Menu_Env*)(state_menu->env))->mouse.x = ((State_Menu_Env*)(state_menu->env))->w_width / 2.0f;
 		((State_Menu_Env*)(state_menu->env))->mouse.y = ((State_Menu_Env*)(state_menu->env))->w_height / 2.0f;
+		config_load_state_menu((State_Menu_Env*)(state_menu->env));
 	}
 	else if( action == STATE_DESTROY && state_menu ){
 		free(state_menu->env);
@@ -122,7 +123,6 @@ void state_menu_init(State_Menu_Env* env){
 
 	/* Menu de config */
 	env->menu_item[STATE_MENU_CONFIG][0].type = MENU_ITEM_SLIDER;
-	env->menu_item[STATE_MENU_CONFIG][0].value = 0;
 	env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load ("images/menu/retour.png");
 	env->menu_item[STATE_MENU_CONFIG][1].type = MENU_ITEM_CHECKBOX;
 	env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load ("images/menu/retour.png");
@@ -131,6 +131,11 @@ void state_menu_init(State_Menu_Env* env){
 	env->menu_item[STATE_MENU_CONFIG][3].texture = util_texture_load ("images/menu/retour.png");
 	env->menu_item[STATE_MENU_CONFIG][4].texture = util_texture_load ("images/menu/retour.png");
 
+	/* Valeur des configs */
+	for(i = 0; i < CONFIG_NB; i++){
+		env->menu_item[STATE_MENU_CONFIG][i].value = env->config[i];
+	}
+	
 	env->selected_item = -1;
 	if(state_game_get_pause() == 0)
 		env->selected_page = STATE_MENU_HOME;
@@ -141,7 +146,7 @@ void state_menu_init(State_Menu_Env* env){
 	env->top_texture = util_texture_load("images/menu/haut.png");
 	env->bottom_texture = util_texture_load("images/menu/bas_fond.png");
 	env->footer_texture = util_texture_load("images/menu/bas.png");
-
+	
 	/* On enleve les params de la 3D */
 	glDisable(GL_DEPTH_TEST);
 	glDisable(GL_LIGHTING);
@@ -308,6 +313,15 @@ int state_menu_select_item(State_Menu_Env* env){
 					env->selected_page = STATE_MENU_HOME;
 				}
 			}
+			else if(env->selected_item == 3){
+				state_menu_save_config_items(env);
+				env->selected_item = -1;
+				if(state_game_get_pause() != 0) {
+					env->selected_page = STATE_MENU_CONTINUE;
+				} else {
+					env->selected_page = STATE_MENU_HOME;
+				}
+			}
 			else {
 				state_menu_select_config_item(env);
 			}
@@ -316,33 +330,6 @@ int state_menu_select_item(State_Menu_Env* env){
 			break;
 	}
 	return 1;
-}
-
-void state_menu_select_config_item(State_Menu_Env* env){
-	Menu_Item* item = &(env->menu_item[env->selected_page][env->selected_item]);
-	
-	if(item->type == MENU_ITEM_CHECKBOX){
-		if(item->value > 0){
-			item->value = 0;
-		}
-		else {
-			item->value = 1;
-		}		
-	}
-	else if(item->type == MENU_ITEM_SLIDER){
-		GLfloat y_min, y_max;
-		y_min = item->position.y + 40.0f;
-		y_max = item->position.y + 128.0f - 8.0f;
-		if(env->mouse.y > y_min && env->mouse.y < y_max){
-			item->value = (int)(env->mouse.y - y_min);
-		}
-		else if(env->mouse.y < y_min){
-			item->value = 0;
-		}
-		else{
-			item->value = 80;
-		}
-	}
 }
 
 void state_menu_main(State_Menu_Env* env, Uint32 e_time){
@@ -389,4 +376,44 @@ int state_menu_cursor_handler(State_Menu_Env* env){
         }
     }
 	return 0;
+}
+
+
+void state_menu_select_config_item(State_Menu_Env* env){
+	Menu_Item* item = &(env->menu_item[env->selected_page][env->selected_item]);
+	
+	if(item->type == MENU_ITEM_CHECKBOX){
+		if(item->value > 0){
+			item->value = 0;
+		}
+		else {
+			item->value = 1;
+		}		
+	}
+	else if(item->type == MENU_ITEM_SLIDER){
+		GLfloat y_min, y_max;
+		y_min = item->position.y + 40.0f;
+		y_max = item->position.y + 128.0f - 8.0f;
+		if(env->mouse.y > y_min && env->mouse.y < y_max){
+			item->value = (int)(env->mouse.y - y_min);
+		}
+		else if(env->mouse.y < y_min){
+			item->value = 0;
+		}
+		else{
+			item->value = 80;
+		}
+	}
+}
+
+void state_menu_save_config_items(State_Menu_Env* env){
+	
+	/* On repasse à l'envirronement les valeurs des items de config */
+	env->config[CONFIG_MOUSE_SENSIBILITY] = env->menu_item[STATE_MENU_CONFIG][CONFIG_MOUSE_SENSIBILITY].value;
+	env->config[CONFIG_REFLECTION] = env->menu_item[STATE_MENU_CONFIG][CONFIG_REFLECTION].value;
+	env->config[CONFIG_PARTICLES] = env->menu_item[STATE_MENU_CONFIG][CONFIG_PARTICLES].value;
+	
+	/* On lance la sauvegarde dans le fichier de config */
+	config_save_state_menu(env->config);
+	
 }

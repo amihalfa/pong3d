@@ -53,6 +53,8 @@
 		
 		GLuint mouse_texture;
 		
+		int config[CONFIG_NB];
+		
 	};
 	typedef struct State_Menu_Env State_Menu_Env;
 	

@@ -6,6 +6,7 @@
 #include "includes/Particles.h"
 #include "includes/State.h"
 #include "includes/Ball.h"
+#include "includes/Config.h"
 #include "includes/Menu_Item.h"
 #include "includes/State_Menu.h"
 #include "includes/Animation.h"

@@ -34,8 +34,7 @@ State* state_game(int action) {
         (( State_Game_Env* )state_game->env)->w_height = modes[0]->h;
         (( State_Game_Env* )state_game->env)->w_width = modes[0]->w;
 
-        config_load(( State_Game_Env* ) state_game->env);
-    }
+	}
     else if ( action == STATE_DESTROY && state_game ) {
 
         free(state_game->env);
@@ -75,6 +74,8 @@ void state_game_init(State_Game_Env* env) {
     GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
     GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f};
 
+	config_load_state_game(env);
+	
     if (state_game_get_pause() == 0) {
 
         /* Mise en place du terrain dans la scene */

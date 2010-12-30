@@ -9,8 +9,10 @@
 
 	int config_load(float* config);
 
-	int config_load_state_game(State_Game_Env* env);
+	int config_load_state_game(void* game_env);
 
-	int config_load_state_menu(State_Menu_Env* env);
+	int config_load_state_menu(void* menu_env);
 
+	int config_save_state_menu(int* config);
+	
 #endif

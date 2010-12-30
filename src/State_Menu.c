@@ -168,7 +168,7 @@ void state_menu_init(State_Menu_Env* env){
 	env->top_texture = util_texture_load("images/menu/haut.png");
 	env->bottom_texture = util_texture_load("images/menu/bas_fond.png");
 	env->footer_texture = util_texture_load("images/menu/bas.png");
-	env->mouse_texture = util_texture_load("images/menu/souris.png");
+	env->mouse_texture = util_texture_load("images/menu/curseur.png");
 
 	/* On enleve les params de la 3D */
 	glDisable(GL_DEPTH_TEST);

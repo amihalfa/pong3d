@@ -25,24 +25,29 @@ void AI_easy(State_Game_Env* env, int racket_id){
 			
 			dist = racket->position.x - ball->position.x;
 			
-			if( dist > racket->width/4.0f){
+			if( dist > racket->width/8.0f){
 				if(racket->speed > -RACKET_SPEED_MAX){
-					racket->speed -= fabs(ball->speed.x)/20.0f + fabs(ball->speed.y)/20.0f;
+					racket->speed -= (float)(rand()%100 + 100)/10000.0;
 				}
 				else {
 					racket->speed = -RACKET_SPEED_MAX;
 				}
 			}
-			else if( dist < -racket->width/4.0f){
+			else if( dist < -racket->width/8.0f){
 				if(racket->speed < RACKET_SPEED_MAX){
-					racket->speed += fabs(ball->speed.x)/20.0f + fabs(ball->speed.y)/20.0f;
+					racket->speed += (float)(rand()%100+ 100)/10000.0;
 				}
 				else{
 					racket->speed = RACKET_SPEED_MAX;
 				}
 			}
 			else {
-					racket->speed /=  fabs(env->ground.length/(3*dist));
+				if(racket->speed > 0){
+					racket->speed -= (float)(rand()%100 + 100)/1000.0;
+				}
+				else {
+					racket->speed += (float)(rand()%100 +100)/1000.0;
+				}
 			}
 		}
 	}

@@ -18,7 +18,7 @@
 #include "includes/Animation.h"
 #include "includes/AI.h"
 #include "includes/State_Game_OpenGL.h"
-
+#include "includes/State_Game_Util.h"
 
 State* state_game(int action) {
     static State* state_game = (State*)0;
@@ -68,7 +68,7 @@ void state_game_init(State_Game_Env* env) {
 
 	config_load_state_game(env);
 	
-    if (state_game_get_pause() == 0) {
+    if (sgu_get_pause() == 0) {
 
         /* Mise en place du terrain dans la scene */
         env->ground.height = 2.0f;
@@ -90,15 +90,15 @@ void state_game_init(State_Game_Env* env) {
         /* ... Donnees de l'env ... */
 		
 		/* Nombre de balles suivant le niveau */
-		if(state_game_get_level() == 1){
+		if(sgu_get_level() == 1){
 			env->balls_nb = 1;
 			env->AI_handler = *AI_easy;
 		} 
-		else if(state_game_get_level() == 2){
+		else if(sgu_get_level() == 2){
 			env->balls_nb = 5;
 			env->AI_handler = *AI_easy;
 		}
-		else if(state_game_get_level() == 3){
+		else if(sgu_get_level() == 3){
 			env->balls_nb = 10;
 			env->AI_handler = *AI_easy;
 		}
@@ -124,7 +124,7 @@ void state_game_init(State_Game_Env* env) {
 			particles_init( &env->ball[i].particles, &env->ball[i].position);
         }
     }
-    state_game_set_pause(1);
+    sgu_set_pause(1);
 
 	sgo_init();
 
@@ -186,14 +186,14 @@ int state_game_events(State_Game_Env* env) {
             break;
 
         case SDL_MOUSEMOTION:
-            if (state_game_get_pause() == 2) {
+            if (sgu_get_pause() == 2) {
                 env->mouse_motion_x += event.motion.xrel;
                 env->mouse_motion_y += event.motion.yrel;
             }
             break;
 
         case SDL_MOUSEBUTTONDOWN:
-            state_game_set_pause(2);
+            sgu_set_pause(2);
             break;
         }
     }
@@ -215,7 +215,7 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
 
 	env->AI_handler(env, RACKET_TOP);
 	
-	if (state_game_get_pause() != 1){   
+	if (sgu_get_pause() != 1){   
 		racket_mouse_move(env, RACKET_BOTTOM);
 		for(i=0; i<2; i++){
 			racket_move(&env->racket[i]);
@@ -229,42 +229,4 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
 	}
 	
     state_game_draw(env);
-}
-
-/**
- * Gestion de la pause
- * @param	pause	Pour definir l'etat (-1: Renvoi de l'etat en cours)
- * @return 	0 : Jeu pas encore lance - 1 : Attente de clic pour demarrer - 2 : Pas en pause
- */
-int state_game_pause(int pause) {
-    static int p = 0;
-    if (pause != -1) {
-        p = pause;
-    }
-    return p;
-}
-
-int state_game_get_pause() {
-    return state_game_pause(-1);
-}
-
-void state_game_set_pause(int pause) {
-    state_game_pause(pause);
-}
-
-/**
- * Gestion des niveaux
- */
-int state_game_level(int level) {
-    static int l = 1;
-    if (level != -1) {
-        l = level;
-    }
-    return l;
-}
-int state_game_get_level() {
-    return state_game_level(-1);
-}
-void state_game_set_level(int level) {
-    state_game_level(level);
 }

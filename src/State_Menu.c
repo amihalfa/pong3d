@@ -13,9 +13,11 @@
 #include "includes/State_Menu.h"
 #include "includes/Collisions.h"
 #include "includes/Util.h"
-#include "includes/State_Menu_Items.h"
 #include "includes/Animation.h"
+#include "includes/State_Menu_Items.h"
 #include "includes/State_Menu_OpenGL.h"
+#include "includes/State_Menu_Util.h"
+#include "includes/State_Game_Util.h"
 
 /**
  *	Fonction generique permettant d'instancier le singleton etat_menu
@@ -108,7 +110,6 @@ void state_menu_main(State_Menu_Env* env, Uint32 e_time){
 	
 	/* Dessin du menu */
 	state_menu_draw(env);
-
 }
 
 /**
@@ -119,47 +120,16 @@ void state_menu_init(State_Menu_Env* env){
 
 	int i, j;
 	
-	/* Enregistrements des nombres d'elements par menu */
-	env->itemsnb[STATE_MENU_HOME] = 3;
-	env->itemsnb[STATE_MENU_CONTINUE] = 4;
-	env->itemsnb[STATE_MENU_PLAY] = 4;
-	env->itemsnb[STATE_MENU_CONFIG] = 5;
-
-	/* Initialisation des items du menu */
-	for(i = 0; i < STATE_MENU_PAGES; i++){
-		
-		/* Position en x du premier item pour la page en cours */
-		GLfloat first_item_x = env->w_width / 2 - 150.0 * (GLfloat)(env->itemsnb[i]) / 2.0;
-		
-		/* Proprietes de chaque item de la page */
-		for(j = 0; j < env->itemsnb[i]; j++){
-			env->menu_item[i][j].position.x = first_item_x + j * 150;
-			env->menu_item[i][j].position.y = 250.0f;
-			env->menu_item[i][j].anim_step = 0.0f;
-			env->menu_item[i][j].anim_dir = 1;
-			env->menu_item[i][j].type = MENU_ITEM_DEFAULT;
-			env->menu_item[i][j].value = 0;
-		}
-	}
-	
-	/* Types d'items particuliers pour la config */
-	env->menu_item[STATE_MENU_CONFIG][0].type = MENU_ITEM_SLIDER;
-	env->menu_item[STATE_MENU_CONFIG][1].type = MENU_ITEM_CHECKBOX;
-	env->menu_item[STATE_MENU_CONFIG][2].type = MENU_ITEM_CHECKBOX;
+	smi_init(env);
 
 	/* Chargement des textures des items */
-	state_menu_items_init_textures(env);
-
-	/* Valeur des configs */
-	for(i = 0; i < CONFIG_NB; i++){
-		env->menu_item[STATE_MENU_CONFIG][i].value = env->config[i];
-	}
+	smi_init_textures(env);
 	
 	/* Aucun item selectionne au depart */
 	env->selected_item = -1;
 	
 	/* A l'acces au menu, soit l'accueil si pas encore joue, soit la page 'continuer' */
-	if(state_game_get_pause() == 0)
+	if(sgu_get_pause() == 0)
 		env->selected_page = STATE_MENU_HOME;
 	else
 		env->selected_page = STATE_MENU_CONTINUE;
@@ -214,7 +184,7 @@ int state_menu_events(State_Menu_Env* env){
 	/* Variable de gestion des evenements */
 	SDL_Event event;
 
-    state_menu_cursor_handler(env);
+    smu_cursor_handler(env);
 
 	/* Recuperation des evenements */
 	while(SDL_PollEvent(&event)){
@@ -224,79 +194,10 @@ int state_menu_events(State_Menu_Env* env){
 			return 0;
 		}
 		else if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT ){
-			if(state_menu_items_select(env) == 0){
+			if(smi_select(env) == 0){
 				return 0;
 			}
 		}
 	}
 	return 1;
-}
-
-/**
- * Fait bouger le curseur dans l'etat menu
- * @param env		Environnement du menu
- */
-void state_menu_move_cursor(State_Menu_Env* env){
-
-    Coord2d move;
-	
-	/* S'il ya eu reellement un mouvement */
-	if ( env->mouse_motion.x != 0 && env->mouse_motion.y != 0){
-		
-		/* Si la souris ne sort pas de l'ecran */
-		move.x = env->mouse.x + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.x;
-		move.y = env->mouse.y + (GLfloat)env->ellapsed_time/10.0 * env->mouse_motion.y;
-
-		/* A l'horizontale */
-		if(move.x >= 0 && move.x <= env->w_width)
-			env->mouse.x = move.x;
-
-		/* A la verticale */
-		if(move.y > 0 && move.y <= env->w_height)
-			env->mouse.y = move.y;
-	}
-}
-
-/**
- * Gestionnaire du curseur de souris
- * S'occupe des mouvement et du survol d'elements
- * @param env		Environnement du menu
- */
-void state_menu_cursor_handler(State_Menu_Env* env){
-
-	int rel_x, rel_y, i;
-
-    /* Recuperation de la position relative de la souris */
-	SDL_GetRelativeMouseState(&rel_x, &rel_y);
-	
-	/* Deduction du mouvement a faire a la souris */
-	env->mouse_motion.y = -(GLfloat)rel_y;
-	env->mouse_motion.x = (GLfloat)rel_x;
-	
-	/* On fait bouger le curseur */
-	state_menu_move_cursor(env);
-	
-	/* On retrouve l'item sur lequel se trouve le curseur, -1 si aucun */
-	env->selected_item = -1;
-	for(i = 0; i < env->itemsnb[env->selected_page]; i++){
-        if( menu_item_mouse_over(&(env->menu_item[env->selected_page][i]), &env->mouse) ){
-            env->selected_item = i;
-        }
-    }
-}
-
-/**
- * Actionne la sauvegarde de la config du menu config vers le fichier de config
- * @param env		Environnement du menu
- */
-void state_menu_save_config_items(State_Menu_Env* env){
-	
-	/* On repasse à l'envirronement les valeurs des items de config */
-	env->config[CONFIG_MOUSE_SENSIBILITY] = env->menu_item[STATE_MENU_CONFIG][CONFIG_MOUSE_SENSIBILITY].value;
-	env->config[CONFIG_REFLECTION] = env->menu_item[STATE_MENU_CONFIG][CONFIG_REFLECTION].value;
-	env->config[CONFIG_PARTICLES] = env->menu_item[STATE_MENU_CONFIG][CONFIG_PARTICLES].value;
-	
-	/* On lance la sauvegarde dans le fichier de config */
-	config_save_state_menu(env->config);
-	
 }

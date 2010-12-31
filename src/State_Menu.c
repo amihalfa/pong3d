@@ -15,6 +15,7 @@
 #include "includes/Util.h"
 #include "includes/State_Menu_Items.h"
 #include "includes/Animation.h"
+#include "includes/State_Menu_OpenGL.h"
 
 /**
  *	Fonction generique permettant d'instancier le singleton etat_menu
@@ -170,15 +171,7 @@ void state_menu_init(State_Menu_Env* env){
 	env->footer_texture = util_texture_load("images/menu/bas.png");
 	env->mouse_texture = util_texture_load("images/menu/curseur.png");
 
-	/* On enleve les params de la 3D */
-	glDisable(GL_DEPTH_TEST);
-	glDisable(GL_LIGHTING);
-	glDisable(GL_COLOR_MATERIAL);
-
-	/* On dimensionne le point de vue */
-	glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-	gluOrtho2D(0.0f, env->w_width, 0.0f, env->w_height);
+	smo_init(env->w_width, env->w_height);
 }
 
 /**
@@ -188,14 +181,9 @@ void state_menu_init(State_Menu_Env* env){
 void state_menu_draw(State_Menu_Env* env){
 
 	int i;
-
-	/* On vide le buffer d'affichage */
-	glClear( GL_COLOR_BUFFER_BIT );
-
-	/* Matrice de manipulation des objets */
-	glMatrixMode( GL_MODELVIEW );
-	glLoadIdentity();
-
+	
+	smo_draw();
+	
 	/* On dessinne le panneau du haut */
  	util_texture_display(env->top_texture, 0.0f, 500.0f, env->w_width, 100.0f);
 
@@ -214,12 +202,6 @@ void state_menu_draw(State_Menu_Env* env){
 	/* Dessin de la souris */
 	util_texture_display(env->mouse_texture, env->mouse.x, env->mouse.y-32.0f, 32.0f, 32.0f);
 
-	/* On s'assure que le dessin est termine */
-	glFlush();
-
-	/* On affiche */
-	SDL_GL_SwapBuffers();
-
 }
 
 /**
@@ -232,27 +214,19 @@ int state_menu_events(State_Menu_Env* env){
 	/* Variable de gestion des evenements */
 	SDL_Event event;
 
-	/* Pour recuperer la touche pressee */
-	int key_pressed;
-
     state_menu_cursor_handler(env);
 
-	/* Recuperation d'un evenement */
+	/* Recuperation des evenements */
 	while(SDL_PollEvent(&event)){
 		
 		/* Analyse de l'evenement */
-		switch(event.type){
-			case SDL_QUIT:
+		if(event.type == SDL_QUIT){
+			return 0;
+		}
+		else if(event.type == SDL_MOUSEBUTTONDOWN && event.button.button == SDL_BUTTON_LEFT ){
+			if(state_menu_items_select(env) == 0){
 				return 0;
-			break;
-			case SDL_MOUSEBUTTONDOWN:
-				if(event.button.button == SDL_BUTTON_LEFT)
-					if(state_menu_items_select(env) == 0){
-						return 0;
-					}
-				break;
-			default:
-				break;
+			}
 		}
 	}
 	return 1;

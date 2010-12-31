@@ -246,9 +246,10 @@ int state_menu_events(State_Menu_Env* env){
 				return 0;
 			break;
 			case SDL_MOUSEBUTTONDOWN:
-				if(state_menu_items_select(env) == 0){
-					return 0;
-				}
+				if(event.button.button == SDL_BUTTON_LEFT)
+					if(state_menu_items_select(env) == 0){
+						return 0;
+					}
 				break;
 			default:
 				break;

@@ -14,8 +14,48 @@
 #include "includes/Collisions.h"
 #include "includes/Util.h"
 #include "includes/State_Menu_Items.h"
+#include "includes/State_Menu_Util.h"
+#include "includes/State_Game_Util.h"
 
-void state_menu_items_init_textures(State_Menu_Env* env){
+void smi_init(State_Menu_Env* env){
+	
+	int i, j;
+	
+	/* Enregistrements des nombres d'elements par menu */
+	env->itemsnb[STATE_MENU_HOME] = 3;
+	env->itemsnb[STATE_MENU_CONTINUE] = 4;
+	env->itemsnb[STATE_MENU_PLAY] = 4;
+	env->itemsnb[STATE_MENU_CONFIG] = 5;
+
+	/* Initialisation des items du menu */
+	for(i = 0; i < STATE_MENU_PAGES; i++){
+		
+		/* Position en x du premier item pour la page en cours */
+		GLfloat first_item_x = env->w_width / 2 - 150.0 * (GLfloat)(env->itemsnb[i]) / 2.0;
+		
+		/* Proprietes de chaque item de la page */
+		for(j = 0; j < env->itemsnb[i]; j++){
+			env->menu_item[i][j].position.x = first_item_x + j * 150;
+			env->menu_item[i][j].position.y = 250.0f;
+			env->menu_item[i][j].anim_step = 0.0f;
+			env->menu_item[i][j].anim_dir = 1;
+			env->menu_item[i][j].type = MENU_ITEM_DEFAULT;
+			env->menu_item[i][j].value = 0;
+		}
+	}
+	
+	/* Types d'items particuliers pour la config */
+	env->menu_item[STATE_MENU_CONFIG][0].type = MENU_ITEM_SLIDER;
+	env->menu_item[STATE_MENU_CONFIG][1].type = MENU_ITEM_CHECKBOX;
+	env->menu_item[STATE_MENU_CONFIG][2].type = MENU_ITEM_CHECKBOX;
+	
+	/* Valeur des configs */
+	for(i = 0; i < CONFIG_NB; i++){
+		env->menu_item[STATE_MENU_CONFIG][i].value = env->config[i];
+	}
+}
+
+void smi_init_textures(State_Menu_Env* env){
 	
 	/* Menu d'accueil */
 	env->menu_item[STATE_MENU_HOME][0].texture = util_texture_load("images/menu/jouer.png");
@@ -43,7 +83,7 @@ void state_menu_items_init_textures(State_Menu_Env* env){
 	
 }
 
-int state_menu_items_select(State_Menu_Env* env){
+int smi_select(State_Menu_Env* env){
 	if(env->selected_item != -1)
 	switch(env->selected_page){
 		case STATE_MENU_HOME:
@@ -86,23 +126,23 @@ int state_menu_items_select(State_Menu_Env* env){
 		case STATE_MENU_PLAY:
 			switch(env->selected_item){
 				case 0:
-					state_game_set_level(1);
-					state_game_set_pause(0);
+					sgu_set_level(1);
+					sgu_set_pause(0);
 					state_set_current(state_game_get());
 					break;
 				case 1:
-					state_game_set_level(2);
-					state_game_set_pause(0);
+					sgu_set_level(2);
+					sgu_set_pause(0);
 					state_set_current(state_game_get());
 					break;
 				case 2:
-					state_game_set_pause(0);
-					state_game_set_level(3);
+					sgu_set_pause(0);
+					sgu_set_level(3);
 					state_set_current(state_game_get());
 					break;
 				case 3:
 					env->selected_item = -1;
-					if(state_game_get_pause() != 0)
+					if(sgu_get_pause() != 0)
 						env->selected_page = STATE_MENU_CONTINUE;
 					else
 						env->selected_page = STATE_MENU_HOME;
@@ -114,23 +154,25 @@ int state_menu_items_select(State_Menu_Env* env){
 		case STATE_MENU_CONFIG:
 			if(env->selected_item == 4){
 				env->selected_item = -1;
-				if(state_game_get_pause() != 0) {
+				if(sgu_get_pause() != 0) {
 					env->selected_page = STATE_MENU_CONTINUE;
 				} else {
 					env->selected_page = STATE_MENU_HOME;
 				}
 			}
 			else if(env->selected_item == 3){
-				state_menu_save_config_items(env);
+				
+				smu_save_config_items(env);
+				
 				env->selected_item = -1;
-				if(state_game_get_pause() != 0) {
+				if(sgu_get_pause() != 0) {
 					env->selected_page = STATE_MENU_CONTINUE;
 				} else {
 					env->selected_page = STATE_MENU_HOME;
 				}
 			}
 			else {
-				state_menu_items_select_config(env);
+				smi_select_config(env);
 			}
 			break;
 		default:
@@ -139,7 +181,7 @@ int state_menu_items_select(State_Menu_Env* env){
 	return 1;
 }
 
-void state_menu_items_select_config(State_Menu_Env* env){
+void smi_select_config(State_Menu_Env* env){
 	Menu_Item* item = &(env->menu_item[env->selected_page][env->selected_item]);
 	
 	if(item->type == MENU_ITEM_CHECKBOX){

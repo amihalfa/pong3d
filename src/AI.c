@@ -14,9 +14,26 @@
 
 void AI_easy(State_Game_Env* env, int racket_id){
 
-	Ball* ball = &env->ball[0];
+	int i;
+	Ball* ball= &env->ball[0];
 	Racket* racket = &env->racket[racket_id];
-	GLfloat dist;
+	GLfloat dist, b_s = 1000.0f, b_s_temp;
+	
+	/* Choix de la balle a intercepter */
+	for(i = 0; i < env->balls_nb; i++){
+		
+		/* Si la balle va dans le bon sens */
+		if((ball->speed.y > 0 && racket->position.y < ball->position.y) || (ball->speed.y < 0 && racket->position.y > ball->position.y)){
+			
+			b_s_temp = (ball->position.y - racket->position.y) / ball->speed.y;
+			if(b_s_temp <= b_s){
+				b_s = b_s_temp;
+				ball = &env->ball[i];
+			}
+		}
+	}
+	
+	/* Poursuite de la balle */
 	if( (ball->speed.y > 0 && racket->position.y < ball->position.y) || (ball->speed.y < 0 && racket->position.y > ball->position.y)  ){
 		racket->speed = 0.0f;	
 	}

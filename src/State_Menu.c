@@ -45,12 +45,12 @@ State* state_menu(int action){
 		GLfloat ratio = (GLfloat)modes[0]->w/(GLfloat)modes[0]->h;
  		
 		/* Au dessus ou en dessous des 4/3 */
-		if(ratio >= 1.33){
+		if(ratio >= 4.0/3.0){
 			e->w_width = 600.0f * ratio;
 			e->w_height = 600.0f;
 		} else {
 			e->w_width = 800.0f;
-			e->w_height = 800.0f * ratio;
+			e->w_height = 800.0f / ratio;
 		}
 		
 		/* Mise en position du curseur de souris */

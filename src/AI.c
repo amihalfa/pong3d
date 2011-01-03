@@ -12,21 +12,32 @@
 #include "includes/Collisions.h"
 #include "includes/AI.h"
 
+#define AI_EASY_SPEED	RACKET_SPEED_MAX/6.0f
+#define AI_MEDIUM_SPEED	RACKET_SPEED_MAX/3.0f
+#define AI_HARD_SPEED	RACKET_SPEED_MAX
+
+
+
+void AI_medium(State_Game_Env* env, int racket_id){
+
+}
+
+
 void AI_easy(State_Game_Env* env, int racket_id){
 
 	int i;
-	Ball* ball= &env->ball[0];
+	Ball* ball = NULL;
 	Racket* racket = &env->racket[racket_id];
-	GLfloat dist, b_s = 1000.0f, b_s_temp;
+	GLfloat dist, b_s = 1000000.0f, b_s_temp;
 	
 	/* Choix de la balle a intercepter */
 	for(i = 0; i < env->balls_nb; i++){
 		
 		/* Si la balle va dans le bon sens */
-		if((ball->speed.y > 0 && racket->position.y < ball->position.y) || (ball->speed.y < 0 && racket->position.y > ball->position.y)){
+		if((env->ball[i].speed.y > 0 && racket->position.y > env->ball[i].position.y) || (env->ball[i].speed.y < 0 && racket->position.y < env->ball[i].position.y)){
 			
-			b_s_temp = (ball->position.y - racket->position.y) / ball->speed.y;
-			if(b_s_temp <= b_s){
+			b_s_temp = (env->ball[i].position.y - racket->position.y) / env->ball[i].speed.y;
+			if(b_s_temp < b_s){
 				b_s = b_s_temp;
 				ball = &env->ball[i];
 			}
@@ -34,38 +45,20 @@ void AI_easy(State_Game_Env* env, int racket_id){
 	}
 	
 	/* Poursuite de la balle */
-	if( (ball->speed.y > 0 && racket->position.y < ball->position.y) || (ball->speed.y < 0 && racket->position.y > ball->position.y)  ){
-		racket->speed = 0.0f;	
-	}
-	else {
-		if(fabs(ball->position.y-racket->position.y) < env->ground.length/2.0f ){
-			
-			dist = racket->position.x - ball->position.x;
-			
-			if( dist > racket->width/8.0f){
-				if(racket->speed > -RACKET_SPEED_MAX){
-					racket->speed -= (float)(rand()%100 + 100)/10000.0;
-				}
-				else {
-					racket->speed = -RACKET_SPEED_MAX;
-				}
-			}
-			else if( dist < -racket->width/8.0f){
-				if(racket->speed < RACKET_SPEED_MAX){
-					racket->speed += (float)(rand()%100+ 100)/10000.0;
-				}
-				else{
-					racket->speed = RACKET_SPEED_MAX;
-				}
-			}
-			else {
-				if(racket->speed > 0){
-					racket->speed -= (float)(rand()%100 + 100)/1000.0;
-				}
-				else {
-					racket->speed += (float)(rand()%100 +100)/1000.0;
-				}
-			}
+	if (ball != NULL) {
+		float dist = fabs(ball->position.x - racket->position.x);
+		float dir = (ball->position.x > racket->position.x)? 1.0 : -1.0;
+
+		if (dist > racket->width/4.0)
+		{
+			if (dist > AI_EASY_SPEED)
+				racket->speed = dir * AI_EASY_SPEED;
+			else
+				racket->speed = dir * dist;
 		}
+		else
+			racket->speed = 0.0f;
 	}
+	else
+		racket->speed = 0.0f;
 }

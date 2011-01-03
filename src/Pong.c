@@ -15,8 +15,7 @@
 #include "includes/State_Menu.h"
 #include "includes/Util.h"
 
-#define FRAME_DURATION 10
-
+#define FRAME_DURATION	10
 
 /**
  *	Programme principal Pong

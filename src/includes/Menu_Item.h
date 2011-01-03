@@ -5,6 +5,8 @@
 #define MENU_ITEM_CHECKBOX	1
 #define MENU_ITEM_SLIDER	2
 
+#define MENU_ITEM_ALPHA_MIN		0.2f
+
 	typedef struct Menu_Item {
 
 		/* Position */

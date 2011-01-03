@@ -20,7 +20,7 @@ void menu_item_draw(Menu_Item * menu_item){
 	/* Changement de repere pour positionner au bon endroit */
 	glTranslated( menu_item->position.x, menu_item->position.y , 0 );
 	
-	glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+	glColor4f(1.0f, 1.0f, 1.0f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 	
 	/* Debut de dessin */
 	glBegin( GL_QUADS );
@@ -61,13 +61,13 @@ void menu_item_draw_checkbox(Menu_Item* menu_item){
 			glVertex2f(128.0f, 60.0f);
 			glVertex2f(128.0f, 28.0f);
 			
-			glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
+			glColor4f(0.5f, 0.5f, 0.5f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(97.0f, 29.0f);
-			glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
+			glColor4f(0.6f, 0.6f, 0.6f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(97.0, 59.0f);
-			glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
+			glColor4f(0.7f, 0.7f, 0.7f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(127.0f, 59.0f);
-			glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+			glColor4f(1.0f, 1.0f, 1.0f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(127.0f, 29.0f);
 			
 			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
@@ -78,13 +78,13 @@ void menu_item_draw_checkbox(Menu_Item* menu_item){
 		glEnd();
 		if(menu_item->value > 0){
 			glBegin( GL_QUADS );
-				glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+				glColor4f(1.0f, 1.0f, 1.0f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(103.0f, 35.0f);
-				glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
+				glColor4f(0.7f, 0.7f, 0.7f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(103.0, 53.0f);
-				glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
+				glColor4f(0.6f, 0.6f, 0.6f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(121.0f, 53.0f);
-				glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
+				glColor4f(0.5f, 0.5f, 0.5f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(121.0f, 35.0f);
 			glEnd();	
 		}
@@ -99,13 +99,13 @@ void menu_item_draw_slider(Menu_Item* menu_item){
 			glVertex2f(128.0f, 128.0f);
 			glVertex2f(128.0f, 28.0f);
 			
-			glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
+			glColor4f(0.5f, 0.5f, 0.5f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(97.0f, 29.0f);
-			glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
+			glColor4f(0.6f, 0.6f, 0.6f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(97.0, 127.0f);
-			glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
+			glColor4f(0.7f, 0.7f, 0.7f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(127.0f, 127.0f);
-			glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+			glColor4f(1.0f, 1.0f, 1.0f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 			glVertex2f(127.0f, 29.0f);
 			
 			glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
@@ -116,13 +116,13 @@ void menu_item_draw_slider(Menu_Item* menu_item){
 		glEnd();
 		if(menu_item->value >= 0){
 			glBegin( GL_QUADS );
-				glColor4f(1.0f, 1.0f, 1.0f, 0.10f + menu_item->anim_step);
+				glColor4f(1.0f, 1.0f, 1.0f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(103.0f, 35.0f);
-				glColor4f(0.7f, 0.7f, 0.7f, 0.10f + menu_item->anim_step);
+				glColor4f(0.7f, 0.7f, 0.7f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(103.0, 40.0f + menu_item->value);
-				glColor4f(0.6f, 0.6f, 0.6f, 0.10f + menu_item->anim_step);
+				glColor4f(0.6f, 0.6f, 0.6f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(121.0f, 40.0f + menu_item->value);
-				glColor4f(0.5f, 0.5f, 0.5f, 0.10f + menu_item->anim_step);
+				glColor4f(0.5f, 0.5f, 0.5f, MENU_ITEM_ALPHA_MIN + menu_item->anim_step);
 				glVertex2f(121.0f, 35.0f);
 			glEnd();	
 		}
@@ -131,9 +131,11 @@ void menu_item_draw_slider(Menu_Item* menu_item){
 void menu_item_animate(Menu_Item * menu_item, Uint32 e_time){
 	
 	float d_step = e_time / 800.0f * menu_item->anim_dir;
+	float alpha_max = 1.0f - MENU_ITEM_ALPHA_MIN;
+	float alpha_max_2 = alpha_max / 2.0f;
 	
-	if(menu_item->anim_step >= 0.80 || menu_item->anim_step <= 0.0){
-		menu_item->anim_step = 0.40*menu_item->anim_dir+0.40;
+	if(menu_item->anim_step >= alpha_max || menu_item->anim_step <= 0.0){
+		menu_item->anim_step = alpha_max_2 * menu_item->anim_dir + alpha_max_2;
 		menu_item->anim_dir *= -1;
 		d_step *= -1;
 	}

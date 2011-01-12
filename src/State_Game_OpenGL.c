@@ -14,7 +14,7 @@ void sgo_init(){
 	/* Proprietes du spot d'eclairage */
 	GLfloat spotDif[] = {1.0f, 1.0f, 1.0f, 1.0f};
 	GLfloat spotSpec[] = {0.7f, 0.7f, 0.7f, 1.0f};
-	GLfloat spotAmb[] = {0.5f, 0.5f, 0.5f, 1.0f};
+	GLfloat spotAmb[] = {0.7f, 0.7f, 0.7f, 1.0f};
 
 	/* Activation de la lumiere */
     glEnable(GL_LIGHT0);

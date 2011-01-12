@@ -5,17 +5,17 @@
 
 
 void sgo_init(){
-	
+
 	float ratio;
-   
+
 	/* Resolutions possibles sous la config actuelle */
 	SDL_Rect **modes;
-	
+
 	/* Proprietes du spot d'eclairage */
 	GLfloat spotDif[] = {1.0f, 1.0f, 1.0f, 1.0f};
-	GLfloat spotSpec[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	GLfloat spotAmb[] = {0.2f, 0.2f, 0.2f, 1.0f};
-	
+	GLfloat spotSpec[] = {0.7f, 0.7f, 0.7f, 1.0f};
+	GLfloat spotAmb[] = {0.5f, 0.5f, 0.5f, 1.0f};
+
 	/* Activation de la lumiere */
     glEnable(GL_LIGHT0);
     glLightfv(GL_LIGHT0, GL_DIFFUSE, spotDif);
@@ -40,17 +40,17 @@ void sgo_init(){
     glLoadIdentity();
     gluPerspective( 40 , ratio , 1 , 1000);
 
-	
+
 }
 
 void sgo_draw(){
-	
+
 	/* On s'assure que le dessin est termine */
     glFlush();
 
     /* On affiche */
 	SDL_GL_SwapBuffers();
-    
+
 	/* Position du spot d'eclairage */
     GLfloat spotPosition[] = {0.0 , -30.0 , 40.0 , 1.0};
 

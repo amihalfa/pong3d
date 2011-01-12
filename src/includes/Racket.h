@@ -14,17 +14,20 @@
 	*/
 
 	struct Racket{
-		
-		/* Position */
+
+		/** Position */
 		Coord3d position;
-		
-		/* Dimensions de la raquette */
+
+		/** Dimensions de la raquette */
 		float width;
 		float radius;
 
-		/* Vitesse de la raquette */
+		/** Vitesse de la raquette */
 		float speed;
-		
+
+		/** Nombres de vies de la raquette */
+		int lifes;
+
 		GLuint texture;
 	};
 

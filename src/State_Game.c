@@ -67,7 +67,7 @@ void state_game_init(State_Game_Env* env) {
     srand(time(NULL));
 
 	config_load_state_game(env);
-	
+
     if (sgu_get_pause() == 0) {
 
         /* Mise en place du terrain dans la scene */
@@ -88,12 +88,12 @@ void state_game_init(State_Game_Env* env) {
         env->racket[RACKET_BOTTOM].position.y = -18.0f;
 
         /* ... Donnees de l'env ... */
-		
+
 		/* Nombre de balles suivant le niveau */
 		if(sgu_get_level() == 1){
 			env->balls_nb = 1;
 			env->AI_handler = *AI_easy;
-		} 
+		}
 		else if(sgu_get_level() == 2){
 			env->balls_nb = 5;
 			env->AI_handler = *AI_easy;
@@ -102,7 +102,7 @@ void state_game_init(State_Game_Env* env) {
 			env->balls_nb = 10;
 			env->AI_handler = *AI_easy;
 		}
-        
+
 		env->mouse_motion_x = 0;
         env->mouse_motion_y = 0;
 
@@ -133,9 +133,9 @@ void state_game_init(State_Game_Env* env) {
 void state_game_draw(State_Game_Env* env) {
 
     int i;
-	
+
 	sgo_draw();
-	
+
     /* Dessin des reflets des balles et des particules */
     if (env->config[CONFIG_REFLECTION]) {
         for (i = 0 ; i< env->balls_nb ; i++) {
@@ -213,9 +213,12 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
     int i;
     env->ellapsed_time = e_time;
 
+    sgu_destroy_balls_out(env);
+
+
 	env->AI_handler(env, RACKET_TOP);
-	
-	if (sgu_get_pause() != 1){   
+
+	if (sgu_get_pause() != 1){
 		racket_mouse_move(env, RACKET_BOTTOM);
 		for(i=0; i<2; i++){
 			racket_move(&env->racket[i]);
@@ -227,6 +230,11 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
             ball_move(&env->ball[i], e_time );
         }
 	}
-	
+
     state_game_draw(env);
+
+    if(env->balls_nb == 0){
+        sgu_set_pause(1);
+        state_set_current(state_get_menu());
+    }
 }

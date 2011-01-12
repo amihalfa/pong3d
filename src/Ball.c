@@ -11,43 +11,43 @@
 #include "includes/State_Game.h"
 #include "includes/Util.h"
 
-
 /**
  *	Dessin de la balle en OpenGL
  *	@param	ball		Pointeur vers la structure a utiliser pour le dessin
  */
-void ball_draw( Ball* ball ){
-	
-	/* On met la matrice actuelle dans la pile avant modif. */
-	glPushMatrix();
-	
-	/* On change le repere */
-	glTranslatef( ball->position.x , ball->position.y, ball->position.z );
-	
-	/* On applique la couleur */
-	glColor3f( 0.04f , 0.04f , 0.9f);
-	
-	/* On alloue dynamiquement les parametres pour notre quadrique */
-	GLUquadric* params = gluNewQuadric();
-	
-	/* On dessine la balle */
-	gluSphere( params , ball->radius , 10 , 10 );
-	
-	/* Liberation des ressources car fin du dessin */
-	gluDeleteQuadric(params);
-	
-	/* On remet la matrice mise en pile au depart */
-	glPopMatrix();
-	
+void ball_draw(Ball* ball) {
+
+    /* On met la matrice actuelle dans la pile avant modif. */
+    glPushMatrix();
+
+    /* On change le repere */
+    glTranslatef(ball->position.x, ball->position.y, ball->position.z);
+
+    /* On applique la couleur */
+    glColor3f(0.04f, 0.04f, 0.9f);
+
+    /* On alloue dynamiquement les parametres pour notre quadrique */
+    GLUquadric* params = gluNewQuadric();
+
+    /* On dessine la balle */
+    gluSphere(params, ball->radius, 10, 10);
+
+    /* Liberation des ressources car fin du dessin */
+    gluDeleteQuadric(params);
+
+    /* On remet la matrice mise en pile au depart */
+    glPopMatrix();
+
 
 }
+
 /**
  *	Mouvement de la balle en tenant compte de la vitesse
  *	@param ball			Pointeur vers la structure de balle
  */
-void ball_move( Ball* ball, Uint32 e_time ){
+void ball_move(Ball* ball, Uint32 e_time) {
 
-	/* Nouvelle position */
-	ball->position.x += ball->speed.x + (ball->speed.x / 10) * e_time ;
-	ball->position.y += ball->speed.y + (ball->speed.y / 10) * e_time;
+    /* Nouvelle position */
+    ball->position.x += ball->speed.x + (ball->speed.x / 10) * e_time;
+    ball->position.y += ball->speed.y + (ball->speed.y / 10) * e_time;
 }

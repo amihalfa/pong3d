@@ -9,13 +9,12 @@
  * Structure representant un nuage de particules
  */
 typedef struct Particles {
-	
-	/** Ensemble de particules */
+    /** Ensemble de particules */
     GLfloat elements[PARTICLES_NB][7];
-	
-	/** Curseur indiquant la prochaine particule a effacer */
+
+    /** Curseur indiquant la prochaine particule a effacer */
     int cursor;
-	
+
 } Particles;
 
 /**

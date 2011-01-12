@@ -23,7 +23,6 @@
  *	Environnement pour l'etat menu
  */
 typedef struct State_Menu_Env {
-
     /** Tableau des elements du menu */
     Menu_Item menu_item[STATE_MENU_PAGES][STATE_MENU_ITEMSNB_MAX];
 

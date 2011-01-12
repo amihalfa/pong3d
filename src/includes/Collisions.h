@@ -9,19 +9,19 @@
 #ifndef COLLISIONS_H
 #define COLLISIONS_H
 
-	/**
-	 *	Gestion generale des collisions de l'etat Jeu
-	 *	@param	env			Envirronement du jeu 
-	 *	@return				Nul si pas de collision, un entier sinon
-	 */
-	int collision_state_game( State_Game_Env* env );
+/**
+ *	Gestion generale des collisions de l'etat Jeu
+ *	@param	env			Envirronement du jeu
+ *	@return				Nul si pas de collision, un entier sinon
+ */
+int collision_state_game(State_Game_Env* env);
 
-	int collision_racket_ground( Racket* racket , Ground* ground);
+int collision_racket_ground(Racket* racket, Ground* ground);
 
-	int collision_ball_ground( Ball* ball, Ground* ground );
+int collision_ball_ground(Ball* ball, Ground* ground);
 
-	int collision_ball_racket( Ball* ball, Racket* racket );
-	
-	int collision_ball_ball( Ball* ball_a, Ball* ball_b );
-	
+int collision_ball_racket(Ball* ball, Racket* racket);
+
+int collision_ball_ball(Ball* ball_a, Ball* ball_b);
+
 #endif

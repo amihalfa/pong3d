@@ -1,7 +1,7 @@
 #ifndef STATE_MENU_UTIL_H
 #define STATE_MENU_UTIL_H
- 
- /**
+
+/**
  * Fait bouger le curseur dans l'etat menu
  * @param env		Environnement du menu
  */

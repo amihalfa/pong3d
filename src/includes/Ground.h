@@ -10,10 +10,9 @@
 #define GROUND_H
 
 /**
-*	Structure permettant de gerer le terrain
-*/
+ *	Structure permettant de gerer le terrain
+ */
 typedef struct Ground {
-
     /** Hauteur du terrain */
     float height;
 
@@ -30,13 +29,13 @@ typedef struct Ground {
  * On prépare les donnees a envoyer a la carte graphique
  * @param	ground		Pointeur vers la structure a utiliser designant le terrain
  */
-void ground_init_draw( Ground* ground );
+void ground_init_draw(Ground* ground);
 
 /**
  *	Dessin du terrain en OpenGL
  *	@param	ground		Pointeur vers la structure a utiliser pour le dessin
  */
-void ground_draw( Ground* ground );
+void ground_draw(Ground* ground);
 
 
 #endif

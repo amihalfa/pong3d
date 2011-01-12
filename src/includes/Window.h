@@ -1,18 +1,18 @@
 #ifndef WINDOW_H
 #define WINDOW_h
 
-	#define WINDOW_TITLE		"Pong by A.H. & A.H."
-	#define WINDOW_COLOR_DEPTH	32
+#define WINDOW_TITLE		"Pong by A.H. & A.H."
+#define WINDOW_COLOR_DEPTH	32
 
-	/**
-	 *	Initialisation de la fenetre et de l'affichage 
-	 */
-	void window_create();
+/**
+ *	Initialisation de la fenetre et de l'affichage
+ */
+void window_create();
 
-	/**
-	 *	Liberation de la memoire
-	 */
-	void window_destroy();
+/**
+ *	Liberation de la memoire
+ */
+void window_destroy();
 
 
 #endif

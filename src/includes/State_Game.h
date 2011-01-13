@@ -18,6 +18,8 @@ typedef struct State_Game_Env {
     Uint8 *keystates;
     Uint32 ellapsed_time;
     float config[CONFIG_NB];
+	
+	GLuint heart_texture;
 
     /** Fonction de gestion de l'IA */
     void (*AI_handler)(struct State_Game_Env* env, int racket_id);

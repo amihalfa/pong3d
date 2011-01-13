@@ -96,7 +96,11 @@ void state_game_init(State_Game_Env* env) {
         } else if (sgu_get_level() == 3) {
             env->balls_nb = 10;
             env->AI_handler = *AI_hard;
-        }
+        } else if(sgu_get_level() == 4){
+			/* Mode 2 joueurs pas d'IA */
+			env->balls_nb = 1;
+			env->AI_handler = (void*)0;
+		}
 
         env->mouse_motion_x = 0;
         env->mouse_motion_y = 0;
@@ -177,24 +181,25 @@ int state_game_events(State_Game_Env* env) {
 
     env->mouse_motion_x = env->mouse_motion_y = 0;
 
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-            case SDL_QUIT:
-                return 0;
-                break;
+    while (SDL_PollEvent(&event)){
+		switch (event.type) {
+			case SDL_QUIT:
+				return 0;
+				break;
 
-            case SDL_MOUSEMOTION:
-                if (sgu_get_pause() == 2) {
-                    env->mouse_motion_x += event.motion.xrel;
-                    env->mouse_motion_y += event.motion.yrel;
-                }
-                break;
+			case SDL_MOUSEMOTION:
+				if (sgu_get_pause() == 2) {
+					env->mouse_motion_x += event.motion.xrel;
+					env->mouse_motion_y += event.motion.yrel;
+				}
+				break;
 
-            case SDL_MOUSEBUTTONDOWN:
-                sgu_set_pause(2);
-                break;
-        }
-    }
+			case SDL_MOUSEBUTTONDOWN:
+				sgu_set_pause(2);
+				break;
+		}
+	}
+	
     env->keystates = SDL_GetKeyState(NULL);
 
     if (env->keystates[ SDLK_ESCAPE ]) {
@@ -212,15 +217,32 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
 
     sgu_destroy_balls_out(env);
 
-
-    env->AI_handler(env, RACKET_TOP);
-
+	/* On n'utilise pas l'IA dans le mode 2 joueurs */
+	if(sgu_get_level() != 4){
+		env->AI_handler(env, RACKET_TOP);
+	}
+	
     if (sgu_get_pause() != 1) {
-        racket_mouse_move(env, RACKET_BOTTOM);
-        for (i = 0; i < 2; i++) {
+		
+		/* Gestion de la raquette du haut avec le clavier dans le cas ou pas d'IA */
+		if(sgu_get_level() == 4){
+			racket_keyboard_move(env, RACKET_TOP);
+			racket_keyboard_move(env, RACKET_BOTTOM);
+		}
+		else {
+			/* Gestion de la raquette du bas avec la souris */
+			racket_mouse_move(env, RACKET_BOTTOM);
+		}
+		
+		/* On bouge les raquettes */
+		for (i = 0; i < 2; i++) {
             racket_move(&env->racket[i]);
         }
+        
+        /* Gestion des collisions */
         collision_state_game(env);
+		
+		/* Mouvement des balles et de leurs particules */
         for (i = 0; i < env->balls_nb; i++) {
             if (env->config[CONFIG_PARTICLES])
                 particles_add_position(&env->ball[i].particles, &env->ball[i].position);
@@ -230,6 +252,7 @@ void state_game_main(State_Game_Env* env, Uint32 e_time) {
 
     state_game_draw(env);
 
+	/* Cas ou il n'y a plus de balles sur le terrain */
     if (env->balls_nb == 0) {
         sgu_set_pause(1);
         state_set_current(state_get_menu());

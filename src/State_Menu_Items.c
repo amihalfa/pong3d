@@ -24,7 +24,7 @@ void smi_init(State_Menu_Env* env) {
     /* Enregistrements des nombres d'elements par menu */
     env->itemsnb[STATE_MENU_HOME] = 3;
     env->itemsnb[STATE_MENU_CONTINUE] = 4;
-    env->itemsnb[STATE_MENU_PLAY] = 4;
+    env->itemsnb[STATE_MENU_PLAY] = 5;
     env->itemsnb[STATE_MENU_CONFIG] = 5;
 
     /* Initialisation des items du menu */
@@ -72,7 +72,8 @@ void smi_init_textures(State_Menu_Env* env) {
     env->menu_item[STATE_MENU_PLAY][0].texture = util_texture_load("images/menu/facile.png");
     env->menu_item[STATE_MENU_PLAY][1].texture = util_texture_load("images/menu/moyen.png");
     env->menu_item[STATE_MENU_PLAY][2].texture = util_texture_load("images/menu/difficile.png");
-    env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load("images/menu/retour.png");
+    env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load("images/menu/jouer.png");
+	env->menu_item[STATE_MENU_PLAY][4].texture = util_texture_load("images/menu/retour.png");
 
     /* Menu de config */
     env->menu_item[STATE_MENU_CONFIG][0].texture = util_texture_load("images/menu/souris.png");
@@ -140,7 +141,11 @@ int smi_select(State_Menu_Env* env) {
                         sgu_set_level(3);
                         state_set_current(state_game_get());
                         break;
-                    case 3:
+					case 3:
+						sgu_set_pause(0);
+						sgu_set_level(4);
+						state_set_current(state_game_get());
+                    case 4:
                         env->selected_item = -1;
                         if (sgu_get_pause() != 0)
                             env->selected_page = STATE_MENU_CONTINUE;

@@ -39,6 +39,7 @@ State* state_game(int action) {
 
     } else if (action == STATE_DESTROY && state_game) {
 
+		Mix_FreeChunk(((State_Game_Env*) state_game->env)->sound);
         free(state_game->env);
         free(state_game);
         state_game = (State*) 0;

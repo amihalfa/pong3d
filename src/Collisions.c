@@ -67,14 +67,13 @@ int collision_ball_ground(Ball* ball, Ground* ground) {
         return 1;
     }
 
-        /* Collision par le haut ... C'est temporaire ... */
+        /* Collision par le haut ... C'est temporaire ... 
     else if (ball->position.y + ball->radius > ground->length / 2) {
-
         ball->speed.y *= -1;
         ball->position.y = ground->length / 2 - ball->radius;
 
         return 2;
-    }
+    }*/
     return 0;
 
 }

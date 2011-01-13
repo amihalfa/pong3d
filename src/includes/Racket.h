@@ -27,8 +27,6 @@ struct Racket {
 
     /** Nombres de vies de la raquette */
     int lifes;
-
-    GLuint texture;
 };
 
 /* Definition du type Racket */

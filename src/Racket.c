@@ -27,9 +27,6 @@ void racket_draw(Racket* racket) {
     /* Choix de la couleur */
     glColor3ub(255, 0, 0);
 
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, racket->texture);
-
     glClipPlane(GL_CLIP_PLANE0, eqn);
     glEnable(GL_CLIP_PLANE0);
 
@@ -37,7 +34,6 @@ void racket_draw(Racket* racket) {
     GLUquadric* params = gluNewQuadric();
 
     gluQuadricDrawStyle(params, GLU_FILL);
-    gluQuadricTexture(params, GL_TRUE);
 
     /* On dessine la gauche */
     gluSphere(params, racket->radius, 15, 15);
@@ -63,8 +59,6 @@ void racket_draw(Racket* racket) {
 
     /* Liberation des ressources car fin du dessin */
     gluDeleteQuadric(params);
-
-    glDisable(GL_TEXTURE_2D);
 
     /* On remet la matrice de projection telle qu'elle etait au depart */
     glPopMatrix();

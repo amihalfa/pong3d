@@ -20,6 +20,9 @@ typedef struct State_Game_Env {
     float config[CONFIG_NB];
 	
 	GLuint heart_texture;
+	
+	/* Son pour une collision */
+	Mix_Chunk* sound;
 
     /** Fonction de gestion de l'IA */
     void (*AI_handler)(struct State_Game_Env* env, int racket_id);

@@ -1,4 +1,5 @@
 #include <SDL/SDL.h>
+#include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
@@ -34,6 +35,7 @@ State* state_game(int action) {
         SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN | SDL_OPENGL);
         ((State_Game_Env*) state_game->env)->w_height = modes[0]->h;
         ((State_Game_Env*) state_game->env)->w_width = modes[0]->w;
+		((State_Game_Env*) state_game->env)->sound = Mix_LoadWAV("son/collision.wav");
 
     } else if (action == STATE_DESTROY && state_game) {
 

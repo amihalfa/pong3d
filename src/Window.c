@@ -1,5 +1,6 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_mouse.h>
+#include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include "includes/Window.h"
@@ -20,12 +21,15 @@ void window_create() {
 
     /* Initialisation de la fenetre */
     SDL_SetVideoMode(modes[0]->w, modes[0]->h, WINDOW_COLOR_DEPTH, SDL_FULLSCREEN | SDL_OPENGL);
-
+	
     /* Mise en place du titre de la fenetre */
     SDL_WM_SetCaption(WINDOW_TITLE, NULL);
 
     /* On masque le curseur de la souris */
     SDL_ShowCursor(SDL_DISABLE);
+	
+	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
+	Mix_AllocateChannels(1024);
 }
 
 /**
@@ -33,6 +37,7 @@ void window_create() {
  */
 void window_destroy() {
 
+	Mix_CloseAudio();
     SDL_Quit();
 
 }

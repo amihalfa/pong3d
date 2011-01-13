@@ -96,6 +96,35 @@ void racket_mouse_move(void* v_env, char num_racket) {
     }
 }
 
+void racket_keyboard_move(void* v_env, char num_racket){
+	
+	State_Game_Env* env = (State_Game_Env *)v_env;
+	Racket* racket;
+	racket = &env->racket[num_racket];
+	if(num_racket == 0){
+		if(env->keystates[SDLK_LEFT]){
+			racket->speed = -RACKET_SPEED_MAX;
+		}
+		else if(env->keystates[SDLK_RIGHT]){
+			racket->speed = RACKET_SPEED_MAX;
+		}
+		else {
+			racket->speed = 0;
+		}
+	}
+	else if(num_racket == 1){
+		if(env->keystates[SDLK_q]){
+			racket->speed = -RACKET_SPEED_MAX;
+		}
+		else if(env->keystates[SDLK_d]){
+			racket->speed = RACKET_SPEED_MAX;
+		}
+		else {
+			racket->speed = 0;
+		}
+	}
+}
+
 void racket_move(Racket* racket) {
 
     racket->position.x += racket->speed;

@@ -41,11 +41,18 @@ typedef struct Racket Racket;
 void racket_draw(Racket* racket);
 
 /**
- * Actualise la vitesse de la rackette et la bouge
+ * Actualise la vitesse de la raquette pour pouvoir la bouger
  * @param env			Environement
  * @param num_racket	numero de la raquette a bouger
  */
 void racket_mouse_move(void* v_env, char num_racket);
+
+/**
+ * Actualise la vitesse de la souris au clavier afin de pouvoir la bouger
+ * @param v_env
+ * @param num_racket
+ */ 
+void racket_keyboard_move(void* v_env, char num_racket);
 
 /**
  * Faire bouger la raquette

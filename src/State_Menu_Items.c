@@ -80,7 +80,7 @@ void smi_init_textures(State_Menu_Env* env) {
     env->menu_item[STATE_MENU_CONFIG][1].texture = util_texture_load("images/menu/reflets.png");
     env->menu_item[STATE_MENU_CONFIG][2].texture = util_texture_load("images/menu/particules.png");
     env->menu_item[STATE_MENU_CONFIG][3].texture = util_texture_load("images/menu/valider.png");
-    env->menu_item[STATE_MENU_CONFIG][4].texture = env->menu_item[STATE_MENU_PLAY][3].texture;
+    env->menu_item[STATE_MENU_CONFIG][4].texture = env->menu_item[STATE_MENU_PLAY][4].texture;
 
 }
 

@@ -58,12 +58,20 @@ void sgu_destroy_balls_out(State_Game_Env* env) {
 
     int i;
     for (i = 0; i < env->balls_nb; i++) {
-        if (fabs(env->ball[i].position.y) > env->ground.length / 2) {
+        if (env->ball[i].position.y > env->ground.length / 2) {
 
+			env->racket[RACKET_TOP].lifes -=1;
             /* La belle en cours d'etude est en dehors du terrain */
             env->ball[i] = env->ball[env->balls_nb - 1];
             env->balls_nb--;
         }
+        else if (env->ball[i].position.y < -env->ground.length / 2) {
+			
+			env->racket[RACKET_BOTTOM].lifes -=1;
+			/* La belle en cours d'etude est en dehors du terrain */
+			env->ball[i] = env->ball[env->balls_nb - 1];
+			env->balls_nb--;
+		}
     }
 
 }

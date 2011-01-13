@@ -65,6 +65,8 @@ void state_game_init(State_Game_Env* env) {
 
     config_load_state_game(env);
 
+	env->heart_texture = util_texture_load("images/game/jaime.png");
+	
     if (sgu_get_pause() == 0) {
 
         /* Mise en place du terrain dans la scene */
@@ -79,6 +81,7 @@ void state_game_init(State_Game_Env* env) {
         env->racket[RACKET_TOP].width = 5.0f;
         env->racket[RACKET_TOP].radius = 0.8f;
         env->racket[RACKET_TOP].speed = 0.0f;
+		env->racket[RACKET_TOP].lifes = 3;
 
         /* ... Raquette du bas ... */
         env->racket[RACKET_BOTTOM] = env->racket[RACKET_TOP];
@@ -168,6 +171,9 @@ void state_game_draw(State_Game_Env* env) {
         ball_draw(&(env->ball[i]));
     }
 
+	util_score_display(env->heart_texture, env->racket[RACKET_TOP].lifes, -env->ground.width/2+1.0f, env->ground.length/2-2.0f);
+	util_score_display(env->heart_texture, env->racket[RACKET_BOTTOM].lifes, -env->ground.width/2+1.0f, -env->ground.length/2+1.0f);
+	
     /* Dessin des deux raquettes */
     racket_draw(&(env->racket[RACKET_TOP]));
     racket_draw(&(env->racket[RACKET_BOTTOM]));

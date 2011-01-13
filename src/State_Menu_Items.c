@@ -72,7 +72,7 @@ void smi_init_textures(State_Menu_Env* env) {
     env->menu_item[STATE_MENU_PLAY][0].texture = util_texture_load("images/menu/facile.png");
     env->menu_item[STATE_MENU_PLAY][1].texture = util_texture_load("images/menu/moyen.png");
     env->menu_item[STATE_MENU_PLAY][2].texture = util_texture_load("images/menu/difficile.png");
-    env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load("images/menu/jouer.png");
+    env->menu_item[STATE_MENU_PLAY][3].texture = util_texture_load("images/menu/deuxjoueurs.png");
 	env->menu_item[STATE_MENU_PLAY][4].texture = util_texture_load("images/menu/retour.png");
 
     /* Menu de config */

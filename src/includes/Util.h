@@ -25,6 +25,8 @@ void util_texture_display(GLuint texture_id, GLfloat x, GLfloat y, GLfloat w, GL
 
 void util_score_display(GLuint heart_text, int lifes, GLfloat x, GLfloat y);
 
+void util_victory_display(GLuint victory_text);
+
 /**
  * Chargement des parametres de jeu
  * Fichier de config dans APPLICATION_PATH/config/config.cfg

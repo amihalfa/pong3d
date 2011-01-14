@@ -77,6 +77,39 @@ void util_score_display(GLuint heart_text, int lifes, GLfloat x, GLfloat y){
 	glDisable(GL_BLEND);
 }
 
+void util_victory_display(GLuint victory_text){
+	
+	/* Accepter la transparence sur les textures */
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	
+	/* Active et applique la texture */
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, victory_text);
+	
+	/* On met en pile la matrice telle qu'elle est au depart */
+	glPushMatrix();
+	
+	/* Changement de repere pour positionner au bon endroit */
+	glTranslated(-10.0f, -10.0f, 0.1f);
+	
+	/* Dessin */
+	glBegin(GL_QUADS);
+	glColor4ub(255, 255, 255, 255);
+	glTexCoord2i(0, 1); glVertex3f(0.0f, 0.0f, 0.0f);
+	glTexCoord2i(0, 0); glVertex3f(0.0f, 20.0f, 0.0f);
+	glTexCoord2i(1, 0); glVertex3f(20.0f, 20.0f, 0.0f);
+	glTexCoord2i(1, 1); glVertex3f(20.0f, 0.0f, 0.0f);
+	glEnd();
+	
+	/* On remet la matrice mise en pile au depart */
+	glPopMatrix();
+	
+	/* On desactive texturing et transparence */
+	glDisable(GL_TEXTURE_2D);
+	glDisable(GL_BLEND);
+}
+
 /**
  * Affichage d'une texture en position (x,y) avec les dimensions w x h
  * Utile pour le menu

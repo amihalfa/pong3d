@@ -22,7 +22,7 @@ $(DIR_EXEC)/$(EXEC): $(OBJ)
 
 $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c $(INC)
 	$(CC) -o $@ -c $< $(CFLAGS)
-	
+
 clean:
 	rm -f $(DIR_EXEC)/$(EXEC)
 

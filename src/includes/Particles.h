@@ -35,6 +35,11 @@ void particles_init(Particles* particles, Coord3d* position);
  */
 void particles_draw(Particles* particles);
 
+/**
+ * Ajoute des particule a une position
+ * @param particles	    Structure designant un nuage de particules
+ * @param position      La position cible
+ */
 void particles_add_position(Particles* particles, Coord3d* position);
 
 #endif

@@ -19,14 +19,14 @@ int collision_state_game ( State_Game_Env* env ) {
 	int i, j;
 	Mix_Chunk* sound = env->sound;
 	for ( i = 0; i < env->balls_nb; i++ ) {
-		
+
 		if(collision_ball_racket ( &env->ball[i], &env->racket[RACKET_BOTTOM] )){
 			Mix_PlayChannel(-1, sound, 0);
 		}
 		if(collision_ball_racket ( &env->ball[i], &env->racket[RACKET_TOP] )){
 			Mix_PlayChannel(-1, sound, 0);
 		}
-		
+
 		if(collision_ball_ground ( &env->ball[i], &env->ground )){
 			Mix_PlayChannel(-1, sound, 0);
 		}
@@ -77,13 +77,6 @@ int collision_ball_ground ( Ball* ball, Ground* ground ) {
 		return 1;
 	}
 
-	/* Collision par le haut ... C'est temporaire ...
-	else if (ball->position.y + ball->radius > ground->length / 2) {
-	ball->speed.y *= -1;
-	ball->position.y = ground->length / 2 - ball->radius;
-
-	return 2;
-	}*/
 	return 0;
 
 }

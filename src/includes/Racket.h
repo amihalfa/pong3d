@@ -49,11 +49,12 @@ void racket_mouse_move(void* v_env, char num_racket);
  * Actualise la vitesse de la souris au clavier afin de pouvoir la bouger
  * @param v_env
  * @param num_racket
- */ 
+ */
 void racket_keyboard_move(void* v_env, char num_racket);
 
 /**
- * Faire bouger la raquette
+ * Fait bouger la raquette
+ * @param racket        La rackette
  */
 void racket_move(Racket* racket);
 #endif

@@ -16,7 +16,7 @@
 
 #define AI_EASY_SPEED       RACKET_SPEED_MAX/5.0f
 #define AI_MEDIUM_SPEED     RACKET_SPEED_MAX/3.0f
-#define AI_HARD_SPEED       RACKET_SPEED_MAX
+#define AI_HARD_SPEED       RACKET_SPEED_MAX/1.5f
 #define AI_EASY_SIGHT       env->ground.length / 4.0f
 #define AI_MEDIUM_SIGHT     env->ground.length / 2.0f
 
@@ -82,20 +82,18 @@ void AI_medium(State_Game_Env* env, int racket_id) {
     }
 
     /* Poursuite de la balle */
-    if (ball != NULL) {
+    if (ball != NULL && fabs(ball->position.y - racket->position.y) < AI_MEDIUM_SIGHT) {
         float dist = fabs(ball->position.x - racket->position.x);
 
-        if (fabs(ball->position.y - racket->position.y) < AI_MEDIUM_SIGHT) {
-            float dir = (ball->position.x > racket->position.x) ? 1.0 : -1.0;
+        float dir = (ball->position.x > racket->position.x) ? 1.0 : -1.0;
 
-            if (dist > racket->width / 4.0) {
-                if (dist > AI_MEDIUM_SPEED)
-                    racket->speed = dir * AI_MEDIUM_SPEED;
-                else
-                    racket->speed = dir * dist;
-            } else
-                racket->speed = 0.0f;
-        }
+        if (dist > racket->width / 4.0) {
+            if (dist > AI_MEDIUM_SPEED)
+                racket->speed = dir * AI_MEDIUM_SPEED;
+            else
+                racket->speed = dir * dist;
+        } else
+            racket->speed = 0.0f;
     } else if (racket->position.x > 0.5f) {
         racket->speed = -AI_MEDIUM_SPEED;
     } else if (racket->position.x < -0.5f) {
@@ -118,7 +116,7 @@ void AI_hard(State_Game_Env* env, int racket_id) {
         if ((env->ball[i].speed.y > 0 && racket->position.y > env->ball[i].position.y) || (env->ball[i].speed.y < 0 && racket->position.y < env->ball[i].position.y)) {
 
             /* On va suivre celle qui arrivera en premier */
-            b_s_temp = (env->ball[i].position.y - racket->position.y) / env->ball[i].speed.y;
+            b_s_temp = (racket->position.y - env->ball[i].position.y) / env->ball[i].speed.y;
             if (b_s_temp < b_s) {
                 b_s = b_s_temp;
                 ball = &env->ball[i];

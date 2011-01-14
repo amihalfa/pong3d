@@ -91,7 +91,7 @@ void util_victory_display(GLuint victory_text){
 	glPushMatrix();
 	
 	/* Changement de repere pour positionner au bon endroit */
-	glTranslated(-10.0f, -10.0f, 0.1f);
+	glTranslated(-10.0f, -10.0f, 0.01f);
 	
 	/* Dessin */
 	glBegin(GL_QUADS);

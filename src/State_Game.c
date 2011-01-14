@@ -69,8 +69,8 @@ void state_game_init ( State_Game_Env* env ) {
 	config_load_state_game ( env );
 
 	env->heart_texture = util_texture_load ( "images/game/jaime.png" );
-	env->top_victory_texture = util_texture_load ( "images/game/jaime.png" );
-	env->bottom_victory_texture = util_texture_load ( "images/game/jaime.png" );
+	env->top_victory_texture = util_texture_load ( "images/game/victoire_haut.png" );
+	env->bottom_victory_texture = util_texture_load ( "images/game/victoire_bas.png" );
 
 	if ( sgu_get_pause() == 0 ) {
 
@@ -145,7 +145,7 @@ void state_game_draw ( State_Game_Env* env ) {
 	int i;
 
 	sgo_draw();
-
+	
 	/* Dessin des reflets des balles et des particules */
 	if ( env->config[CONFIG_REFLECTION] ) {
 		for ( i = 0; i < env->balls_nb; i++ ) {
@@ -179,10 +179,6 @@ void state_game_draw ( State_Game_Env* env ) {
 	util_score_display ( env->heart_texture, env->racket[RACKET_TOP].lifes, -env->ground.width / 2 + 1.0f, env->ground.length / 2 - 2.0f );
 	util_score_display ( env->heart_texture, env->racket[RACKET_BOTTOM].lifes, -env->ground.width / 2 + 1.0f, -env->ground.length / 2 + 1.0f );
 
-	/* Dessin des deux raquettes */
-	racket_draw ( & ( env->racket[RACKET_TOP] ) );
-	racket_draw ( & ( env->racket[RACKET_BOTTOM] ) );
-
 	if ( sgu_get_pause() == 1 ) {
 		if ( env->racket[RACKET_TOP].lifes <= 0 ) {
 			util_victory_display ( env->bottom_victory_texture );
@@ -190,6 +186,10 @@ void state_game_draw ( State_Game_Env* env ) {
 			util_victory_display ( env->top_victory_texture );
 		}
 	}
+	
+	/* Dessin des deux raquettes */
+	racket_draw ( & ( env->racket[RACKET_TOP] ) );
+	racket_draw ( & ( env->racket[RACKET_BOTTOM] ) );
 
 }
 

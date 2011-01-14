@@ -17,8 +17,8 @@
 int collision_state_game(State_Game_Env* env);
 
 /**
- *	Gestion des collisions de la rackette sur les bords du terrain
- *	@param	racket		La rackette
+ *	Gestion des collisions de la raquette sur les bords du terrain
+ *	@param	racket		La raquette
  *  @param  ground      Le terrain
  *	@return				Nul si pas de collision, un entier sinon
  */
@@ -33,9 +33,9 @@ int collision_racket_ground(Racket* racket, Ground* ground);
 int collision_ball_ground(Ball* ball, Ground* ground);
 
 /**
- *	Gestion des collisions de la balle sur une rackette
+ *	Gestion des collisions de la balle sur une raquette
  *	@param	ball		La balle
- *  @param  racket      La rackette
+ *  @param  racket      La raquette
  *	@return				Nul si pas de collision, un entier sinon
  */
 int collision_ball_racket(Ball* ball, Racket* racket);

@@ -54,7 +54,7 @@ void racket_keyboard_move(void* v_env, char num_racket);
 
 /**
  * Fait bouger la raquette
- * @param racket        La rackette
+ * @param racket        La raquette
  */
 void racket_move(Racket* racket);
 #endif

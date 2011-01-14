@@ -153,7 +153,7 @@ int collision_ball_racket ( Ball* ball, Racket* racket ) {
 				speed_col.x = norm * axe.x;
 				speed_col.y = norm * axe.y;
 
-				/* enfin on met a jour la vitesse en inversant sa composante selon l'axe de collision et en eventuellement en augementant la vitesse selon y en fonction de la vitesse de la rackette */
+				/* enfin on met a jour la vitesse en inversant sa composante selon l'axe de collision et en eventuellement en augementant la vitesse selon y en fonction de la vitesse de la raquette */
 				ball->speed.x -= 2 * speed_col.x;
 				ball->speed.y -= 2 * speed_col.y;
 

@@ -15,7 +15,7 @@ typedef struct State_Game_Env {
     /** Le terrain */
     Ground ground;
 
-    /** Les rackettes */
+    /** Les raquettes */
     Racket racket[2];
 
     /** Les ball */

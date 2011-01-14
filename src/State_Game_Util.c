@@ -55,23 +55,29 @@ void sgu_set_level(int level) {
     sgu_level(level);
 }
 
-void sgu_destroy_balls_out(State_Game_Env* env) {
+void sgu_handle_balls_out(State_Game_Env* env) {
 
     int i;
     for (i = 0; i < env->balls_nb; i++) {
         if (env->ball[i].position.y > env->ground.length / 2) {
 
-			env->racket[RACKET_TOP].lifes -=1;
-            /* La belle en cours d'etude est en dehors du terrain */
-            env->ball[i] = env->ball[env->balls_nb - 1];
-            env->balls_nb--;
+			env->racket[RACKET_TOP].lifes--;
+			
+			/* La belle en cours d'etude est en dehors du terrain */
+			if( env->racket[RACKET_TOP].lifes > 0 ){
+				env->ball[i].position.x = 0;
+				env->ball[i].position.y = 0;
+			}
         }
         else if (env->ball[i].position.y < -env->ground.length / 2) {
 			
-			env->racket[RACKET_BOTTOM].lifes -=1;
+			env->racket[RACKET_BOTTOM].lifes--;
+			
 			/* La belle en cours d'etude est en dehors du terrain */
-			env->ball[i] = env->ball[env->balls_nb - 1];
-			env->balls_nb--;
+			if( env->racket[RACKET_BOTTOM].lifes > 0 ){
+				env->ball[i].position.x = 0;
+				env->ball[i].position.y = 0;
+			}
 		}
     }
 

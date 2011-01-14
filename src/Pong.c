@@ -2,7 +2,6 @@
 #include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include <stdio.h>
 #include "includes/Coords.h"
 #include "includes/Particles.h"
 #include "includes/Window.h"

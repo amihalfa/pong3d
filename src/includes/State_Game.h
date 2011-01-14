@@ -21,8 +21,11 @@ typedef struct State_Game_Env {
 	
 	GLuint heart_texture;
 	
-	/* Son pour une collision */
+	/** Son pour une collision */
 	Mix_Chunk* sound;
+	
+	/** Texture pour la victoire */
+	GLuint bottom_victory_texture, top_victory_texture;
 
     /** Fonction de gestion de l'IA */
     void (*AI_handler)(struct State_Game_Env* env, int racket_id);

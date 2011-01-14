@@ -9,6 +9,6 @@ int sgu_level(int level);
 int sgu_get_level();
 void sgu_set_level(int level);
 
-void sgu_destroy_balls_out(State_Game_Env* env);
+void sgu_handle_balls_out(State_Game_Env* env);
 
 #endif

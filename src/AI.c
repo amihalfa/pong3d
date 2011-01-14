@@ -25,7 +25,7 @@ void AI_easy(State_Game_Env* env, int racket_id) {
     int i;
     Ball* ball = NULL;
     Racket* racket = &env->racket[racket_id];
-    float dist_temp, dist = 100000.0f;
+    float dist_temp, dist = 1000.0f;
 
     /* Choix de la balle a intercepter */
     for (i = 0; i < env->balls_nb; i++) {
@@ -34,7 +34,7 @@ void AI_easy(State_Game_Env* env, int racket_id) {
         if ((env->ball[i].speed.y > 0.0f && racket->position.y > env->ball[i].position.y) || (env->ball[i].speed.y < 0.0f && racket->position.y < env->ball[i].position.y)) {
 
             /* On va betement suivre la plus proche */
-            dist_temp = fabs(ball->position.x - racket->position.x);
+			dist_temp = fabs(env->ball[i].position.y - racket->position.y);
             if ( dist_temp < dist && dist > AI_EASY_SIGHT) {
                 dist = dist_temp;
                 ball = &env->ball[i];
@@ -45,6 +45,7 @@ void AI_easy(State_Game_Env* env, int racket_id) {
     /* Poursuite de la balle */
     if (ball != NULL) {
 
+		fabs(ball->position.x - racket->position.x);
         float dir = (ball->position.x > racket->position.x) ? 1.0 : -1.0;
 
         if (dist > racket->width / 4.0) {

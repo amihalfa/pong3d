@@ -29,7 +29,7 @@ void window_create() {
     SDL_ShowCursor(SDL_DISABLE);
 	
 	Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
-	Mix_AllocateChannels(1024);
+	Mix_AllocateChannels(32);
 }
 
 /**

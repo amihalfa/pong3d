@@ -10,10 +10,7 @@
 #include "includes/Config.h"
 #include "includes/State_Game.h"
 
-/**
- * Initialisation du dessin de particules
- * @param	particles	Structure designant un nuage de particules
- */
+
 void particles_init_draw(Particles* particles) {
 
     /*glGenBuffers( 1, particles->buffer );
@@ -21,10 +18,7 @@ void particles_init_draw(Particles* particles) {
     glBufferData(GL_ARRAY_BUFFER, 7*PARTICLES_NB*sizeof(GLfloat), &(particles->elements[0][0]), GL_DYNAMIC_DRAW);*/
 }
 
-/**
- * Initialisation de la position et de la couleur des particules
- * @param	particles	Structure designant un nuage de particules
- */
+
 void particles_init(Particles* particles, Coord3d* position) {
 
     int i;
@@ -40,10 +34,7 @@ void particles_init(Particles* particles, Coord3d* position) {
     particles->cursor = 0;
 }
 
-/**
- * Dessin de particules
- * @param	particles	Structure designant un nuage de particules
- */
+
 void particles_draw(Particles* particles) {
 
     glEnableClientState(GL_VERTEX_ARRAY);

@@ -12,10 +12,7 @@
 #include "includes/State_Game.h"
 #include "includes/Util.h"
 
-/**
- *	Dessin de la balle en OpenGL
- *	@param	ball		Pointeur vers la structure a utiliser pour le dessin
- */
+
 void ball_draw(Ball* ball) {
 
     /* On met la matrice actuelle dans la pile avant modif. */
@@ -42,10 +39,7 @@ void ball_draw(Ball* ball) {
 
 }
 
-/**
- *	Mouvement de la balle en tenant compte de la vitesse
- *	@param ball			Pointeur vers la structure de balle
- */
+
 void ball_move(Ball* ball, Uint32 e_time) {
 
     /* Nouvelle position */

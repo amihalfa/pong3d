@@ -20,11 +20,7 @@
 #include "includes/State_Menu_Util.h"
 #include "includes/State_Game_Util.h"
 
-/**
- *	Fonction generique permettant d'instancier le singleton etat_menu
- *	@param	flag	Drapeau pour savoir si on cree, on recupere ou on detruit l'etat
- *	@return 		Pointeur vers l'etat de menu
- */
+
 State* state_menu(int action) {
 
     /* Pointeur vers l'etat menu */
@@ -72,34 +68,21 @@ State* state_menu(int action) {
     return state_menu;
 }
 
-/**
- *	Fonction permettant d'instancier l'etat menu
- */
+
 void state_menu_create() {
     state_menu(STATE_CREATE);
 }
 
-/**
- *	Recuperation du pointeur vers l'etat menu
- *	@return			Pointeur vers l'instance de l'etat menu en cours
- */
+
 State* state_get_menu() {
     return state_menu(STATE_GET);
 }
 
-/**
- *	Destruction de l'etat menu
- */
+
 void state_menu_destroy() {
     state_menu(STATE_DESTROY);
 }
 
-/**
- * Fonction maitresse de l'etat menu, appelee a chaque tour de boucle,
- * elle s'occupe de coordonner moteur physique et moteur graphique
- * @param env		Environnement de menu
- * @param e_time	Temps de latence donne par la boucle principale
- */
 void state_menu_main(State_Menu_Env* env, Uint32 e_time) {
 
     /* Recuperation du temps de latence */
@@ -112,10 +95,6 @@ void state_menu_main(State_Menu_Env* env, Uint32 e_time) {
     state_menu_draw(env);
 }
 
-/**
- *	Initialisation de l'etat menu
- *	@param	env		Environnement de l'etat menu
- */
 void state_menu_init(State_Menu_Env* env) {
 
     int i, j;
@@ -144,10 +123,6 @@ void state_menu_init(State_Menu_Env* env) {
     smo_init(env->w_width, env->w_height);
 }
 
-/**
- *	Affichage de l'etat menu
- *	@param	env		Environnement de l'etat menu
- */
 void state_menu_draw(State_Menu_Env* env) {
 
     int i;
@@ -174,11 +149,6 @@ void state_menu_draw(State_Menu_Env* env) {
 
 }
 
-/**
- *	Gestionnaire des evenements de l'etat menu
- * @param env		Environnement du menu
- * @return			0 pour quitter l'appli et 1 sinon
- */
 int state_menu_events(State_Menu_Env* env) {
 
     /* Variable de gestion des evenements */

@@ -11,6 +11,9 @@
 
 #define BALL_MIN_SPEED 0.05f
 
+/**
+ * Structure de la balle
+ */
 typedef struct Ball {
     /** Position de la balle */
     Coord3d position;
@@ -21,6 +24,7 @@ typedef struct Ball {
     /** Rayon de la balle */
     float radius;
 
+    /** La trainnée de particule */
     Particles particles;
 
 } Ball;

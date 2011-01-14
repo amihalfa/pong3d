@@ -17,9 +17,7 @@
 #include "includes/Util.h"
 #include "includes/Animation.h"
 
-/**
- *	Fonction de chargement de la texture en memoire graphique
- */
+
 GLuint util_texture_load(char * path) {
 
     GLuint texture_name;
@@ -49,17 +47,17 @@ void util_score_display(GLuint heart_text, int lifes, GLfloat x, GLfloat y){
 	/* Accepter la transparence sur les textures */
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+
 	/* Active et applique la texture */
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, heart_text);
-	
+
 	/* On met en pile la matrice telle qu'elle est au depart */
 	glPushMatrix();
-	
+
 	/* Changement de repere pour positionner au bon endroit */
 	glTranslated(x, y, 0.1f);
-	
+
 	/* Dessin */
 	glBegin(GL_QUADS);
 	glColor4ub(255, 255, 255, 255);
@@ -68,31 +66,31 @@ void util_score_display(GLuint heart_text, int lifes, GLfloat x, GLfloat y){
 	glTexCoord2i(lifes, 0); glVertex3f(lifes * 1.5f, 1.5f, 0.0f);
 	glTexCoord2i(lifes, 1); glVertex3f(lifes * 1.5, 0.0f, 0.0f);
 	glEnd();
-	
+
 	/* On remet la matrice mise en pile au depart */
 	glPopMatrix();
-	
+
 	/* On desactive texturing et transparence */
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 }
 
 void util_victory_display(GLuint victory_text){
-	
+
 	/* Accepter la transparence sur les textures */
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+
 	/* Active et applique la texture */
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, victory_text);
-	
+
 	/* On met en pile la matrice telle qu'elle est au depart */
 	glPushMatrix();
-	
+
 	/* Changement de repere pour positionner au bon endroit */
 	glTranslated(-10.0f, -10.0f, 0.01f);
-	
+
 	/* Dessin */
 	glBegin(GL_QUADS);
 	glColor4ub(255, 255, 255, 255);
@@ -101,24 +99,16 @@ void util_victory_display(GLuint victory_text){
 	glTexCoord2i(1, 0); glVertex3f(20.0f, 20.0f, 0.0f);
 	glTexCoord2i(1, 1); glVertex3f(20.0f, 0.0f, 0.0f);
 	glEnd();
-	
+
 	/* On remet la matrice mise en pile au depart */
 	glPopMatrix();
-	
+
 	/* On desactive texturing et transparence */
 	glDisable(GL_TEXTURE_2D);
 	glDisable(GL_BLEND);
 }
 
-/**
- * Affichage d'une texture en position (x,y) avec les dimensions w x h
- * Utile pour le menu
- * @param	texture_id		Identifiant OpenGL de la texture a afficher
- * @param 	x				Position en x de l'endroit ou afficher
- * @param	y				Position en y de l'endroit ou afficher
- * @param	w				Largeur de l'affichage
- * @param	h				Hauteur de l'affichage
- */
+
 void util_texture_display(GLuint texture_id, GLfloat x, GLfloat y, GLfloat w, GLfloat h) {
 
     /* Accepter la transparence sur les textures */

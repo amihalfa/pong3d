@@ -5,6 +5,10 @@
 #define STATE_GET		1
 #define STATE_DESTROY	2
 
+
+/**
+ * Structure de l'etat general
+ */
 typedef struct State {
     /**
      *	Environnement associe a l'etat en cours de l'application
@@ -49,8 +53,15 @@ State* state_set_current(State*);
  */
 int current_state_events(Uint32 e_time);
 
+/**
+ * Appelle la focntion principale de l'etat courant
+ */
 void current_state_main(Uint32 e_time);
 
+/**
+ * Permet d'obtenir l'environement de l'etat courant
+ * @return      L'environement
+ */
 void* current_state_env();
 
 #endif

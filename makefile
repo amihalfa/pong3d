@@ -15,6 +15,8 @@ INC = $(wildcard src/includes/*.h)
 SRC = $(wildcard src/*.c)
 OBJ = $(SRC:src/%.c=obj/%.o)
 
+Debug: all
+
 all: $(DIR_EXEC)/$(EXEC) 
 
 $(DIR_EXEC)/$(EXEC): $(OBJ)

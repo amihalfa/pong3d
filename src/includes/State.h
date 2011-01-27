@@ -31,7 +31,7 @@ typedef struct State {
      *	Fonction de gestion des evenements de l'etat courant
      *	@param	env		Environnement attache a l'etat
      */
-    int ( *events_handler)(void*, Uint32);
+    int ( *events_handler)(void*);
 
 } State;
 
@@ -51,7 +51,7 @@ State* state_set_current(State*);
 /**
  *	Gestionnaire d'evenements de l'etat courant
  */
-int current_state_events(Uint32 e_time);
+int current_state_events();
 
 /**
  * Appelle la focntion principale de l'etat courant

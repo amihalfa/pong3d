@@ -96,25 +96,25 @@ void state_menu_destroy();
  * @param env		Environnement de menu
  * @param e_time	Temps de latence donne par la boucle principale
  */
-void state_menu_main(State_Menu_Env* env, Uint32 e_time);
+void state_menu_main(void* env, Uint32 e_time);
 
 /**
  *	Initialisation de l'etat menu
  *	@param	env		Environnement du menu
  */
-void state_menu_init(State_Menu_Env* env);
+void state_menu_init(void* env);
 
 /**
  * Affichage de l'etat menu
  * @param env		Environement du menu
  */
-void state_menu_draw(State_Menu_Env* env);
+void state_menu_draw(void* env);
 
 /**
  *	Gestionnaire des evenements de l'etat menu
  * @param env		Environnement du menu
  * @return			0 pour quitter l'appli et 1 sinon
  */
-int state_menu_events(State_Menu_Env* env);
+int state_menu_events(void* env);
 
 #endif

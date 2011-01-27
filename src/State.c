@@ -17,8 +17,8 @@ State* state_set_current(State* s) {
     return state_cur;
 }
 
-int current_state_events(Uint32 e_time) {
-    return state_get_current()->events_handler(current_state_env(), e_time);
+int current_state_events() {
+    return state_get_current()->events_handler(current_state_env());
 }
 
 void current_state_main(Uint32 e_time) {

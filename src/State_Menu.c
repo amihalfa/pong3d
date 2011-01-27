@@ -2,6 +2,8 @@
 #include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "includes/State_Menu_Util.h"
+#include "includes/State_Game_Util.h"
 #include "includes/Coords.h"
 #include "includes/Particles.h"
 #include "includes/State.h"
@@ -17,14 +19,16 @@
 #include "includes/Animation.h"
 #include "includes/State_Menu_Items.h"
 #include "includes/State_Menu_OpenGL.h"
-#include "includes/State_Menu_Util.h"
-#include "includes/State_Game_Util.h"
 
 
 State* state_menu(int action) {
 
     /* Pointeur vers l'etat menu */
     static State* state_menu = (State*) 0;
+	
+	State_Menu_Env* e;
+	SDL_Rect **modes;
+	GLfloat ratio;
 
     /* Creation si l'etat n'existe pas */
     if (action == STATE_CREATE && !state_menu) {
@@ -35,11 +39,11 @@ State* state_menu(int action) {
         state_menu->main_handler = &state_menu_main;
         state_menu->events_handler = &state_menu_events;
 
-        State_Menu_Env* e = (State_Menu_Env*) (state_menu->env);
+        e = (State_Menu_Env*) (state_menu->env);
 
         /* Gestion de la taille de l'ecran */
-        SDL_Rect **modes = SDL_ListModes(NULL, SDL_FULLSCREEN | SDL_OPENGL);
-        GLfloat ratio = (GLfloat) modes[0]->w / (GLfloat) modes[0]->h;
+        modes = SDL_ListModes(NULL, SDL_FULLSCREEN | SDL_OPENGL);
+        ratio = (GLfloat) modes[0]->w / (GLfloat) modes[0]->h;
 
         /* Au dessus ou en dessous des 4/3 */
         if (ratio >= 4.0 / 3.0) {
@@ -83,8 +87,12 @@ void state_menu_destroy() {
     state_menu(STATE_DESTROY);
 }
 
-void state_menu_main(State_Menu_Env* env, Uint32 e_time) {
+void state_menu_main(void* environement, Uint32 e_time) {
 
+	State_Menu_Env* env;
+	
+	env = (State_Menu_Env*) environement;
+	
     /* Recuperation du temps de latence */
     env->ellapsed_time = e_time;
 
@@ -95,9 +103,11 @@ void state_menu_main(State_Menu_Env* env, Uint32 e_time) {
     state_menu_draw(env);
 }
 
-void state_menu_init(State_Menu_Env* env) {
-
-    int i, j;
+void state_menu_init(void* environement) {
+	
+	State_Menu_Env* env;
+	
+	env = (State_Menu_Env*) environement;
 
     smi_init(env);
 
@@ -123,9 +133,12 @@ void state_menu_init(State_Menu_Env* env) {
     smo_init(env->w_width, env->w_height);
 }
 
-void state_menu_draw(State_Menu_Env* env) {
+void state_menu_draw(void* environement) {
 
     int i;
+	State_Menu_Env* env;
+	
+	env = (State_Menu_Env*) environement;
 
     smo_draw();
 
@@ -149,12 +162,16 @@ void state_menu_draw(State_Menu_Env* env) {
 
 }
 
-int state_menu_events(State_Menu_Env* env) {
+int state_menu_events(void* environement) {
+	
+	State_Menu_Env* env;
+	
+	env = (State_Menu_Env*) environement;
 
     /* Variable de gestion des evenements */
     SDL_Event event;
 
-    smu_cursor_handler(env);
+    smu_cursor_handler(environement);
 
     /* Recuperation des evenements */
     while (SDL_PollEvent(&event)) {

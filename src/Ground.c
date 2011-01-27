@@ -18,7 +18,7 @@ void ground_draw(Ground* ground) {
     GLfloat h = ground->height;
 
     /* Coordonnees des points permettant de dessiner le terrain */
-    GLfloat ground_array[112] = {
+    GLfloat ground_array[] = {
         -w, -l, 0.0f, 0.15f, 0.15f, 0.15f, 0.9f,
         -w, l, 0.0f, 0.05f, 0.05f, 0.05f, 0.9f,
         w, l, 0.0f, 0.15f, 0.15f, 0.15f, 0.9f,

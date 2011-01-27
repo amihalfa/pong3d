@@ -12,10 +12,11 @@
 #include "includes/State_Menu.h"
 #include "includes/State_Menu_Util.h"
 
-
-void smu_move_cursor(State_Menu_Env* env) {
+void smu_move_cursor(void* environment) {
 
     Coord2d move;
+	State_Menu_Env* env;
+	env = (State_Menu_Env*) environment;
 
     /* S'il ya eu reellement un mouvement */
     if (env->mouse_motion.x != 0 && env->mouse_motion.y != 0) {
@@ -35,8 +36,12 @@ void smu_move_cursor(State_Menu_Env* env) {
 }
 
 
-void smu_cursor_handler(State_Menu_Env* env) {
+void smu_cursor_handler(void* environment) {
 
+	State_Menu_Env* env;
+	
+	env = (State_Menu_Env*) environment;
+	
     int rel_x, rel_y, i;
 
     /* Recuperation de la position relative de la souris */
@@ -59,7 +64,10 @@ void smu_cursor_handler(State_Menu_Env* env) {
 }
 
 
-void smu_save_config_items(State_Menu_Env* env) {
+void smu_save_config_items(void* environment) {
+	
+	State_Menu_Env* env;
+	env = (State_Menu_Env*) environment;
 
     /* On repasse à l'envirronement les valeurs des items de config */
     env->config[CONFIG_MOUSE_SENSIBILITY] = env->menu_item[STATE_MENU_CONFIG][CONFIG_MOUSE_SENSIBILITY].value;

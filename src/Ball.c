@@ -15,6 +15,8 @@
 
 void ball_draw(Ball* ball) {
 
+	GLUquadric* params;
+	
     /* On met la matrice actuelle dans la pile avant modif. */
     glPushMatrix();
 
@@ -25,7 +27,7 @@ void ball_draw(Ball* ball) {
     glColor3f(0.04f, 0.04f, 0.9f);
 
     /* On alloue dynamiquement les parametres pour notre quadrique */
-    GLUquadric* params = gluNewQuadric();
+    params = gluNewQuadric();
 
     /* On dessine la balle */
     gluSphere(params, ball->radius, 10, 10);

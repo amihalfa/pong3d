@@ -110,20 +110,21 @@ int collision_ball_racket ( Ball* ball, Racket* racket ) {
 		if ( ball->position.y + ball->radius > racket->position.y - racket->radius ) {
 
 
-			float dist_x_r, dist_x_l = ball->position.x - ( racket->position.x - rckt_width_mi );
+			float dist, dist_x_r, dist_x_l = ball->position.x - ( racket->position.x - rckt_width_mi );
 			float dist_y = -racket->position.y + ball->position.y;
 
 			float dist_left = sqrt ( dist_x_l * dist_x_l + dist_y * dist_y );
 			float dist_right = 0;
-
+			Coord2d axe, speed_col;
+			
+			
 			dist_x_r = -racket->position.x - rckt_width_mi + ball->position.x;
 
 			dist_right = sqrt ( dist_x_r * dist_x_r + dist_y * dist_y );
 
-			float dist = ball->radius + racket->radius;
+			dist = ball->radius + racket->radius;
 
 
-			Coord2d axe, speed_col;
 			float norm, tmp, rack_x;
 			char there_is_a_collision = 0;
 

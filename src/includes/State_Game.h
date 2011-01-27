@@ -78,28 +78,28 @@ void state_game_destroy();
 
 /**
  *  Fonction principale de l'etat de jeux
- *  @param env      L'environement de jeux
+ *  @param environment      L'environement de jeux
  *  @param e_time   Le temps de la frame
  */
-void state_game_main(State_Game_Env* env, Uint32 e_time);
+void state_game_main(void* environment, Uint32 e_time);
 
 /**
  *	Initialisation de l'etat de jeu
- *  @param env      L'environement de jeux
+ *  @param enviroment      L'environement de jeux
  */
-void state_game_init(State_Game_Env* env);
+void state_game_init(void* environment);
 
 /**
  *	Dessin de l'etat de jeu
- *  @param env      L'environement de jeux
+ *  @param environment      L'environement de jeux
  */
-void state_game_draw(State_Game_Env* env);
+void state_game_draw(void* environment);
 
 /**
  *	Gestionnaire des evenements de l'etat de jeu
- *  @param env      L'environement de jeux
+ *  @param environment      L'environement de jeux
  */
-int state_game_events(State_Game_Env* env);
+int state_game_events(void* environment);
 
 #endif
 

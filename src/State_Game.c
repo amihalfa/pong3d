@@ -3,6 +3,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
 #include "includes/Coords.h"
 #include "includes/Particles.h"
@@ -23,7 +24,8 @@
 
 State* state_game ( int action ) {
 	static State* state_game = ( State* ) 0;
-
+	SDL_Rect **modes;
+	
 	if ( action == STATE_CREATE && !state_game ) {
 
 		state_game = ( State* ) malloc ( sizeof ( State ) );
@@ -32,7 +34,7 @@ State* state_game ( int action ) {
 		state_game->main_handler = &state_game_main;
 		state_game->events_handler = &state_game_events;
 
-		SDL_Rect **modes = SDL_ListModes ( NULL, SDL_FULLSCREEN | SDL_OPENGL );
+		modes = SDL_ListModes ( NULL, SDL_FULLSCREEN | SDL_OPENGL );
 		( ( State_Game_Env* ) state_game->env )->w_height = modes[0]->h;
 		( ( State_Game_Env* ) state_game->env )->w_width = modes[0]->w;
 		( ( State_Game_Env* ) state_game->env )->sound = Mix_LoadWAV ( "son/collision.wav" );
@@ -48,7 +50,7 @@ State* state_game ( int action ) {
 }
 
 void state_game_create() {
-	State* state = state_game ( STATE_CREATE );
+	state_game ( STATE_CREATE );
 }
 
 State* state_game_get() {
@@ -59,9 +61,12 @@ void state_game_destroy() {
 	state_game ( STATE_DESTROY );
 }
 
-void state_game_init ( State_Game_Env* env ) {
+void state_game_init ( void* environment ) {
 
-	int i, j, nbcols;
+	State_Game_Env* env;
+	int i, nbcols;
+	
+	env = (State_Game_Env*) environment;
 
 	/* Initialisation du gen. de nbrs aleatoires, positions et vitesses des balles */
 	srand ( time ( NULL ) );
@@ -140,9 +145,12 @@ void state_game_init ( State_Game_Env* env ) {
 
 }
 
-void state_game_draw ( State_Game_Env* env ) {
+void state_game_draw ( void* environment ) {
 
 	int i;
+	State_Game_Env* env;
+	
+	env = (State_Game_Env*)environment;
 
 	sgo_draw();
 	
@@ -193,10 +201,13 @@ void state_game_draw ( State_Game_Env* env ) {
 
 }
 
-int state_game_events ( State_Game_Env* env ) {
+int state_game_events ( void* environment ) {
 
 	/* Variable de gestion des evenements */
 	SDL_Event event;
+	State_Game_Env* env;
+	
+	env = (State_Game_Env*)environment;
 
 	env->mouse_motion_x = env->mouse_motion_y = 0;
 
@@ -241,10 +252,13 @@ int state_game_events ( State_Game_Env* env ) {
 
 }
 
-void state_game_main ( State_Game_Env* env, Uint32 e_time ) {
+void state_game_main ( void* environment, Uint32 e_time ) {
 
 	int i;
-
+	State_Game_Env* env;
+	
+	env = (State_Game_Env*) environment;
+	
 	env->ellapsed_time = e_time;
 
 	/* On n'utilise pas l'IA dans le mode 2 joueurs */

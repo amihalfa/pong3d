@@ -2,6 +2,8 @@
 #include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include "includes/State_Game_Util.h"
+#include "includes/State_Menu_Util.h"
 #include "includes/Coords.h"
 #include "includes/Particles.h"
 #include "includes/State.h"
@@ -15,11 +17,12 @@
 #include "includes/Collisions.h"
 #include "includes/Util.h"
 #include "includes/State_Menu_Items.h"
-#include "includes/State_Menu_Util.h"
-#include "includes/State_Game_Util.h"
 
-void smi_init(State_Menu_Env* env) {
+void smi_init(void* environment) {
 
+	State_Menu_Env* env;
+	env = (State_Menu_Env*) environment;
+	
     int i, j;
 
     /* Enregistrements des nombres d'elements par menu */
@@ -56,7 +59,10 @@ void smi_init(State_Menu_Env* env) {
     }
 }
 
-void smi_init_textures(State_Menu_Env* env) {
+void smi_init_textures(void* environment) {
+	
+	State_Menu_Env* env;
+	env = (State_Menu_Env*) environment;
 
     /* Menu d'accueil */
     env->menu_item[STATE_MENU_HOME][0].texture = util_texture_load("images/menu/jouer.png");
@@ -85,7 +91,11 @@ void smi_init_textures(State_Menu_Env* env) {
 
 }
 
-int smi_select(State_Menu_Env* env) {
+int smi_select(void* environment) {
+	
+	State_Menu_Env* env;
+	env = (State_Menu_Env*)environment;
+	
     if (env->selected_item != -1)
         switch (env->selected_page) {
             case STATE_MENU_HOME:
@@ -167,7 +177,7 @@ int smi_select(State_Menu_Env* env) {
                     }
                 } else if (env->selected_item == 3) {
 
-                    smu_save_config_items(env);
+                    smu_save_config_items((void*)env);
 
                     env->selected_item = -1;
                     if (sgu_get_pause() != 0) {
@@ -185,7 +195,11 @@ int smi_select(State_Menu_Env* env) {
     return 1;
 }
 
-void smi_select_config(State_Menu_Env* env) {
+void smi_select_config(void* environment) {
+	
+	State_Menu_Env* env;
+	env = (State_Menu_Env*) environment;
+	
     Menu_Item* item = &(env->menu_item[env->selected_page][env->selected_item]);
 
     if (item->type == MENU_ITEM_CHECKBOX) {

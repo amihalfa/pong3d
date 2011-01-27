@@ -5,7 +5,7 @@
 #########################################################
 
 CC = gcc
-CFLAGS = -w -ansi -Wall -pedantic
+CFLAGS = -ansi -Wall
 LDFLAGS = -lGL -lGLU -lSDL -lSDL_image -lSDL_mixer
 EXEC = Pong
 DIR_EXEC = bin

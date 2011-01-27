@@ -4,6 +4,7 @@
 #include <GL/glu.h>
 #include <stdlib.h>
 #include <time.h>
+#include "includes/State_Game_Util.h"
 #include "includes/Coords.h"
 #include "includes/Particles.h"
 #include "includes/State.h"
@@ -13,7 +14,6 @@
 #include "includes/Menu_Item.h"
 #include "includes/Config.h"
 #include "includes/State_Game.h"
-#include "includes/State_Game_Util.h"
 
 
 int sgu_pause(int pause) {
@@ -48,8 +48,11 @@ void sgu_set_level(int level) {
     sgu_level(level);
 }
 
-void sgu_handle_balls_out(State_Game_Env* env) {
+void sgu_handle_balls_out(void* environment) {
 
+	State_Game_Env* env;
+	env = (State_Game_Env*) environment;
+	
     int i;
     for (i = 0; i < env->balls_nb; i++) {
         if (env->ball[i].position.y > env->ground.length / 2) {

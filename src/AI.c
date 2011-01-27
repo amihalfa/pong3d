@@ -3,6 +3,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <float.h>
+#include <math.h>
 #include "includes/Coords.h"
 #include "includes/Particles.h"
 #include "includes/State.h"
@@ -25,7 +26,7 @@ void AI_easy(State_Game_Env* env, int racket_id) {
     int i;
     Ball* ball = NULL;
     Racket* racket = &env->racket[racket_id];
-    float dist_temp, dist = 1000.0f;
+    float dist_temp, dist = 1000.0f, dir;
 
     /* Choix de la balle a intercepter */
     for (i = 0; i < env->balls_nb; i++) {
@@ -46,7 +47,7 @@ void AI_easy(State_Game_Env* env, int racket_id) {
     if (ball != NULL) {
 
 		fabs(ball->position.x - racket->position.x);
-        float dir = (ball->position.x > racket->position.x) ? 1.0 : -1.0;
+        dir = (ball->position.x > racket->position.x) ? 1.0 : -1.0;
 
         if (dist > racket->width / 4.0) {
             if (dist > AI_EASY_SPEED)

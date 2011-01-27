@@ -43,6 +43,6 @@ void sgu_set_level(int level);
  * Gere la sortie des balles
  * @param env       L'environement de jeux
  */
-void sgu_handle_balls_out(State_Game_Env* env);
+void sgu_handle_balls_out(void* env);
 
 #endif

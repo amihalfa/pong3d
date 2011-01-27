@@ -2,6 +2,7 @@
 #include <SDL/SDL_mixer.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <math.h>
 #include "includes/Coords.h"
 #include "includes/Particles.h"
 #include "includes/State.h"
@@ -15,6 +16,7 @@
 void racket_draw(Racket* racket) {
 
     GLdouble eqn[4] = {-1.0, 0.0, 0.0, 0.0};
+	GLUquadric* params;
 
     /* On met en pile la matrice telle qu'elle est au depart */
     glPushMatrix();
@@ -29,7 +31,7 @@ void racket_draw(Racket* racket) {
     glEnable(GL_CLIP_PLANE0);
 
     /* On alloue dynamiquement les parametres pour notre quadrique */
-    GLUquadric* params = gluNewQuadric();
+    params = gluNewQuadric();
 
     gluQuadricDrawStyle(params, GLU_FILL);
 
@@ -63,16 +65,12 @@ void racket_draw(Racket* racket) {
 
 }
 
-void racket_mouse_move(void* v_env, char num_racket) {
+void racket_mouse_move(void* v_env, int num_racket) {
 
     State_Game_Env* env = (State_Game_Env *) v_env;
 
     Racket* racket;
     racket = &env->racket[num_racket];
-
-    float rckt_width_mi = racket->width / 2;
-    float grnd_width_mi = env->ground.width / 2;
-
 
     if (env->mouse_motion_x != 0) {
         racket->speed = env->ellapsed_time / 10.0 * env->mouse_motion_x * env->config[CONFIG_MOUSE_SENSIBILITY];
@@ -88,7 +86,7 @@ void racket_mouse_move(void* v_env, char num_racket) {
     }
 }
 
-void racket_keyboard_move(void* v_env, char num_racket){
+void racket_keyboard_move(void* v_env, int num_racket){
 
 	State_Game_Env* env = (State_Game_Env *)v_env;
 	Racket* racket;

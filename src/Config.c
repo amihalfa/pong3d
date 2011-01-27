@@ -51,7 +51,6 @@ int config_load_state_game(void* game_env) {
 int config_load_state_menu(void* menu_env) {
     State_Menu_Env* env = (State_Menu_Env*) menu_env;
     float config[CONFIG_NB];
-    int i;
     if (config_load(config)) {
 
         env->config[CONFIG_MOUSE_SENSIBILITY] = (int) (80.0f * config[CONFIG_MOUSE_SENSIBILITY]);
